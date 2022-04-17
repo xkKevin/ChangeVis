@@ -72,7 +72,7 @@
             </el-dropdown>
             <el-button
               round
-              @click="generateSomnusGlyphs"
+              @click="generateVis"
               style="
                 background: #6391d7;
                 font-family: PingFangSC-Regular;
@@ -83,7 +83,7 @@
                 font-weight: 400;
                 display: flex;
                 align-items: center;
-                height: 38px;
+                height: 32px;
                 margin-top: 3px;
                 margin-left: 8px;
               "
@@ -92,7 +92,7 @@
           </div>
         </el-row>
         <div style="flex: 1; display: flex; align-items: center">
-          <div id="monaco" style="height: 100%; width: 100%"></div>
+          <div id="monaco" style="height: 98%; width: 99%"></div>
         </div>
       </el-col>
       <el-col
@@ -134,7 +134,7 @@
 <script>
 // import axios from "axios";
 import * as d3 from "d3";
-// import * as monaco from "monaco-editor"; // https://www.cnblogs.com/xuhaoliang/p/13803230.html
+import * as monaco from "monaco-editor"; // https://www.cnblogs.com/xuhaoliang/p/13803230.html
 
 const request_api = "/backend";
 
@@ -143,7 +143,9 @@ export default {
   // delimiters: ["[[", "]]"],
   data() {
     return {
-      language: "r",
+      editor: null, // 文本编辑器
+      script_content: 'print("hello world!")', //'print("hello world!")',  上一次运行的script脚本
+      language: "python",
       all_langs: ["r", "python"],
     };
   },
@@ -190,8 +192,80 @@ export default {
         .attr("font-family", "Arial")
         .text(text);
     },
+    initEditor() {
+      // 初始化编辑器，确保dom已经渲染
+      this.editor = monaco.editor.create(document.getElementById("monaco"), {
+        value: this.script_content, // 编辑器初始显示文字
+        language: this.language, // 语言支持自行查阅demo
+        automaticLayout: true, // 自动布局
+        autoIndent: true, //自动布局
+        fontSize: 16, //字体大小
+        readOnly: false, // 只读
+        theme: "vs", // 官方自带三种主题vs, hc-black, or vs-dark,
+        glyphMargin: true,
+      });
+
+      this.editor.onKeyUp((e) => {
+        this.detectChanges();
+      });
+    },
+    detectChanges() {
+      if (this.script_content == this.editor.getValue()) {
+        // console.log("no changes");
+        this.interaction_flag = true;
+      } else {
+        // console.log("changes");
+        this.interaction_flag = false;
+        this.fireKeyEvent(document.getElementById("tag3"), "keyup", 27);  // Escape code is 27
+      }
+    },
+    changeModel(lang = "r", script_content = "", flag = true) {
+      //创建新模型，value为旧文本，lang 为语言
+      var oldModel = this.editor.getModel(); //获取旧模型
+      if (flag) {
+        // flag 为 true，说明是界面传来的，注意不能用 script_content === "" 来判断，因为 第二个参数传进来的是 VueComponent
+        if (lang === this.language) return;
+        // console.log("script_content:", script_content);
+        script_content = this.editor.getValue();
+        this.language = lang;
+      }
+      // modesIds即为支持语言
+      // var modesIds = monaco.languages.getLanguages().map(function (lang) {
+      //   return lang.id;
+      // });
+      var newModel = monaco.editor.createModel(script_content, lang);
+
+      //将旧模型销毁
+      if (oldModel) {
+        oldModel.dispose();
+      }
+      //设置新模型
+      this.editor.setModel(newModel);
+      this.decorations = this.editor.deltaDecorations(
+        [],
+        [
+          {
+            range: new monaco.Range(1, 1, 1, 1),
+            options: {
+              isWholeLine: true,
+              className: "myContentClass2",
+              glyphMarginClassName: "myGlyphMarginClass2",
+            },
+          },
+        ]
+      );
+
+      // console.log(this.decorations);
+    },
+    generateVis(){
+      this.$message({
+          showClose: true,
+          message: 'Test'
+      });
+    },
   },
   mounted() {
+    this.initEditor();
     this.drawTag("tag1", "Script Panel");
     this.drawTag("tag2", "Overview Panel");
     this.drawTag("tag3", "Change Panel");
@@ -203,6 +277,11 @@ export default {
 #TableChanges {
   border: 2px solid #e3e6f0;
   background-color: #e3e6f0;
+}
+
+.el-button.is-round {
+  border-radius: 15px;
+  padding: 12px 18px;
 }
 
 .el-popover, .el-popover__title {
