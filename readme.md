@@ -13,7 +13,7 @@ RUN: `python backend/src/app.py`
 
 ##### Frontend
 
-+ node
++ `node --version`: v12.18
 
 RUN:
   + `cd frontend`
