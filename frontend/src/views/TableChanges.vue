@@ -112,7 +112,8 @@
           >
           <div id="tag2"></div>
         </el-row>
-        <div style="flex: 1; display: flex; align-items: center;">
+        <div style="flex: 1; display: flex; align-items: center; padding: 3px 4px;">
+          <svg id="overview_svg" width="100%" height="100%"></svg>
         </div>
       </el-col>
     </el-row>
@@ -135,6 +136,8 @@
 // import axios from "axios";
 import * as d3 from "d3";
 import * as monaco from "monaco-editor"; // https://www.cnblogs.com/xuhaoliang/p/13803230.html
+
+import {testELK} from "@/assets/js/overview_panel"
 
 const request_api = "/backend";
 
@@ -258,10 +261,11 @@ export default {
       // console.log(this.decorations);
     },
     generateVis(){
-      this.$message({
-          showClose: true,
-          message: 'Test'
-      });
+      // this.$message({
+      //     showClose: true,
+      //     message: 'Test'
+      // });
+      testELK();
     },
   },
   mounted() {
@@ -269,6 +273,8 @@ export default {
     this.drawTag("tag1", "Script Panel");
     this.drawTag("tag2", "Overview Panel");
     this.drawTag("tag3", "Change Panel");
+    window.d3 = d3;
+    this.generateVis()
   },
 };
 </script>
