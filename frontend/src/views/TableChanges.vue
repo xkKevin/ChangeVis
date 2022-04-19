@@ -126,7 +126,9 @@
           <div id="tag3"></div>
         </el-row>
         <div style="flex: 1; display: flex; align-items: center;">
-          <div id="tb_changes" style="height: 100%; width: 100%; background-color:white"></div>
+          <div style="height: 100%; width: 100%; background-color:white">
+            <svg id="tb_changes" width="100%" height="100%"></svg>
+          </div>
         </div>
     </el-row>
   </div>
@@ -137,7 +139,8 @@
 import * as d3 from "d3";
 import * as monaco from "monaco-editor"; // https://www.cnblogs.com/xuhaoliang/p/13803230.html
 
-import {testELK} from "@/assets/js/overview_panel"
+import {handel_overview} from "@/assets/js/overview_panel"
+import {handel_change} from "@/assets/js/change_panel"
 
 const request_api = "/backend";
 
@@ -265,7 +268,8 @@ export default {
       //     showClose: true,
       //     message: 'Test'
       // });
-      testELK();
+      handel_overview();
+      handel_change();
     },
   },
   mounted() {

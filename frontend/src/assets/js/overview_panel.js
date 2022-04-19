@@ -3,13 +3,12 @@ import * as d3 from "d3"
 
 const ELK = require('elkjs')
 
-async function testELK() {
+async function handel_overview() {
     let { graph, height_ratio } = generateGraph(data)
     await generatePos(graph)
-    console.log(graph);
+        // console.log(graph);
     drawOverview(data.pipeline_data, graph, height_ratio)
 }
-
 
 
 function generatePos(graph) {
@@ -30,7 +29,7 @@ function generatePos(graph) {
 
 function generateGraph(data) {
     // 计算行列高度
-    const height_ratio = overview_config.tbl_height / data.average_row
+    const height_ratio = overview_config.col_height / data.average_row
     let graph = {
         id: "root",
         layoutOptions: {
@@ -45,7 +44,7 @@ function generateGraph(data) {
     graph.children.push({
         id: "tbl0",
         width: data.source_column * overview_config.col_width,
-        height: overview_config.tbl_height,
+        height: overview_config.col_height,
         height_real: data.source_row * height_ratio
     })
 
@@ -55,7 +54,7 @@ function generateGraph(data) {
         let node = {}
         node.id = "tbl" + element.id
         node.width = element.column_num * overview_config.col_width
-        node.height = overview_config.tbl_height
+        node.height = overview_config.col_height
         node.height_real = element.row_num * height_ratio
         graph.children.push(node)
 
@@ -72,18 +71,22 @@ function generateGraph(data) {
 
 
 function drawOverview(pipeline_data, graph, height_ratio) {
-    let overview_svg = d3.select("#overview_svg")
+    let overview_svg = d3.select("#overview_svg") // overview_svg  tb_changes
     overview_svg.selectChildren().remove()
     let line_flag = -1 // -1 表示上；1 表示下
     graph.children.forEach((tbl, index) => {
-        console.log(tbl);
-        overview_svg.append('rect')
+        // console.log(tbl);
+        let rect_tbl = overview_svg.append('rect')
             .attr("id", tbl.id)
             .attr("x", tbl.x).attr("y", tbl.y).attr("width", tbl.width).attr("height", tbl.height_real)
             .attr("fill", change_color.unchange) //.attr("stroke", change_color.line)
-        console.log(index);
         if (index === 0) return
         let p_data = pipeline_data[index - 1]
+
+        if (p_data.group != undefined) {
+            rect_tbl.attr("class", "og" + p_data.group)
+        }
+
         if (p_data.type === 'columns') { // 列
             // p_data.output_transform_posi.forEach((ci) => {
             //     let anchor_posi = +d3.select("#tbl" + p_data.pre).attr("x");
@@ -218,4 +221,4 @@ function drawOverview(pipeline_data, graph, height_ratio) {
 }
 
 
-export { testELK }
+export { handel_overview }
