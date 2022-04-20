@@ -168,55 +168,72 @@ function drawOverview(pipeline_data, graph, height_ratio) {
                 }
             }
 
-            let start_p = drawColumnLines(source_points, change_color[p_data.change_type], line_flag, overview_config.line_height + start_margin)
-            let end_p = drawColumnLines(target_points, change_color[p_data.change_type], line_flag, overview_config.line_height + end_margin)
-            drawColumnLines([start_p, end_p], change_color[p_data.change_type], line_flag, overview_config.line_height)
+            let start_p = drawColumnLines(overview_svg, source_points, change_color[p_data.change_type], line_flag, overview_config.line_height + start_margin)
+            let end_p = drawColumnLines(overview_svg, target_points, change_color[p_data.change_type], line_flag, overview_config.line_height + end_margin)
+            drawColumnLines(overview_svg, [start_p, end_p], change_color[p_data.change_type], line_flag, overview_config.line_height)
 
             line_flag *= -1
 
         } else { // 行
-            drawRows(p_data.output_delete_posi, change_color.delete, tbl, p_data)
-            drawRows(p_data.output_transform_posi, change_color.transform, tbl, p_data)
-            drawRows(p_data.output_create_posi, change_color.create, tbl, p_data)
+            drawRows(overview_svg, p_data.output_delete_posi, change_color.delete, tbl, p_data, height_ratio)
+            drawRows(overview_svg, p_data.output_transform_posi, change_color.transform, tbl, p_data, height_ratio)
+            drawRows(overview_svg, p_data.output_create_posi, change_color.create, tbl, p_data, height_ratio)
         }
     })
+}
 
-    function drawColumnLines(points, color, line_flag, height) {
-        // points 为一个数组，每个元素包含一个坐标
-        points.forEach(point => {
-            overview_svg.append('line')
-                // .attr("id", tbl.id + '_r' + change_num)
-                .attr("x1", point.x).attr("y1", point.y).attr("x2", point.x).attr("y2", point.y + line_flag * height)
-                .attr("stroke", color).attr("stroke-width", overview_config.line_width)
-        })
-        let end_point = points[points.length - 1]
-        overview_svg.append('line')
+/**
+ * @description “半口型”连接一系列点
+ * @param {*} svg 需要绘制在哪个对象上
+ * @param {*} points 一个数组，每个元素包含一个坐标 eg: [{x:2, y:12}]
+ * @param {*} color 绘制这条线的颜色
+ * @param {*} line_flag 朝上画还是朝下画（-1 表示上；1 表示下）
+ * @param {*} height 垂直方向的高度
+ * @returns 返回水平方向的连接线的中点坐标
+ */
+function drawColumnLines(svg, points, color, line_flag, height) {
+    points.forEach(point => {
+        svg.append('line')
             // .attr("id", tbl.id + '_r' + change_num)
-            .attr("x1", points[0].x).attr("y1", points[0].y + line_flag * height).attr("x2", end_point.x).attr("y2", end_point.y + line_flag * height)
+            .attr("x1", point.x).attr("y1", point.y).attr("x2", point.x).attr("y2", point.y + line_flag * height)
             .attr("stroke", color).attr("stroke-width", overview_config.line_width)
+    })
+    let end_point = points[points.length - 1]
+    svg.append('line')
+        // .attr("id", tbl.id + '_r' + change_num)
+        .attr("x1", points[0].x).attr("y1", points[0].y + line_flag * height).attr("x2", end_point.x).attr("y2", end_point.y + line_flag * height)
+        .attr("stroke", color).attr("stroke-width", overview_config.line_width)
 
-        return { x: (points[0].x + end_point.x) / 2, y: (points[0].y + end_point.y) / 2 + line_flag * height }
-    }
+    return { x: (points[0].x + end_point.x) / 2, y: (points[0].y + end_point.y) / 2 + line_flag * height }
+}
 
-    function drawRows(output_posi_data, color, tbl, p_data) {
-        if (output_posi_data.length > 0) {
-            let change_num = output_posi_data.length
-            let posi_y = tbl.y + (p_data.row_num - change_num) * height_ratio
-            let rect_height = change_num * height_ratio
-            overview_svg.append('rect')
-                .attr("id", tbl.id + '_r' + change_num)
-                .attr("x", tbl.x).attr("y", posi_y).attr("width", tbl.width).attr("height", rect_height)
-                .attr("fill", color)
+/**
+ * @description 绘制行结构以及连接线
+ * @param {*} svg 需要绘制在哪个对象上
+ * @param {*} output_posi_data output_delete/transform/create_posi
+ * @param {*} color 绘制的矩形及线条的颜色
+ * @param {*} tbl table节点的一些信息，如节点的坐上角坐标，高度等
+ * @param {*} p_data 单个pipeline_data数据
+ * @param {*} height_ratio table中实际高度与行数比
+ */
+function drawRows(svg, output_posi_data, color, tbl, p_data, height_ratio) {
+    if (output_posi_data.length > 0) {
+        let change_num = output_posi_data.length
+        let posi_y = tbl.y + (p_data.row_num - change_num) * height_ratio
+        let rect_height = change_num * height_ratio
+        svg.append('rect')
+            .attr("id", tbl.id + '_r' + change_num)
+            .attr("x", tbl.x).attr("y", posi_y).attr("width", tbl.width).attr("height", rect_height)
+            .attr("fill", color)
 
-            let posi_line_y = posi_y + rect_height / 2
-            let pre_x = +d3.select("#tbl" + p_data.pre).attr("x");
-            let pre_x_width = +d3.select("#tbl" + p_data.pre).attr("width");
-            let posi_line_x = pre_x + pre_x_width
-            overview_svg.append('line')
-                .attr("id", tbl.id + '_r' + change_num)
-                .attr("x1", posi_line_x).attr("y1", posi_line_y).attr("x2", tbl.x).attr("y2", posi_line_y)
-                .attr("stroke", color).attr("stroke-width", overview_config.line_width)
-        }
+        let posi_line_y = posi_y + rect_height / 2
+        let pre_x = +d3.select("#tbl" + p_data.pre).attr("x");
+        let pre_x_width = +d3.select("#tbl" + p_data.pre).attr("width");
+        let posi_line_x = pre_x + pre_x_width
+        svg.append('line')
+            .attr("id", tbl.id + '_r' + change_num)
+            .attr("x1", posi_line_x).attr("y1", posi_line_y).attr("x2", tbl.x).attr("y2", posi_line_y)
+            .attr("stroke", color).attr("stroke-width", overview_config.line_width)
     }
 }
 

@@ -18,17 +18,22 @@ const overview_config = {
 }
 
 const change_config = {
-    'col_width': 60,
-    'col_height': 130,
+    'col_width': 70,
+    'col_height': 180,
     'col_inner_interval': 25, // 框内列间距
-    'col_outer_interval': 20, // 框外列间距
+    'col_outer_interval': 25, // 框外列间距
     'col_border_interval_x': 15, // 指边框与左右两边的间隙
     'col_border_interval_y': 10, // 指边框与上下两边的间隙
-    'icon_size': [40, 20], // icon 的宽高 // 只有高有效
+    'icon_size': [40, 23], // icon 的宽高 // 只有高有效
     'icon_margin_bottom': 6,
     'margin_top': 60, // 大框距离顶端间隙
     'margin_left': 60, // 大框距离左端间隙
-    'empty_col_width': 50
+    'empty_col_width': 50,
+    'title_font_size': '20px',
+    'content_font_size': '18px',
+    'step_font_size': '16px',
+    'dot_width': 1, // 虚线的宽度
+    'dot_dasharray': "6 10", // 虚线与空白的长度
 }
 
 const data = {
@@ -158,40 +163,24 @@ const data = {
             output_row_num: 36,
             input_col: [],
             transform_icon: 'delete_rows_deduplicate',
-            same: {
-                posi: [
-                    [0.167, 1]
-                ],
+            unchange: [{
+                posi: [0, 0.8333],
                 case: {
                     input_case: [],
                     output_case: [],
                 }
-            },
-            create: {
-                posi: [],
+            }],
+            create: [],
+            delete: [{
+                posi: [0.8333, 1],
                 case: {
                     input_case: [],
                     output_case: [],
                 }
-            },
-            delete: {
-                posi: [
-                    [0, 0.167]
-                ],
-                case: {
-                    input_case: [],
-                    output_case: [],
-                }
-            },
-            transform: {
-                posi: [],
-                case: {
-                    input_case: [],
-                    output_case: [],
-                }
-            },
-            input_null_posi: [],
-            output_null_posi: [],
+            }],
+            transform: [],
+            input_nan_posi: [],
+            output_nan_posi: [],
             step: 2
         }],
         id: [{
@@ -200,40 +189,20 @@ const data = {
             output_row_num: 36,
             input_col: ['id'],
             transform_icon: 'transform_columns_extract',
-            same: {
-                posi: [],
-                case: {
-                    input_case: [],
-                    output_case: [],
-                }
-            },
-            create: {
-                posi: [],
-                case: {
-                    input_case: [],
-                    output_case: [],
-                }
-            },
-            delete: {
-                posi: [],
-                case: {
-                    input_case: [],
-                    output_case: [],
-                }
-            },
-            transform: {
-                posi: [
-                    [0, 1]
-                ],
+            unchange: [],
+            create: [],
+            delete: [],
+            transform: [{
+                posi: [0, 1],
                 case: {
                     input_case: [
                         ['01Bob']
                     ],
                     output_case: ['01'],
                 }
-            },
-            input_null_posi: [],
-            output_null_posi: [],
+            }],
+            input_nan_posi: [],
+            output_nan_posi: [],
             step: 1
         }],
         math: [],
@@ -244,17 +213,9 @@ const data = {
                 output_row_num: 30,
                 input_col: ['math', 'art'],
                 transform_icon: 'create_columns_mutate',
-                same: {
-                    posi: [],
-                    case: {
-                        input_case: [],
-                        output_case: [],
-                    }
-                },
-                create: {
-                    posi: [
-                        [0, 1]
-                    ],
+                unchange: [],
+                create: [{
+                    posi: [0, 1],
                     case: {
                         input_case: [
                             ['87'],
@@ -262,23 +223,11 @@ const data = {
                         ],
                         output_case: ['166'],
                     }
-                },
-                delete: {
-                    posi: [],
-                    case: {
-                        input_case: [],
-                        output_case: [],
-                    }
-                },
-                transform: {
-                    posi: [],
-                    case: {
-                        input_case: [],
-                        output_case: [],
-                    }
-                },
-                input_null_posi: [],
-                output_null_posi: [],
+                }],
+                delete: [],
+                transform: [],
+                input_nan_posi: [],
+                output_nan_posi: [],
                 step: 3
             },
             {
@@ -298,42 +247,20 @@ const data = {
                 output_row_num: 30,
                 input_col: ['total'],
                 transform_icon: 'create_columns_mutate',
-                same: {
-                    posi: [],
-                    case: {
-                        input_case: [],
-                        output_case: [],
-                    }
-                },
-                create: {
-                    posi: [
-                        [0, 0.167]
-                    ],
+                unchange: [],
+                create: [{
+                    posi: [0, 0.167],
                     case: {
                         input_case: [
                             ['84']
                         ],
                         output_case: ['F'],
                     }
-                },
-                delete: {
-                    posi: [],
-                    case: {
-                        input_case: [],
-                        output_case: [],
-                    }
-                },
-                transform: {
-                    posi: [],
-                    case: {
-                        input_case: [],
-                        output_case: [],
-                    }
-                },
-                input_null_posi: [],
-                output_null_posi: [
-                    [0.167, 1]
-                ],
+                }],
+                delete: [],
+                transform: [],
+                input_nan_posi: [],
+                output_nan_posi: [0.167, 1],
                 step: 4,
                 group: 1
             },
@@ -343,44 +270,26 @@ const data = {
                 output_row_num: 30,
                 input_col: ['total'],
                 transform_icon: 'transform_columns_mutate',
-                same: {
-                    posi: [
-                        [0, 0.167]
-                    ],
+                unchange: [{
+                    posi: [0, 0.167],
                     case: {
                         input_case: [],
                         output_case: ['F'],
                     }
-                },
-                create: {
-                    posi: [],
-                    case: {
-                        input_case: [],
-                        output_case: [],
-                    }
-                },
-                delete: {
-                    posi: [],
-                    case: {
-                        input_case: [],
-                        output_case: [],
-                    }
-                },
-                transform: {
-                    posi: [
-                        [0.167, 0.3]
-                    ],
+                }],
+                create: [],
+                delete: [],
+                transform: [{
+                    posi: [0.167, 0.3],
                     case: {
                         input_case: [
                             ['122']
                         ],
                         output_case: ['D'],
                     }
-                },
-                input_null_posi: [],
-                output_null_posi: [
-                    [0.3, 1]
-                ],
+                }],
+                input_nan_posi: [],
+                output_nan_posi: [0.3, 1],
                 step: 5,
                 group: 1
             },
@@ -390,45 +299,26 @@ const data = {
                 output_row_num: 30,
                 input_col: ['total'],
                 transform_icon: 'transform_columns_mutate',
-                same: {
-                    posi: [
-                        [0, 0.167],
-                        [0.167, 0.3]
-                    ],
+                unchange: [{
+                    posi: [0, 0.167],
                     case: {
                         input_case: [],
-                        output_case: ['F', 'D'],
+                        output_case: ['F'],
                     }
-                },
-                create: {
-                    posi: [],
-                    case: {
-                        input_case: [],
-                        output_case: [],
-                    }
-                },
-                delete: {
-                    posi: [],
-                    case: {
-                        input_case: [],
-                        output_case: [],
-                    }
-                },
-                transform: {
-                    posi: [
-                        [0.3, 0.667]
-                    ],
+                }],
+                create: [],
+                delete: [],
+                transform: [{
+                    posi: [0.3, 0.667],
                     case: {
                         input_case: [
                             ['154']
                         ],
                         output_case: ['C'],
                     }
-                },
-                input_null_posi: [],
-                output_null_posi: [
-                    [0.667, 1]
-                ],
+                }],
+                input_nan_posi: [],
+                output_nan_posi: [0.667, 1],
                 step: 6,
                 group: 1
             },
@@ -438,48 +328,26 @@ const data = {
                 output_row_num: 30,
                 input_col: ['total'],
                 transform_icon: 'transform_columns_mutate',
-                same: {
-                    posi: [
-                        [0, 0.167],
-                        [0.167, 0.3],
-                        [0.3, 0.667]
-                    ],
+                unchange: [{
+                    posi: [0.167, 0.3],
                     case: {
                         input_case: [],
-                        output_case: ['F', 'D', 'C'],
+                        output_case: ['D'],
                     }
-                },
-                create: {
-                    posi: [],
-                    case: {
-                        input_case: [],
-                        output_case: [],
-                    }
-                },
-                delete: {
-                    posi: [],
-                    case: {
-                        input_case: [],
-                        output_case: [],
-                    }
-                },
-                transform: {
-                    posi: [
-                        [0.667, 0.833]
-                    ],
+                }],
+                create: [],
+                delete: [],
+                transform: [{
+                    posi: [0.667, 0.833],
                     case: {
                         input_case: [
                             ['166']
                         ],
                         output_case: ['B'],
                     }
-                },
-                input_null_posi: [
-                    []
-                ],
-                output_null_posi: [
-                    [0.833, 1]
-                ],
+                }],
+                input_nan_posi: [],
+                output_nan_posi: [0.833, 1],
                 step: 7,
                 group: 1
             },
@@ -489,50 +357,52 @@ const data = {
                 output_row_num: 30,
                 input_col: ['total'],
                 transform_icon: 'transform_columns_mutate',
-                same: {
-                    posi: [
-                        [0, 0.167],
-                        [0.167, 0.3],
-                        [0.3, 0.667],
-                        [0.667, 0.833]
-                    ],
+                unchange: [{
+                    posi: [0.667, 0.833],
                     case: {
                         input_case: [],
-                        output_case: ['F', 'D', 'C', 'B'],
+                        output_case: ['B'],
                     }
-                },
-                create: {
-                    posi: [],
-                    case: {
-                        input_case: [],
-                        output_case: [],
-                    }
-                },
-                delete: {
-                    posi: [],
-                    case: {
-                        input_case: [],
-                        output_case: [],
-                    }
-                },
-                transform: {
-                    posi: [
-                        [0.833, 1]
-                    ],
+                }],
+                create: [],
+                delete: [],
+                transform: [{
+                    posi: [0.833, 1],
                     case: {
                         input_case: [
                             ['181']
                         ],
                         output_case: ['A'],
                     }
-                },
-                input_null_posi: [],
-                output_null_posi: [],
+                }],
+                input_nan_posi: [],
+                output_nan_posi: [],
                 step: 8,
                 group: 1
             }
         ]
     },
+    column_change_data: [{
+            columns_list: ['id', 'math', 'art']
+        },
+        {
+            type: 'create',
+            transform_list: ['transform_columns_extract', 'delete_rows_deduplicate', 'create_columns_mutate'],
+            step_list: [1, 3],
+            columns_list: ['id', 'math', 'art', 'total']
+        },
+        {
+            type: 'create',
+            transform_list: ['create_columns_mutate'],
+            step_list: [3, 4],
+            columns_list: ['id', 'math', 'art', 'total', 'rate']
+        }, {
+            type: 'unchange',
+            transform_list: ['transform_columns_mutate', 'transform_columns_mutate', 'transform_columns_mutate', 'transform_columns_mutate', 'transform_tables_sort'],
+            step_list: [4, 9],
+            columns_list: ['id', 'math', 'art', 'total', 'rate']
+        }
+    ]
 }
 
 export { change_color, overview_config, change_config, data }

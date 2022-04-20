@@ -19,6 +19,7 @@
             <div class="tips-content"> 
               <!-- popover通过slot传入内容链接：https://www.jianshu.com/p/d4f36ee0598d -->
               <h3 style="margin-top:5px;">Introduction</h3>
+              <p>Visaulizing Table Changes in Data Wrangling</p>
               We develop Somnus to visualize the semantics of wrangling scripts.
               Somnus accepts a script and data tables as input and results in a glyph-based provenance graph where nodes are tables while edges are data transformations.
               <h3 style="margin-bottom:10px;">Reference</h3>
@@ -27,7 +28,7 @@
               <a href="/#/morpheus" target="_blank">MORPHEUS Revisited System</a><br>
               <a href="https://www.youtube.com/watch?v=fQ-eN_4vhso" target="_blank">Demo Video</a>
             </div>
-            <span slot="reference">Table Changes</span>
+            <span slot="reference">ChangeVis</span>
           </el-popover>
         </div>
     </el-header>
@@ -150,7 +151,18 @@ export default {
   data() {
     return {
       editor: null, // 文本编辑器
-      script_content: 'print("hello world!")', //'print("hello world!")',  上一次运行的script脚本
+      script_content: `import pandas as pd
+
+studentScore = pd.read_csv("students.csv")
+studentScore.id = studentScore.id.str.extract('(\d+)')
+studentScore.drop_duplicates(inplace=True)
+studentScore.loc[:, 'totalScore'] = studentScore.math + studentScore.art
+studentScore.loc[studentScore['totalScore'] < 120, 'scoreRate'] = 'F'
+studentScore.loc[(studentScore['totalScore'] >= 120) & (studentScore['totalScore'] < 140) , 'scoreRate'] = 'D'
+studentScore.loc[(studentScore['totalScore'] >= 140) & (studentScore['totalScore'] < 160) , 'scoreRate'] = 'C'
+studentScore.loc[(studentScore['totalScore'] >= 160) & (studentScore['totalScore'] < 180) , 'scoreRate'] = 'B'
+studentScore.loc[studentScore['totalScore'] >= 180 , 'scoreRate'] = 'A'
+studentScore = studentScore.sort_values("totalScore", ascending = False)`, //'print("hello world!")',  上一次运行的script脚本
       language: "python",
       all_langs: ["r", "python"],
     };
@@ -208,7 +220,8 @@ export default {
         fontSize: 16, //字体大小
         readOnly: false, // 只读
         theme: "vs", // 官方自带三种主题vs, hc-black, or vs-dark,
-        glyphMargin: true,
+        glyphMargin: false,
+        lineNumbersMinChars: 4,
       });
 
       this.editor.onKeyUp((e) => {
