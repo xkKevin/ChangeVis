@@ -142,6 +142,7 @@ import * as monaco from "monaco-editor"; // https://www.cnblogs.com/xuhaoliang/p
 
 import {handel_overview} from "@/assets/js/overview_panel"
 import {handel_change} from "@/assets/js/change_panel"
+import { data } from '@/assets/js/config'
 
 const request_api = "/backend";
 
@@ -281,8 +282,8 @@ studentScore = studentScore.sort_values("totalScore", ascending = False)`, //'pr
       //     showClose: true,
       //     message: 'Test'
       // });
-      handel_overview();
-      handel_change();
+      handel_overview(data);
+      handel_change(data);
     },
   },
   mounted() {
@@ -367,6 +368,20 @@ footer.el-footer {
 
 .myContentClass {
   background: lightblue;
+}
+
+g.tbl_area {
+  /* pointer-events: none; */
+}
+
+rect.table:hover{
+  /* stroke: red;
+  stroke-width: 2; 
+  outline: #888888 solid;*/
+}
+
+rect.select {
+  outline: #888888 solid;
 }
 
 .myContentClass2,

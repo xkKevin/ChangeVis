@@ -1,13 +1,44 @@
-import { change_color, overview_config, data } from '@/assets/js/config'
+import { change_color, overview_config } from '@/assets/js/config'
+import { handel_change } from "@/assets/js/change_panel"
 import * as d3 from "d3"
 
 const ELK = require('elkjs')
 
-async function handel_overview() {
+var select_rect = [] // 表示选中的矩形块
+var overall_data
+
+async function handel_overview(data) {
+    overall_data = data
     let { graph, height_ratio } = generateGraph(data)
     await generatePos(graph)
         // console.log(graph);
     drawOverview(data.pipeline_data, graph, height_ratio)
+}
+
+function generate_select_data(start, end) {
+    let select_data = { change_data: {} }
+    let column_status_step = 0
+    for (let key in overall_data.column_change_data) {
+        if (key <= end) {
+            column_status_step = key
+        } else {
+            break
+        }
+    }
+    let rows = []
+    let columns = ['index'].concat(overall_data.column_change_data[column_status_step].columns_list)
+    columns.forEach(key => {
+        select_data.change_data[key] = []
+        overall_data.change_data[key].forEach(trans => {
+            if (trans.step >= start && trans.step <= end) {
+                rows.push(trans.output_row_num)
+                select_data.change_data[key].push(trans)
+            }
+        })
+    })
+    select_data.average_row = d3.mean(rows)
+    select_data.max_row = d3.max(rows)
+    return select_data
 }
 
 
@@ -73,26 +104,109 @@ function generateGraph(data) {
 function drawOverview(pipeline_data, graph, height_ratio) {
     let overview_svg = d3.select("#overview_svg") // overview_svg  tb_changes
     overview_svg.selectChildren().remove()
+    d3.select("body").on("keydown", (event) => {
+        // console.log(event)
+        if (event.keyCode === 27) {
+            d3.selectAll(".table").attr("click_flag", '0').classed("select", false)
+            select_rect = []
+        }
+    })
+
+
     let line_flag = -1 // -1 表示上；1 表示下
     graph.children.forEach((tbl, index) => {
         // console.log(tbl);
         let rect_tbl = overview_svg.append('rect')
             .attr("id", tbl.id)
+            .attr("class", "table")
             .attr("x", tbl.x).attr("y", tbl.y).attr("width", tbl.width).attr("height", tbl.height_real)
             .attr("fill", change_color.unchange) //.attr("stroke", change_color.line)
+            .attr("click_flag", "0")
+            // .attr("pointer-events", "fill")
         if (index === 0) return
         let p_data = pipeline_data[index - 1]
 
+        d3.selectAll(".table")
+            .on("mouseover", function() {
+                d3.select(this).classed("select", true)
+            })
+            .on("mouseout", function() {
+                let tbl_this = d3.select(this)
+                if (tbl_this.attr("click_flag") === '0') {
+                    tbl_this.classed("select", false)
+                }
+            })
+            .on("mouseup", function() {
+                let tbl_this = d3.select(this)
+                let index = select_rect.indexOf(tbl_this.attr("id"))
+                if (index != -1) {
+                    tbl_this.attr("click_flag", '0').classed("select", false)
+                    select_rect.splice(index, 1)
+                } else {
+                    tbl_this.attr("click_flag", '1').classed("select", true)
+                    select_rect.push(tbl_this.attr("id"))
+                    select_rect.slice(0, -2).forEach(remove_select => {
+                        d3.select("#" + remove_select).attr("click_flag", '0').classed("select", false)
+                    })
+                    select_rect = select_rect.slice(-2)
+                }
+                if (select_rect.length === 2) {
+                    let select_steps = [+select_rect[0].slice(3), +select_rect[1].slice(3)].sort()
+                    handel_change(generate_select_data(select_steps[0], select_steps[1]))
+                }
+            })
+
+        // d3.selectAll(".table").on("mouseleave", function() {
+        //     d3.select(this).classed("select", false)
+        // })
+
+        // d3.selectAll(".table").on("mousehover", function() {
+        //     // d3.select(this).attr("stroke", "red")
+        //     // d3.select(this).attr("transform", "scale(1.1)")
+        //     let tbl_this = d3.select(this)
+        //     let x = +tbl_this.attr("x")
+        //     let y = +tbl_this.attr("y")
+        //     let width = +tbl_this.attr("width")
+        //     let height = +tbl_this.attr("height")
+        //     let center = {
+        //         x: x + width / 2,
+        //         y: y + height / 2
+        //     }
+        //     let tbl_shadow = {
+        //         x: center.x - width * 0.6,
+        //         y: center.y - height * 0.6,
+        //         width: width * 1.2,
+        //         height: height * 1.2
+        //     }
+        //     overview_svg.append('rect')
+        //         .attr("id", "tbl_this")
+        //         .attr("x", tbl_shadow.x).attr("y", tbl_shadow.y)
+        //         .attr("width", tbl_shadow.width).attr("height", tbl_shadow.height)
+        //         .attr("fill", "#666666").attr("opacity", 0.3)
+
+        //     // .attr("stroke", "red").attr("stroke-width", 2)
+        // });
+
+        // d3.selectAll(".table").on("mouseleave", function() {
+        //     // d3.select(this).attr("stroke", "none")
+        //     // d3.select(this).attr("transform", "scale(0.9)")
+        //     d3.select("#tbl_this").remove()
+        // });
+
         if (p_data.group != undefined) {
-            rect_tbl.attr("class", "og" + p_data.group)
+            // rect_tbl.attr("class", "og" + p_data.group)
+            rect_tbl.classed("og" + p_data.group, true)
         }
+
+        let tbl_area = overview_svg.append('g').attr("class", "tbl_area")
+        let tbl_line = overview_svg.append('g').attr("class", "tbl_line").lower()
 
         if (p_data.type === 'columns') { // 列
             // p_data.output_transform_posi.forEach((ci) => {
             //     let anchor_posi = +d3.select("#tbl" + p_data.pre).attr("x");
             // })
             p_data.output_transform_posi.forEach((ci) => {
-                overview_svg.append('rect')
+                tbl_area.append('rect')
                     .attr("id", tbl.id + '_c' + ci)
                     .attr("x", tbl.x + ci * overview_config.col_width).attr("y", tbl.y).attr("width", overview_config.col_width).attr("height", tbl.height_real)
                     .attr("fill", change_color.transform)
@@ -102,7 +216,7 @@ function drawOverview(pipeline_data, graph, height_ratio) {
                     let linear = d3.scaleLinear().domain([0, color_num]).range([0, 1])
                     let compute = p_data.sort_type === 'desc' ? d3.interpolate(change_color.sort[1], change_color.sort[0]) : d3.interpolate(change_color.sort[0], change_color.sort[1])
 
-                    overview_svg.selectAll('.color_gloup').data(d3.range(color_num)).enter().append('rect')
+                    tbl_area.selectAll('.color_gloup').data(d3.range(color_num)).enter().append('rect')
                         .attr("x", tbl.x + ci * overview_config.col_width).attr("y", (d, i) => tbl.y + tbl.height_real * i / color_num)
                         .attr("width", overview_config.col_width).attr("height", tbl.height_real / color_num)
                         .attr("fill", (d, i) => compute(linear(d))).attr("stroke", (d, i) => compute(linear(d)))
@@ -110,14 +224,14 @@ function drawOverview(pipeline_data, graph, height_ratio) {
             })
 
             p_data.output_delete_posi.forEach((ci) => {
-                overview_svg.append('rect')
+                tbl_area.append('rect')
                     .attr("id", tbl.id + '_c' + ci)
                     .attr("x", tbl.x + ci * overview_config.col_width).attr("y", tbl.y).attr("width", overview_config.col_width).attr("height", tbl.height_real)
                     .attr("fill", change_color.delete)
             })
 
             p_data.output_create_posi.forEach((ci) => {
-                overview_svg.append('rect')
+                tbl_area.append('rect')
                     .attr("id", tbl.id + '_c' + ci)
                     .attr("x", tbl.x + ci * overview_config.col_width).attr("y", tbl.y).attr("width", overview_config.col_width).attr("height", tbl.height_real)
                     .attr("fill", change_color.create)
@@ -168,16 +282,16 @@ function drawOverview(pipeline_data, graph, height_ratio) {
                 }
             }
 
-            let start_p = drawColumnLines(overview_svg, source_points, change_color[p_data.change_type], line_flag, overview_config.line_height + start_margin)
-            let end_p = drawColumnLines(overview_svg, target_points, change_color[p_data.change_type], line_flag, overview_config.line_height + end_margin)
-            drawColumnLines(overview_svg, [start_p, end_p], change_color[p_data.change_type], line_flag, overview_config.line_height)
+            let start_p = drawColumnLines(tbl_line, source_points, change_color[p_data.change_type], line_flag, overview_config.line_height + start_margin)
+            let end_p = drawColumnLines(tbl_line, target_points, change_color[p_data.change_type], line_flag, overview_config.line_height + end_margin)
+            drawColumnLines(tbl_line, [start_p, end_p], change_color[p_data.change_type], line_flag, overview_config.line_height)
 
             line_flag *= -1
 
         } else { // 行
-            drawRows(overview_svg, p_data.output_delete_posi, change_color.delete, tbl, p_data, height_ratio)
-            drawRows(overview_svg, p_data.output_transform_posi, change_color.transform, tbl, p_data, height_ratio)
-            drawRows(overview_svg, p_data.output_create_posi, change_color.create, tbl, p_data, height_ratio)
+            drawRows(tbl_area, tbl_line, p_data.output_delete_posi, change_color.delete, tbl, p_data, height_ratio)
+            drawRows(tbl_area, tbl_line, p_data.output_transform_posi, change_color.transform, tbl, p_data, height_ratio)
+            drawRows(tbl_area, tbl_line, p_data.output_create_posi, change_color.create, tbl, p_data, height_ratio)
         }
     })
 }
@@ -216,7 +330,7 @@ function drawColumnLines(svg, points, color, line_flag, height) {
  * @param {*} p_data 单个pipeline_data数据
  * @param {*} height_ratio table中实际高度与行数比
  */
-function drawRows(svg, output_posi_data, color, tbl, p_data, height_ratio) {
+function drawRows(svg, line_svg, output_posi_data, color, tbl, p_data, height_ratio) {
     if (output_posi_data.length > 0) {
         let change_num = output_posi_data.length
         let posi_y = tbl.y + (p_data.row_num - change_num) * height_ratio
@@ -230,7 +344,7 @@ function drawRows(svg, output_posi_data, color, tbl, p_data, height_ratio) {
         let pre_x = +d3.select("#tbl" + p_data.pre).attr("x");
         let pre_x_width = +d3.select("#tbl" + p_data.pre).attr("width");
         let posi_line_x = pre_x + pre_x_width
-        svg.append('line')
+        line_svg.append('line')
             .attr("id", tbl.id + '_r' + change_num)
             .attr("x1", posi_line_x).attr("y1", posi_line_y).attr("x2", tbl.x).attr("y2", posi_line_y)
             .attr("stroke", color).attr("stroke-width", overview_config.line_width)

@@ -382,27 +382,29 @@ const data = {
             }
         ]
     },
-    column_change_data: [{
+    column_change_data: {
+        0: {
             columns_list: ['id', 'math', 'art']
         },
-        {
+        3: {
             type: 'create',
             transform_list: ['transform_columns_extract', 'delete_rows_deduplicate', 'create_columns_mutate'],
             step_list: [1, 3],
             columns_list: ['id', 'math', 'art', 'total']
         },
-        {
+        4: {
             type: 'create',
             transform_list: ['create_columns_mutate'],
             step_list: [3, 4],
             columns_list: ['id', 'math', 'art', 'total', 'rate']
-        }, {
+        },
+        9: {
             type: 'unchange',
             transform_list: ['transform_columns_mutate', 'transform_columns_mutate', 'transform_columns_mutate', 'transform_columns_mutate', 'transform_tables_sort'],
             step_list: [4, 9],
             columns_list: ['id', 'math', 'art', 'total', 'rate']
         }
-    ]
+    }
 }
 
 export { change_color, overview_config, change_config, data }

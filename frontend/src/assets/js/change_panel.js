@@ -1,7 +1,7 @@
-import { change_color, change_config, data } from '@/assets/js/config'
+import { change_color, change_config } from '@/assets/js/config'
 import * as d3 from "d3"
 
-function handel_change() {
+function handel_change(data) {
 
     // 计算行列高度
     const height_ratio = change_config.col_height / data.average_row
