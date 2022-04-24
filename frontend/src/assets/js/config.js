@@ -18,7 +18,7 @@ const overview_config = {
 }
 
 const change_config = {
-    'col_width': 70,
+    'col_width': 65,
     'col_height': 180,
     'col_inner_interval': 25, // 框内列间距
     'col_outer_interval': 25, // 框外列间距
@@ -27,7 +27,7 @@ const change_config = {
     'icon_size': [40, 23], // icon 的宽高 // 只有高有效
     'icon_margin_bottom': 6,
     'margin_top': 60, // 大框距离顶端间隙
-    'margin_left': 60, // 大框距离左端间隙
+    'margin_left': 25, // 大框距离左端间隙
     'empty_col_width': 50,
     'title_font_size': '20px',
     'content_font_size': '18px',

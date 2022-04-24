@@ -1,13 +1,13 @@
 import { change_color, change_config } from '@/assets/js/config'
 import * as d3 from "d3"
 
-function handel_change(data) {
+function handel_change(data, combine = false) {
 
     // 计算行列高度
     const height_ratio = change_config.col_height / data.average_row
     const outer_col_height = height_ratio * data.max_row + change_config.icon_size[1] + 2 * change_config.col_border_interval_y + change_config.icon_margin_bottom
 
-    drawChanges(data.change_data, height_ratio, outer_col_height)
+    drawChanges(data.change_data, height_ratio, outer_col_height, combine)
 
 }
 
@@ -31,7 +31,7 @@ function drawIcon(change_svg, transform_icon, x, y) {
     })
 }
 
-function drawChanges(change_data, height_ratio, outer_col_height) {
+function drawChanges(change_data, height_ratio, outer_col_height, combine = false) {
     let change_svg = d3.select("#tb_changes") // overview_svg  tb_changes
     change_svg.selectChildren().remove()
 
@@ -56,7 +56,7 @@ function drawChanges(change_data, height_ratio, outer_col_height) {
         }
 
         change_data[key].forEach((col, ci) => {
-            if (ci && group != col.group) { // 只有非首位且不同组才要加间隔
+            if (ci) { // 只有非首位且不同组才要加间隔  && group != col.group
                 margin_left += change_config.col_inner_interval
                 outer_col_width += change_config.col_inner_interval
             }
@@ -65,7 +65,7 @@ function drawChanges(change_data, height_ratio, outer_col_height) {
             let col_height = height_ratio * col.output_row_num
 
             // 添加依赖列
-            if (col.input_col && group != col.group) {
+            if (col.input_col) {
                 col.input_col.forEach((dependent_col, dci) => {
                     if (dci === 0) {
                         dependent_col_x = margin_left

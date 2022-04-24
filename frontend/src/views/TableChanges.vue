@@ -32,7 +32,123 @@
           </el-popover>
         </div>
     </el-header>
-    <el-row type="flex" justify="center" style="height: 42vh; margin: 0">
+    <el-row type="flex" justify="center" style="height: calc(100vh - 70px); margin: 0">
+    <el-col
+        style="
+          width: 28vw;
+          padding: 0 0 0 0;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          margin-right: 5px;
+          z-index: 1;
+        "
+      >
+      <el-row style="height: 40vh; margin: 0">
+        <el-row
+          type="flex"
+          justify="space-between"
+          style="height: 50px; background: #f5f5f5; width: 100%"
+        >
+          <div id="tag1"></div>
+          <div class="title_right">
+            Language:
+            <el-dropdown @command="changeModel" style="margin-left: 8px">
+              <span
+                class="el-dropdown-link"
+                style="width: 69px; display: inline-block; text-align: center; padding: 2px 0;"
+              >
+                {{ language }}
+              </span>
+              <i class="el-icon-arrow-down el-icon--right" style="position: relative; left: -4px;"></i>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item
+                  v-for="item in all_langs"
+                  :key="item"
+                  :value="item"
+                  :command="item"
+                >
+                  {{ item }}
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+            <el-button
+              round
+              @click="generateVis"
+              style="
+                background: #6391d7;
+                font-family: PingFangSC-Regular;
+                font-size: 18px;
+                color: #ffffff;
+                letter-spacing: -0.7px;
+                line-height: 17px;
+                font-weight: 400;
+                display: flex;
+                align-items: center;
+                height: 32px;
+                margin-top: 3px;
+                margin-left: 8px;
+              "
+              >Run</el-button
+            >
+          </div>
+        </el-row>
+        <div style="height: calc(40vh - 55px); margin-top: 4px; align-items: center">
+          <div id="monaco" style="height: 98%; width: 99%"></div>
+        </div>
+      </el-row>
+      <el-row style="background-color: #e3e6f0; height: 5px;"></el-row>
+      <el-row style="height: calc(60vh - 75px);">
+        <el-row
+            type="flex"
+            justify="space-between"
+            style="height: 50px; width: 100%; background: #f5f5f5"
+          >
+          <div id="tag3"></div>
+          <div class="title_right">
+          <span style="margin-right: 5px">Combined:</span> 
+          <el-switch v-model="combined" active-color="#13ce66" inactive-color="#ff4949" @change="combinedChange">
+          </el-switch>
+        </div>
+        </el-row>
+        <el-row style="height: calc(100% - 50px);">
+          
+        </el-row>
+      </el-row>
+    </el-col>
+
+    <el-col
+        style="
+          flex:1;
+          padding: 0 0 0 0;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          z-index: 1;
+        "
+      >
+      <el-row
+          type="flex"
+          justify="space-between"
+          style="height: 50px; background: #f5f5f5"
+        >
+        <div id="tag2"></div>
+        <div class="title_right">
+          <span style="margin-right: 5px">Combined:</span> 
+          <el-switch v-model="combined" active-color="#13ce66" inactive-color="#ff4949" @change="combinedChange">
+          </el-switch>
+        </div>
+      </el-row>
+      <el-row style="height: 180px">
+        <svg id="overview_svg" width="100%" height="100%"></svg>
+      </el-row>
+      <el-row style="height: calc(100% - 230px)">
+        <svg id="tb_changes" width="100%" height="100%"></svg>
+      </el-row>
+    </el-col>
+    </el-row>
+
+    <!-- <el-row type="flex" justify="center" style="height: 42vh; margin: 0">
       <el-col
         style="
           width: 30vw;
@@ -112,6 +228,11 @@
             style="height: 50px; background: #f5f5f5"
           >
           <div id="tag2"></div>
+          <div class="title_right">
+            <span style="margin-right: 5px">Combined:</span> 
+            <el-switch v-model="combined" active-color="#13ce66" inactive-color="#ff4949" @change="combinedChange">
+            </el-switch>
+          </div>
         </el-row>
         <div style="flex: 1; display: flex; align-items: center; padding: 3px 4px;">
           <svg id="overview_svg" width="100%" height="100%"></svg>
@@ -131,7 +252,7 @@
             <svg id="tb_changes" width="100%" height="100%"></svg>
           </div>
         </div>
-    </el-row>
+    </el-row> -->
   </div>
 </template>
 
@@ -151,6 +272,7 @@ export default {
   // delimiters: ["[[", "]]"],
   data() {
     return {
+      combined: false, // 是否合并
       editor: null, // 文本编辑器
       script_content: `import pandas as pd
 
@@ -285,12 +407,17 @@ studentScore = studentScore.sort_values("totalScore", ascending = False)`, //'pr
       handel_overview(data);
       handel_change(data);
     },
+    combinedChange(combined){
+      console.log(combined);
+    }
   },
   mounted() {
     this.initEditor();
     this.drawTag("tag1", "Script Panel");
-    this.drawTag("tag2", "Overview Panel");
-    this.drawTag("tag3", "Change Panel");
+    // this.drawTag("tag2", "Overview Panel");
+    // this.drawTag("tag3", "Change Panel");
+    this.drawTag("tag2", "Visualization Panel");
+    this.drawTag("tag3", "Data Panel");
     window.d3 = d3;
     this.generateVis()
   },
@@ -371,7 +498,7 @@ footer.el-footer {
 }
 
 g.tbl_area {
-  /* pointer-events: none; */
+  pointer-events: none;
 }
 
 rect.table:hover{
