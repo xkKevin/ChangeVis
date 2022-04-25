@@ -107,11 +107,11 @@ function drawChanges(change_data, height_ratio, outer_col_height, combine = fals
                 } else if (col[fill_ai]) {
                     col[fill_ai].forEach(block => { // block 表示一个颜色块
                         let block_y = col_y + block.posi[0] * col_height
-                        fillColorText(change_svg, margin_left, block_y, (block.posi[1] - block.posi[0]) * col_height, change_color[fill_ai], block.case.output_case[0])
+                        let text_y = fillColorText(change_svg, margin_left, block_y, (block.posi[1] - block.posi[0]) * col_height, change_color[fill_ai], block.case.output_case[0])
                         block.case.input_case.forEach((dependent_text, ci) => {
                             change_svg.append("text").text(dependent_text[0])
                                 .attr("font-size", change_config.step_font_size)
-                                .attr("x", dependent_col_x + ci * change_config.col_width).attr("y", block_y + 15)
+                                .attr("x", dependent_col_x + ci * change_config.col_width).attr("y", text_y)
                                 .attr("transform", `translate(${change_config.col_width/2}, 0)`)
                                 .attr("text-anchor", "middle")
                         })
@@ -157,10 +157,17 @@ function drawChanges(change_data, height_ratio, outer_col_height, combine = fals
             drawIcon(change_svg, col.transform_icon, margin_left, col_y - change_config.icon_size[1] - change_config.icon_margin_bottom)
 
             // 添加步骤序号
-            change_svg.append("text").text(col.step)
+            let text_g = change_svg.append("g").attr("id", "step" + col.step)
+            let text_step = text_g.append("text").text(col.step)
                 .attr("font-size", change_config.step_font_size)
                 .attr("x", margin_left + change_config.col_width).attr("y", col_y - 1.5 * change_config.icon_margin_bottom)
                 .attr("text-anchor", "end")
+            let text_box = text_step.node().getBBox()
+            text_g.append("rect")
+                .attr("x", text_box.x).attr("y", text_box.y)
+                .attr("width", text_box.width).attr("height", text_box.height)
+                .attr("fill", change_color[col.transform_icon.split('_')[0]])
+            text_step.raise()
 
             group = col.group ? col.group : 0
             margin_left += change_config.col_width
@@ -175,6 +182,7 @@ function drawChanges(change_data, height_ratio, outer_col_height, combine = fals
             outer_col_width += change_config.col_border_interval_x
         }
 
+        // 绘制列的外边框
         change_svg.append("rect")
             .attr("id", 'col_' + key)
             .attr("x", outer_col_start_x).attr("y", outer_col_start_y)
@@ -182,6 +190,7 @@ function drawChanges(change_data, height_ratio, outer_col_height, combine = fals
             .attr("fill", change_color.col_bg)
             .lower()
 
+        // 绘制列名
         change_svg.append("text").text(key)
             .attr("font-size", change_config.title_font_size)
             .attr("x", outer_col_start_x).attr("y", outer_col_start_y - 10)
@@ -197,14 +206,15 @@ function fillColorText(svg, x, y, height, color, text = undefined) {
         .attr("width", change_config.col_width).attr("height", height)
         .attr("fill", color)
 
+    let text_y = y + height / 2 + 5
     if (text) {
         svg.append("text").text(text)
             .attr("font-size", change_config.step_font_size)
-            .attr("x", x).attr("y", y + 15)
+            .attr("x", x).attr("y", text_y)
             .attr("transform", `translate(${change_config.col_width/2}, 0)`)
             .attr("text-anchor", "middle")
     }
-    return { x, y, height }
+    return text_y
 }
 
 
