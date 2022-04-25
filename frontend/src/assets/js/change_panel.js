@@ -1,25 +1,91 @@
-import { change_color, change_config } from '@/assets/js/config'
+import { change_color, change_config, timeline_config } from '@/assets/js/config'
 import * as d3 from "d3"
 
-function handel_change(data, combine = false) {
-
-    // 计算行列高度
+function handel_change(data) {
+    let change_svg = d3.select("#tb_changes") // overview_svg  tb_changes
+    change_svg.selectChildren().remove()
+        // 计算行列高度
     const height_ratio = change_config.col_height / data.average_row
     const outer_col_height = height_ratio * data.max_row + change_config.icon_size[1] + 2 * change_config.col_border_interval_y + change_config.icon_margin_bottom
 
-    drawChanges(data.change_data, height_ratio, outer_col_height, combine)
+    let margin_top = drawTimeline(data.column_change_data, timeline_config.margin_top)
+    drawChanges(data.change_data, height_ratio, outer_col_height, margin_top + change_config.margin_top)
 
 }
 
-function drawIcon(change_svg, transform_icon, x, y) {
+
+function drawTimeline(column_change_data, margin_top) {
+    let change_svg = d3.select("#tb_changes")
+    let timeline = {
+        x: timeline_config.margin_left - timeline_config.line_width / 2,
+        y: null
+    }
+
+    for (let key in column_change_data) {
+        let margin_left = timeline_config.margin_left
+
+        change_svg.append("circle")
+            .attr("r", timeline_config.radius)
+            .attr("cx", margin_left).attr("cy", margin_top)
+            .attr("stroke", 'black')
+            .attr("fill", 'white')
+
+        let text_y = margin_top + timeline_config.radius / 2
+        change_svg.append("text").text(key)
+            .attr("font-size", change_config.title_font_size)
+            .attr("x", margin_left).attr("y", text_y)
+            // .attr("transform", `translate(${timeline_config.radius/2}, 0)`)
+            .attr("text-anchor", "middle")
+
+
+        if (column_change_data[key].type) {
+            // 绘制 timeline
+            change_svg.append("rect")
+                .classed("timeline", true)
+                .attr("x", timeline.x).attr("y", timeline.y)
+                .attr("width", timeline_config.line_width).attr("height", timeline_config.knot_interval)
+                .attr("fill", change_color[column_change_data[key].type])
+
+            // 绘制 icon
+            let icon_x = margin_left - timeline_config.icon_width - timeline_config.start_gap
+            column_change_data[key].transform_list.slice().reverse().forEach((type, ti) => {
+                drawIcon(change_svg, type, icon_x, margin_top - (timeline_config.knot_interval + change_config.icon_size[1]) / 2, timeline_config.icon_width)
+                icon_x -= timeline_config.icon_width
+            })
+
+        }
+        timeline.y = margin_top
+
+        // 绘制列名
+        margin_left += timeline_config.radius
+        column_change_data[key].columns_list.forEach(coln => {
+            change_svg.append("text").text(coln)
+                .attr("font-size", change_config.title_font_size)
+                .attr("x", margin_left).attr("y", text_y)
+                .attr("transform", `translate(${timeline_config.col_width/2}, 0)`)
+                .attr("text-anchor", "middle")
+
+            margin_left += timeline_config.col_width
+        })
+        margin_top += timeline_config.knot_interval
+    }
+    d3.selectAll(".timeline").lower()
+
+    return margin_top
+}
+
+/**
+ * @description 指定坐标及图形，绘制图形
+ */
+function drawIcon(svg, transform_icon, x, y, icon_width) {
     return new Promise((resolve, reject) => {
         let iconUrl = require(`@/assets/images/${transform_icon}.svg`)
         let icon_image = new Image()
         icon_image.src = iconUrl
         icon_image.onload = function() {
             let icon_scale_ratio = change_config.icon_size[1] / icon_image.height
-            let offset_x = change_config.col_width / 2 - icon_image.width * icon_scale_ratio / 2
-            change_svg.append('image')
+            let offset_x = icon_width / 2 - icon_image.width * icon_scale_ratio / 2
+            svg.append('image')
                 .attr('href', iconUrl)
                 .attr('x', x)
                 .attr('y', y)
@@ -31,9 +97,10 @@ function drawIcon(change_svg, transform_icon, x, y) {
     })
 }
 
-function drawChanges(change_data, height_ratio, outer_col_height, combine = false) {
+
+function drawChanges(change_data, height_ratio, outer_col_height, margin_top = change_config.margin_top) {
     let change_svg = d3.select("#tb_changes") // overview_svg  tb_changes
-    change_svg.selectChildren().remove()
+        // change_svg.selectChildren().remove()
 
     let margin_left = change_config.margin_left
     let start_flag = true
@@ -42,7 +109,7 @@ function drawChanges(change_data, height_ratio, outer_col_height, combine = fals
     for (let key in change_data) {
 
         let outer_col_start_x = margin_left
-        let outer_col_start_y = change_config.margin_top
+        let outer_col_start_y = margin_top // change_config.margin_top
         let outer_col_width = 0
 
         let group = 0
@@ -154,7 +221,7 @@ function drawChanges(change_data, height_ratio, outer_col_height, combine = fals
 
 
             // 添加图标
-            drawIcon(change_svg, col.transform_icon, margin_left, col_y - change_config.icon_size[1] - change_config.icon_margin_bottom)
+            drawIcon(change_svg, col.transform_icon, margin_left, col_y - change_config.icon_size[1] - change_config.icon_margin_bottom, change_config.col_width)
 
             // 添加步骤序号
             let text_g = change_svg.append("g").attr("id", "step" + col.step)

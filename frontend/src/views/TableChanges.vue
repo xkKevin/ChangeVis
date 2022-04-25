@@ -263,7 +263,7 @@ import * as monaco from "monaco-editor"; // https://www.cnblogs.com/xuhaoliang/p
 
 import {handel_overview} from "@/assets/js/overview_panel"
 import {handel_change} from "@/assets/js/change_panel"
-import { data } from '@/assets/js/config'
+import { data } from '@/assets/js/case'
 
 const request_api = "/backend";
 
