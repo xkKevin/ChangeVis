@@ -4,8 +4,7 @@ const case1 = {
     source_column: 3,
     source_row: 36,
     group: [
-        [1, 2],
-        [4, 5, 6, 7]
+        [4, 5, 6, 7, 8]
     ],
     pipeline_data: [{
             type: 'columns',
@@ -118,7 +117,8 @@ const case1 = {
         }
     ],
     change_data: {
-        index: [{
+        index: {
+            origin:[{
             type: 'change',
             output_row_num: 36,
             input_col: [],
@@ -142,34 +142,36 @@ const case1 = {
             input_nan_posi: [],
             output_nan_posi: [],
             step: 2
-        }],
-        step: {
+            }
+        ]},
+        id: {
             origin: [{
-                type: 'change',
-                input_row_num: 36,
-                output_row_num: 36,
-                input_col: ['id'],
-                transform_icon: 'transform_columns_extract',
-                unchange: [],
-                create: [],
-                delete: [],
-                transform: [{
-                    posi: [0, 1],
-                    case: {
-                        input_case: [
-                            ['01Bob']
-                        ],
-                        output_case: ['01'],
-                    }
-                }],
-                input_nan_posi: [],
-                output_nan_posi: [],
-                step: 1
-            }]
+            type: 'change',
+            input_row_num: 36,
+            output_row_num: 36,
+            input_col: ['id'],
+            transform_icon: 'transform_columns_extract',
+            unchange: [],
+            create: [],
+            delete: [],
+            transform: [{
+                posi: [0, 1],
+                case: {
+                    input_case: [
+                        ['01Bob']
+                    ],
+                    output_case: ['01'],
+                }
+            }],
+            input_nan_posi: [],
+            output_nan_posi: [],
+            step: 1
+        }]
         },
-        math: [],
-        art: [],
-        total: [{
+        math: {origin: []},
+        art: {origin: []},
+        total: {
+            origin: [{
                 type: 'change',
                 input_row_num: 30,
                 output_row_num: 30,
@@ -200,9 +202,9 @@ const case1 = {
                 input_case: [166, 169, 154, 157, 149, 84, 155, 156, 122, 130, 232, 176, 155, 181, 162, 83, 148, 133, 144, 189, 107, 184, 170, 126, 185, 102, 154, 146, 143, 119],
                 output_case: [232, 189, 185, 184, 181, 176, 170, 169, 166, 162, 157, 156, 155, 155, 154, 154, 149, 148, 146, 144, 143, 133, 130, 126, 122, 119, 107, 102, 84, 83],
                 transform_icon: 'transform_tables_sort_desc',
-                step: '9'
+                step: 9
             }
-        ],
+        ]},
         rate: {
             origin: [{
                     type: 'change',
@@ -354,76 +356,252 @@ const case1 = {
                         ],
                         output_case: ['F'],
                     },
-                    step: '5'
-                }],
+                    step: 4
+                }
+                ],
                 delete: [],
-                transform: [],
+                transform: [{
+                    posi: [0.167, 0.3],
+                    case: {
+                        input_case: [
+                            ['122']
+                        ],
+                        output_case: ['D'],
+                    },
+                    step: 5
+                    },
+                    {
+                        posi: [0.3, 0.667],
+                        case: {
+                            input_case: [
+                                ['154']
+                            ],
+                            output_case: ['C'],
+                        },
+                        step: 6
+                    },
+                    {
+                        posi: [0.667, 0.833],
+                        case: {
+                            input_case: [
+                                ['166']
+                            ],
+                            output_case: ['B'],
+                        },
+                        step: 7
+                    },
+                    {
+                        posi: [0.833, 1],
+                        case: {
+                            input_case: [
+                                ['181']
+                            ],
+                            output_case: ['A'],
+                        },
+                        step: 8
+                    },
+                ],
                 input_nan_posi: [],
-                output_nan_posi: [0.167, 1],
+                output_nan_posi: [],
             }]
         }
     },
     column_change_data: {
         0: {
-            columns_list: ['id', 'math', 'art']
-        },
-        3: {
-            type: 'create',
-            transform_list: ['transform_columns_extract', 'delete_rows_deduplicate', 'create_columns_mutate'],
-            step_list: [1, 3],
-            columns_list: ['id', 'math', 'art', 'total']
-        },
-        4: {
-            type: 'create',
-            transform_list: ['create_columns_mutate'],
-            step_list: [3, 4],
-            columns_list: ['id', 'math', 'art', 'total', 'rate']
-        },
-        9: {
-            type: 'unchange',
-            transform_list: ['transform_columns_mutate', 'transform_columns_mutate', 'transform_columns_mutate', 'transform_columns_mutate', 'transform_tables_sort_desc'],
-            step_list: [4, 9],
-            columns_list: ['id', 'math', 'art', 'total', 'rate']
-        }
-    },
-    column_change_data: {
-        0: {
-            columns_list: ['id', 'math', 'art'],
-            change: false
+            columns: {
+                'id': {
+                    type: 'str'
+                },
+                'math': {
+                    type: 'num'
+                },
+                'art': {
+                    type: 'num'
+                },
+            }
         },
         1: {
             type: 'unchange',
+            transform: 'transform_columns_extract',
+            change: false,
             columns: {
                 'id': {
-                    type: 'str' | 'num' | 'time'
-                    max: 12,
-                    min: 36
-                }
+                    type: 'str'
+                },
+                'math': {
+                    type: 'num'
+                },
+                'art': {
+                    type: 'num'
+                },
             }
-            transform_list: 'transform_columns_extract',
-            change: false
         },
         2: {
             type: 'unchange',
-            columns_list: ['id', 'math', 'art'],
-            transform_list: 'transform_columns_extract',
-            change: false
+            transform: 'delete_rows_deduplicate',
+            change: false,
+            columns: {
+                'id': {
+                    type: 'str'
+                },
+                'math': {
+                    type: 'num'
+                },
+                'art': {
+                    type: 'num'
+                },
+            }
         },
         3: {
             type: 'create',
-            transform_list: 'transform_columns_extract',
-            columns_list: ['id', 'math', 'art', 'total'],
-            change: true
+            transform: 'create_columns_mutate',
+            change: true,
+            columns: {
+                'id': {
+                    type: 'str'
+                },
+                'math': {
+                    type: 'num'
+                },
+                'art': {
+                    type: 'num'
+                },
+                'total': {
+                    type: 'num'
+                },
+            }
         },
         4: {
             type: 'create',
-            transform_list: ['create_columns_mutate'],
-            columns_list: ['id', 'math', 'art', 'total', 'rate']
+            transform: 'create_columns_mutate',
+            change: true,
+            columns: {
+                'id': {
+                    type: 'str'
+                },
+                'math': {
+                    type: 'num'
+                },
+                'art': {
+                    type: 'num'
+                },
+                'total': {
+                    type: 'num'
+                },
+                'rate': {
+                    type: 'str'
+                }
+            }
+        },
+        5: {
+            type: 'unchange',
+            transform: 'transform_columns_mutate',
+            change: false,
+            columns: {
+                'id': {
+                    type: 'str'
+                },
+                'math': {
+                    type: 'num'
+                },
+                'art': {
+                    type: 'num'
+                },
+                'total': {
+                    type: 'num'
+                },
+                'rate': {
+                    type: 'str'
+                }
+            }
+        },
+        6: {
+            type: 'unchange',
+            transform: 'transform_columns_mutate',
+            change: false,
+            columns: {
+                'id': {
+                    type: 'str'
+                },
+                'math': {
+                    type: 'num'
+                },
+                'art': {
+                    type: 'num'
+                },
+                'total': {
+                    type: 'num'
+                },
+                'rate': {
+                    type: 'str'
+                }
+            }
+        },
+        7: {
+            type: 'unchange',
+            transform: 'transform_columns_mutate',
+            change: false,
+            columns: {
+                'id': {
+                    type: 'str'
+                },
+                'math': {
+                    type: 'num'
+                },
+                'art': {
+                    type: 'num'
+                },
+                'total': {
+                    type: 'num'
+                },
+                'rate': {
+                    type: 'str'
+                }
+            }
+        },
+        8: {
+            type: 'unchange',
+            transform: 'transform_columns_mutate',
+            change: false,
+            columns: {
+                'id': {
+                    type: 'str'
+                },
+                'math': {
+                    type: 'num'
+                },
+                'art': {
+                    type: 'num'
+                },
+                'total': {
+                    type: 'num'
+                },
+                'rate': {
+                    type: 'str'
+                }
+            }
         },
         9: {
             type: 'unchange',
-            transform_list: ['transform_columns_mutate', 'transform_columns_mutate', 'transform_columns_mutate', 'transform_columns_mutate', 'transform_tables_sort_desc'],
-            columns_list: ['id', 'math', 'art', 'total', 'rate']
+            transform: 'transform_tables_sort_desc',
+            change: false,
+            columns: {
+                'id': {
+                    type: 'str'
+                },
+                'math': {
+                    type: 'num'
+                },
+                'art': {
+                    type: 'num'
+                },
+                'total': {
+                    type: 'num'
+                },
+                'rate': {
+                    type: 'str'
+                }
+            }
         }
     }
 }
