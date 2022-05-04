@@ -1683,5 +1683,912 @@ const case2 = {
     }
 }
 
+const case3 = {
+    average_row: 29.77,
+    max_row: 36,
+    source_column: 6,
+    source_row: 36,
+    group: [
+        [7, 9]
+    ],
+    pipeline_data: [{
+            type: 'columns',
+            column_num: 6,
+            row_num: 36,
+            change_type: 'transform',
+            input_posi: [1],
+            output_delete_posi: [],
+            output_create_posi: [],
+            output_transform_posi: [1],
+            step: 1,
+            pre: 0
+        },
+        {
+            type: 'rows',
+            column_num: 6,
+            row_num: 31,
+            change_type: 'delete',
+            input_posi: [31, 32, 33, 34, 35],
+            output_delete_posi: [],
+            output_create_posi: [],
+            output_transform_posi: [31, 32, 33, 34, 35],
+            step: 2,
+            pre: 1
+        },
+        {
+            type: 'columns',
+            column_num: 5,
+            row_num: 31,
+            change_type: 'delete',
+            input_posi: [0, 1],
+            output_delete_posi: [0],
+            output_create_posi: [],
+            output_transform_posi: [1],
+            step: 3,
+            pre: 2
+        },
+        {
+            type: 'columns',
+            column_num: 6,
+            row_num: 31,
+            change_type: 'create',
+            input_posi: [1],
+            output_delete_posi: [],
+            output_create_posi: [2],
+            output_transform_posi: [],
+            step: 4,
+            pre: 3
+        },
+        {
+            type: 'columns',
+            column_num: 7,
+            row_num: 31,
+            change_type: 'create',
+            input_posi: [4, 5],
+            output_delete_posi: [],
+            output_create_posi: [6],
+            output_transform_posi: [],
+            step: 5,
+            pre: 4
+        },
+        {
+            type: 'columns',
+            column_num: 8,
+            row_num: 31,
+            change_type: 'create',
+            input_posi: [6],
+            output_delete_posi: [],
+            output_create_posi: [7],
+            output_transform_posi: [],
+            step: 6,
+            pre: 5
+        },
+        {
+            type: 'columns',
+            column_num: 8,
+            row_num: 31,
+            change_type: 'trasnsform',
+            input_posi: [7],
+            output_delete_posi: [],
+            output_create_posi: [],
+            output_transform_posi: [7],
+            step: 7,
+            pre: 6
+        },
+        {
+            type: 'columns',
+            column_num: 8,
+            row_num: 31,
+            change_type: 'trasnsform',
+            input_posi: [7],
+            output_delete_posi: [],
+            output_create_posi: [],
+            output_transform_posi: [7],
+            step: 8,
+            pre: 7
+        },
+        {
+            type: 'columns',
+            column_num: 8,
+            row_num: 31,
+            change_type: 'trasnsform',
+            input_posi: [7],
+            output_delete_posi: [],
+            output_create_posi: [],
+            output_transform_posi: [7],
+            step: 9,
+            pre: 8
+        },
+        {
+            type: 'columns',
+            column_num: 8,
+            row_num: 31,
+            change_type: 'transform',
+            input_posi: [6],
+            output_delete_posi: [],
+            output_create_posi: [],
+            output_transform_posi: [6],
+            sort_type: 'asc',
+            step: 10,
+            pre: 9
+        },
+        {
+            type: 'columns',
+            column_num: 8,
+            row_num: 31,
+            change_type: 'transform',
+            input_posi: [3, 4],
+            output_delete_posi: [],
+            output_create_posi: [6],
+            output_transform_posi: [],
+            step: 11,
+            pre: 10
+        },
+        {
+            type: 'columns',
+            column_num: 8,
+            row_num: 31,
+            change_type: 'transform',
+            input_posi: [6, 7],
+            output_delete_posi: [],
+            output_create_posi: [],
+            output_transform_posi: [],
+            rearrange_seq: [0, 7, 6, 1, 2, 3, 4, 5, 6],
+            step: 12,
+            pre: 11
+        },
+        {
+            type: 'rows',
+            column_num: 8,
+            row_num: 10,
+            change_type: 'delete',
+            input_posi: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+            output_delete_posi: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+            output_create_posi: [],
+            output_transform_posi: [],
+            step: 13,
+            pre: 12
+        }
+    ],
+    change_data: {
+        Index: {
+            origin: [{
+                type: 'change',
+                input_row_num: 31,
+                output_row_num: 10,
+                input_col: [],
+                transform_icon: 'delete_columns_select_keep',
+                unchange: [{
+                    posi: [0, 0.323],
+                    case: {
+                        input_case: [],
+                        output_case: [],
+                    }
+                }],
+                create: [],
+                delete: [{
+                    posi: [0.323, 1],
+                    case: {
+                        input_case: [],
+                        output_case: [],
+                    }
+                }],
+                transform: [],
+                input_nan_posi: [],
+                output_nan_posi: [],
+                step: 12
+            }]
+        },
+        Manufacturer: {
+            origin: [{
+                type: 'change',
+                input_row_num: 31,
+                output_row_num: 31,
+                input_col: [],
+                transform_icon: 'combine_columns_merge',
+                unchange: [],
+                create: [],
+                delete: [{
+                    posi: [0, 1],
+                    case: {
+                        input_case: [],
+                        output_case: ['Audi', 'Audi', 'Audi', 'Audi', 'Audi', 'Audi', 'BMW', 'BMW', 'BMW', 'BMW', 'BMW', 'BMW', 'Buick', 'Buick', 'Buick', 'Buick', 'Honda', 'Honda', 'Honda', 'Honda', 'Honda', 'Ford', 'Ford', 'Ford', 'Mercedes', 'Mercedes', 'Mercedes', 'Mercedes', 'Mercedes', 'Mercedes', 'Mercedes'],
+                    }
+                }],
+                transform: [],
+                input_nan_posi: [],
+                output_nan_posi: [],
+                step: 3
+            }]
+        },
+        Model: {
+            origin: [{
+                    type: 'change',
+                    input_row_num: 36,
+                    output_row_num: 36,
+                    input_col: ['Model'],
+                    transform_icon: 'transform_columns_repalce_na',
+                    unchange: [{
+                        posi: [0.139, 1],
+                        case: {
+                            input_case: ['A4', 'A6', 'A8', 'S3', 'S4', 'S5', '320i', '325Li', '330i', '520Li', '528Li', '535Li', 'Regal', 'Encore', 'Park Avenue', 'Larcosse', 'Civic', 'Accord', 'Passport', 'Odyssey', 'Focus', 'Mustang', 'Mondeo', 'C180', 'C200', 'GLC200', 'GLC300', 'E200L', 'E300L', 'DeVille', 'Escalade'],
+                            output_case: ['A4', 'A6', 'A8', 'S3', 'S4', 'S5', '320i', '325Li', '330i', '520Li', '528Li', '535Li', 'Regal', 'Encore', 'Park Avenue', 'Larcosse', 'Civic', 'Accord', 'Passport', 'Odyssey', 'Focus', 'Mustang', 'Mondeo', 'C180', 'C200', 'GLC200', 'GLC300', 'E200L', 'E300L', 'DeVille', 'Escalade'],
+                        }
+                    }],
+                    create: [],
+                    delete: [],
+                    transform: [{
+                        posi: [0, 0.139],
+                        case: {
+                            input_case: [
+                                [, , , , ]
+                            ],
+                            output_case: ['Unknown', 'Unknown', 'Unknown', 'Unknown', 'Unknown'],
+                        }
+                    }],
+                    input_nan_posi: [0, 0.139],
+                    output_nan_posi: [],
+                    step: 1
+                },
+                {
+                    type: 'change',
+                    input_row_num: 31,
+                    output_row_num: 31,
+                    input_col: ['Manufacturer', 'Model'],
+                    transform_icon: 'combine_columns_merge',
+                    unchange: [],
+                    create: [],
+                    delete: [],
+                    transform: [{
+                        posi: [0, 1],
+                        case: {
+                            input_case: [
+                                ['Audi', 'Audi', 'Audi', 'Audi', 'Audi', 'Audi', 'BMW', 'BMW', 'BMW', 'BMW', 'BMW', 'BMW', 'Buick', 'Buick', 'Buick', 'Buick', 'Honda', 'Honda', 'Honda', 'Honda', 'Honda', 'Ford', 'Ford', 'Ford', 'Mercedes', 'Mercedes', 'Mercedes', 'Mercedes', 'Mercedes', 'Mercedes', 'Mercedes'],
+                                ['A4', 'A6', 'A8', 'S3', 'S4', 'S5', '320i', '325Li', '330i', '520Li', '528Li', '535Li', 'Regal', 'Encore', 'Park Avenue', 'Larcosse', 'Civic', 'Accord', 'Unknown', 'Passport', 'Odyssey', 'Focus', 'Mustang', 'Mondeo', 'C180', 'C200', 'GLC200', 'Unknown', 'GLC300', 'E200L', 'E300L']
+                            ],
+                            output_case: ['Audi_A4', 'Audi_A6', 'Audi_A8', 'Audi_S3', 'Audi_S4', 'Audi_S5', 'BMW_320i', 'BMW_325Li', 'BMW_330i', 'BMW_520Li', 'BMW_528Li', 'BMW_535Li', 'Buick_Regal', 'Buick_Encore', 'Buick_Park Avenue', 'Buick_Larcosse', 'Honda_Civic', 'Honda_Accord', 'Honda_Unknown', 'Honda_Passport', 'Honda_Odyssey', 'Ford_Focus', 'Ford_Mustang', 'Ford_Mondeo', 'Mercedes_C180', 'Mercedes_C200', 'Mercedes_GLC200', 'Mercedes_Unknown', 'Mercedes_GLC300', 'Mercedes_E200L', 'Mercedes_E300L'],
+                        }
+                    }],
+                    input_nan_posi: [],
+                    output_nan_posi: [],
+                    step: 3
+                }
+            ]
+        },
+        Launch_Date: {
+            origin: [{
+                type: 'change',
+                input_row_num: 36,
+                output_row_num: 36,
+                input_col: [],
+                transform_icon: 'delete_rows_drop_na',
+                unchange: [{
+                    posi: [0.139, 1],
+                    case: {
+                        input_case: ['2015/12/10', '2016/1/1', '2016/2/10', '2016/7/10', '06/15/2018', '09/10/2015', '2016/9/10', '2016/9/10', '2016/9/10', '2016/8/15', '2016/7/15', '2016/7/15', '2014/10/10', '2016/6/20', '2011/5/10', '2016/3/10', '2016/11/10', '2016/9/20', '2016/3/10', '2015/3/10', '2015/7/10', '2016/8/1', '11/10/2015', '2016/11/20', '2016/5/10', '2016/5/10', '2015/11/15', '2015/11/15', '2015/11/15', '2016/8/10', '2016/8/10'],
+                        output_case: ['2015/12/10', '2016/1/1', '2016/2/10', '2016/7/10', '06/15/2018', '09/10/2015', '2016/9/10', '2016/9/10', '2016/9/10', '2016/8/15', '2016/7/15', '2016/7/15', '2014/10/10', '2016/6/20', '2011/5/10', '2016/3/10', '2016/11/10', '2016/9/20', '2016/3/10', '2015/3/10', '2015/7/10', '2016/8/1', '11/10/2015', '2016/11/20', '2016/5/10', '2016/5/10', '2015/11/15', '2015/11/15', '2015/11/15', '2016/8/10', '2016/8/10'],
+                    }
+                }],
+                create: [],
+                delete: [{
+                    posi: [0, 0.139],
+                    case: {
+                        input_case: [
+                            [, , , , ]
+                        ],
+                        output_case: [, , , , ],
+                    }
+                }],
+                transform: [],
+                input_nan_posi: [0, 0.139],
+                output_nan_posi: [],
+                step: 2
+            }]
+        },
+        Launch_Year: {
+            origin: [{
+                type: 'change',
+                input_row_num: 31,
+                output_row_num: 31,
+                input_col: [],
+                transform_icon: 'create_columns_extract',
+                unchange: [],
+                create: [{
+                    posi: [0, 1],
+                    case: {
+                        input_case: [
+                            ['2015/12/10', '2016/1/1', '2016/2/10', '2016/7/10', '06/15/2018', '09/10/2015', '2016/9/10', '2016/9/10', '2016/9/10', '2016/8/15', '2016/7/15', '2016/7/15', '2014/10/10', '2016/6/20', '2011/5/10', '2016/3/10', '2016/11/10', '2016/9/20', '2016/3/10', '2015/3/10', '2015/7/10', '2016/8/1', '11/10/2015', '2016/11/20', '2016/5/10', '2016/5/10', '2015/11/15', '2015/11/15', '2015/11/15', '2016/8/10', '2016/8/10']
+                        ],
+                        output_case: [2015, 2016, 2016, 2016, 6, 9, 2016, 2016, 2016, 2016, 2016, 2016, 2014, 2016, 2011, 2016, 2016, 2016, 2016, 2015, 2015, 2016, 11, 2016, 2016, 2016, 2015, 2015, 2015, 2016, 2016],
+                    }
+                }],
+                delete: [],
+                transform: [],
+                input_nan_posi: [],
+                output_nan_posi: [],
+                step: 4
+            }],
+        },
+        Sale_Price: {
+            origin: []
+        },
+        Resale_Num: {
+            origin: []
+        },
+        Resale_Price: {
+            origin: []
+        },
+        Value_Retention: {
+            origin: [{
+                    type: 'change',
+                    input_row_num: 31,
+                    output_row_num: 31,
+                    input_col: ['Resale_Price', 'Sale_Price'],
+                    transform_icon: 'create_columns_mutate',
+                    unchange: [],
+                    create: [],
+                    delete: [],
+                    transform: [{
+                        posi: [0, 1],
+                        case: {
+                            input_case: [
+                                [23.54, 31.73, 60.72, 20.83, 27.93, 35.92, 25.93, 26.01, 30.45, 34.98, 43.72, 49.92, 12.83, 8.94, 14.99, 16.82, 7.83, 17.87, 14.82, 16.93, 14.94, 7.83, 29.83, 14.53, 21.86, 23.72, 30.84, 31.85, 31.41, 33.82, 35.95],
+                                [27.28, 41.53, 87.98, 39.98, 45.98, 67.9, 32.0, 32.59, 45.2, 43.56, 55.06, 68.86, 18.99, 13.99, 38.8, 22.58, 11.59, 23.98, 17.98, 23.98, 22.98, 13.08, 76.4, 17.98, 31.48, 32.58, 39.6, 42.8, 48.6, 43.68, 47.48]
+                            ],
+                            output_case: [0.753, 0.764, 0.69, 0.521, 0.607, 0.529, 0.81, 0.798, 0.674, 0.803, 0.794, 0.725, 0.676, 0.639, 0.386, 0.745, 0.676, 0.745, 0.824, 0.706, 0.65, 0.599, 0.39, 0.808, 0.694, 0.728, 0.779, 0.744, 0.646, 0.774, 0.757]
+                        }
+                    }],
+                    input_nan_posi: [],
+                    output_nan_posi: [],
+                    step: 5
+                },
+                {
+                    type: 'sort',
+                    output_row_num: 31,
+                    max_num: 0.386,
+                    min_num: 0.863,
+                    input_case: [0.863, 0.764, 0.69, 0.521, 0.607, 0.529, 0.81, 0.798, 0.674, 0.803, 0.794, 0.725, 0.676, 0.639, 0.386, 0.745, 0.676, 0.745, 0.824, 0.706, 0.65, 0.599, 0.39, 0.808, 0.694, 0.728, 0.779, 0.744, 0.646, 0.774, 0.757],
+                    output_case: [0.386, 0.39, 0.521, 0.529, 0.599, 0.607, 0.639, 0.646, 0.65, 0.674, 0.676, 0.676, 0.69, 0.694, 0.706, 0.725, 0.728, 0.744, 0.745, 0.745, 0.757, 0.764, 0.774, 0.779, 0.794, 0.798, 0.803, 0.808, 0.81, 0.824, 0.863],
+                    transform_icon: 'transform_tables_sort_asc',
+                    step: 10
+                }
+            ],
+            combine: []
+        },
+        Rate: {
+            origin: [{
+                    type: 'change',
+                    input_row_num: 31,
+                    output_row_num: 31,
+                    input_col: ['Value_Retention'],
+                    transform_icon: 'create_columns_mutate',
+                    unchange: [],
+                    create: [{
+                        posi: [0, 1],
+                        case: {
+                            input_case: [
+                                [0.863, 0.764, 0.69, 0.521, 0.607, 0.529, 0.81, 0.798, 0.674, 0.803, 0.794, 0.725, 0.676, 0.639, 0.386, 0.745, 0.676, 0.745, 0.824, 0.706, 0.65, 0.599, 0.39, 0.808, 0.694, 0.728, 0.779, 0.744, 0.646, 0.774, 0.757]
+                            ],
+                            output_case: [
+                                ['A', '0.764', '0.69', '0.521', '0.607', '0.529', 'A', '0.798', '0.674', 'A', '0.794', '0.725', '0.676', '0.639', '0.386', '0.745', '0.676', '0.745', 'A', '0.706', '0.65', '0.599', '0.39', 'A', '0.694', '0.728', '0.779', '0.744', '0.646', '0.774', '0.757']
+                            ],
+                        }
+                    }],
+                    delete: [],
+                    transform: [],
+                    input_nan_posi: [],
+                    output_nan_posi: [],
+                    step: 6
+                },
+                {
+                    type: 'change',
+                    input_row_num: 31,
+                    output_row_num: 31,
+                    input_col: ['Rate'],
+                    transform_icon: 'transform_columns_mutate',
+                    unchange: [{
+                        posi: [0.387, 1],
+                        case: {
+                            input_case: [
+                                ['A', '0.69', '0.521', '0.607', '0.529', 'A', '0.674', 'A', '0.676', '0.639', '0.386', '0.676', 'A', '0.65', '0.599', '0.39', 'A', '0.694', '0.646']
+                            ],
+                            output_case: [
+                                ['A', '0.69', '0.521', '0.607', '0.529', 'A', '0.674', 'A', '0.676', '0.639', '0.386', '0.676', 'A', '0.65', '0.599', '0.39', 'A', '0.694', '0.646']
+                            ],
+                        }
+                    }],
+                    create: [],
+                    delete: [],
+                    transform: [{
+                        posi: [0, 0.387],
+                        case: {
+                            input_case: [
+                                [0.764, 0.798, 0.794, 0.725, 0.745, 0.745, 0.706, 0.728, 0.779, 0.744, 0.774, 0.757]
+                            ],
+                            output_case: ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B']
+                        }
+                    }],
+                    input_nan_posi: [],
+                    output_nan_posi: [],
+                    step: 7
+                },
+                {
+                    type: 'change',
+                    input_row_num: 31,
+                    output_row_num: 31,
+                    input_col: ['Rate'],
+                    transform_icon: 'transform_columns_mutate',
+                    unchange: [{
+                        posi: [0.322, 1],
+                        case: {
+                            input_case: [
+                                ['A', 'B', '0.521', '0.529', 'A', 'B', 'A', 'B', 'B', '0.386', 'B', 'B', 'A', 'B', '0.39', 'A', 'B', 'B', 'B', 'B', 'B']
+                            ],
+                            output_case: [
+                                ['A', 'B', '0.521', '0.529', 'A', 'B', 'A', 'B', 'B', '0.386', 'B', 'B', 'A', 'B', '0.39', 'A', 'B', 'B', 'B', 'B', 'B']
+                            ],
+                        }
+                    }],
+                    create: [],
+                    delete: [],
+                    transform: [{
+                        posi: [0, 0.322],
+                        case: {
+                            input_case: [
+                                [0.69, 0.607, 0.674, 0.676, 0.639, 0.676, 0.65, 0.599, 0.694, 0.646]
+                            ],
+                            output_case: ['C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C']
+                        }
+                    }],
+                    input_nan_posi: [],
+                    output_nan_posi: [],
+                    step: 8
+                },
+                {
+                    type: 'change',
+                    input_row_num: 31,
+                    output_row_num: 31,
+                    input_col: ['Rate'],
+                    transform_icon: 'transform_columns_mutate',
+                    unchange: [{
+                        posi: [0.129, 1],
+                        case: {
+                            input_case: [
+                                ['A', 'B', 'C', 'C', 'A', 'B', 'C', 'A', 'B', 'B', 'C', 'C', 'B', 'C', 'B', 'A', 'B', 'C', 'C', 'A', 'C', 'B', 'B', 'B', 'C', 'B', 'B']
+                            ],
+                            output_case: [
+                                ['A', 'B', 'C', 'C', 'A', 'B', 'C', 'A', 'B', 'B', 'C', 'C', 'B', 'C', 'B', 'A', 'B', 'C', 'C', 'A', 'C', 'B', 'B', 'B', 'C', 'B', 'B']
+                            ],
+                        }
+                    }],
+                    create: [],
+                    delete: [],
+                    transform: [{
+                        posi: [0, 0.129],
+                        case: {
+                            input_case: [
+                                [0.521, 0.529, 0.386, 0.39]
+                            ],
+                            output_case: ['F', 'F', 'F', 'F']
+                        }
+                    }],
+                    input_nan_posi: [],
+                    output_nan_posi: [],
+                    step: 9
+                }
+            ],
+            combine: [{
+                type: 'change',
+                input_row_num: 31,
+                output_row_num: 31,
+                input_col: ['Rate'],
+                transform_icon: 'transform_columns_mutate',
+                unchange: [],
+                create: [],
+                delete: [],
+                transform: [{
+                        posi: [0, 0.387],
+                        case: {
+                            input_case: [
+                                [0.764, 0.798, 0.794, 0.725, 0.745, 0.745, 0.706, 0.728, 0.779, 0.744, 0.774, 0.757]
+                            ],
+                            output_case: ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B']
+                        },
+                        step: 7
+                    },
+                    {
+                        posi: [0, 0.322],
+                        case: {
+                            input_case: [
+                                [0.69, 0.607, 0.674, 0.676, 0.639, 0.676, 0.65, 0.599, 0.694, 0.646]
+                            ],
+                            output_case: ['C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C']
+                        },
+                        step: 8
+                    },
+                    {
+                        posi: [0, 0.129],
+                        case: {
+                            input_case: [
+                                [0.521, 0.529, 0.386, 0.39]
+                            ],
+                            output_case: ['F', 'F', 'F', 'F']
+                        },
+                        step: 9
+                    }
+                ],
+                input_nan_posi: [],
+                output_nan_posi: [],
+            }]
+        }
+    },
+    column_change_data: {
+        0: {
+            columns: {
+                'Manufacturer': {
+                    type: 'str'
+                },
+                'Model': {
+                    type: 'str'
+                },
+                'Launch_Date': {
+                    type: 'date'
+                },
+                'Sale_Price	': {
+                    type: 'num'
+                },
+                'Resale_Num	': {
+                    type: 'num'
+                },
+                'Resale_Price	': {
+                    type: 'num'
+                }
+            }
+        },
+        1: {
+            type: 'unchange',
+            transform: 'transform_columns_replace_na',
+            change: false,
+            columns: {
+                'Manufacturer': {
+                    type: 'str'
+                },
+                'Model': {
+                    type: 'str'
+                },
+                'Launch_Date': {
+                    type: 'date'
+                },
+                'Sale_Price': {
+                    type: 'num'
+                },
+                'Resale_Num': {
+                    type: 'num'
+                },
+                'Resale_Price': {
+                    type: 'num'
+                }
+            }
+        },
+        2: {
+            type: 'unchange',
+            transform: 'delete_rows_drop_na',
+            change: false,
+            columns: {
+                'Manufacturer': {
+                    type: 'str'
+                },
+                'Model': {
+                    type: 'str'
+                },
+                'Launch_Date': {
+                    type: 'date'
+                },
+                'Sale_Price': {
+                    type: 'num'
+                },
+                'Resale_Num': {
+                    type: 'num'
+                },
+                'Resale_Price': {
+                    type: 'num'
+                }
+            }
+        },
+        3: {
+            type: 'delete',
+            transform: 'combine_columns_merge',
+            change: true,
+            columns: {
+                'Model': {
+                    type: 'str'
+                },
+                'Launch_Date': {
+                    type: 'date'
+                },
+                'Sale_Price': {
+                    type: 'num'
+                },
+                'Resale_Num': {
+                    type: 'num'
+                },
+                'Resale_Price': {
+                    type: 'num'
+                }
+            }
+        },
+        4: {
+            type: 'create',
+            transform: 'create_columns_extract',
+            change: true,
+            columns: {
+                'Model': {
+                    type: 'str'
+                },
+                'Launch_Date': {
+                    type: 'date'
+                },
+                'Launch_Year': {
+                    type: 'num'
+                },
+                'Sale_Price': {
+                    type: 'num'
+                },
+                'Resale_Num': {
+                    type: 'num'
+                },
+                'Resale_Price': {
+                    type: 'num'
+                }
+            }
+        },
+        5: {
+            type: 'create',
+            transform: 'create_columns_mutate',
+            change: true,
+            columns: {
+                'Model': {
+                    type: 'str'
+                },
+                'Launch_Date': {
+                    type: 'date'
+                },
+                'Launch_Year': {
+                    type: 'num'
+                },
+                'Sale_Price': {
+                    type: 'num'
+                },
+                'Resale_Num': {
+                    type: 'num'
+                },
+                'Resale_Price': {
+                    type: 'num'
+                },
+                'Value_Retention': {
+                    type: 'num'
+                }
+            }
+        },
+        6: {
+            type: 'create',
+            transform: 'create_columns_mutate',
+            change: true,
+            columns: {
+                'Model': {
+                    type: 'str'
+                },
+                'Launch_Date': {
+                    type: 'date'
+                },
+                'Launch_Year': {
+                    type: 'num'
+                },
+                'Sale_Price': {
+                    type: 'num'
+                },
+                'Resale_Num': {
+                    type: 'num'
+                },
+                'Resale_Price': {
+                    type: 'num'
+                },
+                'Value_Retention': {
+                    type: 'num'
+                },
+                'Rate': {
+                    type: 'str'
+                }
+            }
+        },
+        7: {
+            type: 'unchange',
+            transform: 'transform_columns_mutate',
+            change: false,
+            columns: {
+                'Model': {
+                    type: 'str'
+                },
+                'Launch_Date': {
+                    type: 'date'
+                },
+                'Launch_Year': {
+                    type: 'num'
+                },
+                'Sale_Price': {
+                    type: 'num'
+                },
+                'Resale_Num': {
+                    type: 'num'
+                },
+                'Resale_Price': {
+                    type: 'num'
+                },
+                'Value_Retention': {
+                    type: 'num'
+                },
+                'Rate': {
+                    type: 'str'
+                }
+            }
+        },
+        8: {
+            type: 'unchange',
+            transform: 'transform_columns_mutate',
+            change: false,
+            columns: {
+                'Model': {
+                    type: 'str'
+                },
+                'Launch_Date': {
+                    type: 'date'
+                },
+                'Launch_Year': {
+                    type: 'num'
+                },
+                'Sale_Price': {
+                    type: 'num'
+                },
+                'Resale_Num': {
+                    type: 'num'
+                },
+                'Resale_Price': {
+                    type: 'num'
+                },
+                'Value_Retention': {
+                    type: 'num'
+                },
+                'Rate': {
+                    type: 'str'
+                }
+            }
+        },
+        9: {
+            type: 'unchange',
+            transform: 'transform_columns_mutate',
+            change: false,
+            columns: {
+                'Model': {
+                    type: 'str'
+                },
+                'Launch_Date': {
+                    type: 'date'
+                },
+                'Launch_Year': {
+                    type: 'num'
+                },
+                'Sale_Price': {
+                    type: 'num'
+                },
+                'Resale_Num': {
+                    type: 'num'
+                },
+                'Resale_Price': {
+                    type: 'num'
+                },
+                'Value_Retention': {
+                    type: 'num'
+                },
+                'Rate': {
+                    type: 'str'
+                }
+            }
+        },
+        10: {
+            type: 'unchange',
+            transform: 'transform_tables_sort_asc',
+            change: false,
+            columns: {
+                'Model': {
+                    type: 'str'
+                },
+                'Launch_Date': {
+                    type: 'date'
+                },
+                'Launch_Year': {
+                    type: 'num'
+                },
+                'Sale_Price': {
+                    type: 'num'
+                },
+                'Resale_Num': {
+                    type: 'num'
+                },
+                'Resale_Price': {
+                    type: 'num'
+                },
+                'Value_Retention': {
+                    type: 'num'
+                },
+                'Rate': {
+                    type: 'str'
+                }
+            }
+        },
+        11: {
+            type: 'transform',
+            transform: 'transform_tables_rearrange',
+            change: true,
+            columns: {
+                'Model': {
+                    type: 'str'
+                },
+                'Rate': {
+                    type: 'str'
+                },
+                'Value_Retention': {
+                    type: 'num'
+                },
+                'Launch_Date': {
+                    type: 'date'
+                },
+                'Launch_Year': {
+                    type: 'num'
+                },
+                'Sale_Price': {
+                    type: 'num'
+                },
+                'Resale_Num': {
+                    type: 'num'
+                },
+                'Resale_Price': {
+                    type: 'num'
+                }
+            }
+        },
+        12: {
+            type: 'unchange',
+            transform: 'delete_rows_slice_keep',
+            change: false,
+            columns: {
+                'Model': {
+                    type: 'str'
+                },
+                'Rate': {
+                    type: 'str'
+                },
+                'Value_Retention': {
+                    type: 'num'
+                },
+                'Launch_Date': {
+                    type: 'date'
+                },
+                'Launch_Year': {
+                    type: 'num'
+                },
+                'Sale_Price': {
+                    type: 'num'
+                },
+                'Resale_Num': {
+                    type: 'num'
+                },
+                'Resale_Price': {
+                    type: 'num'
+                }
+            }
+        }
+    }
+}
+
 
 export { data }
