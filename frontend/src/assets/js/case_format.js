@@ -15,7 +15,7 @@ const case1 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [0],
-            step: 1,
+            step: [1, 1],
             pre: 0
         },
         {
@@ -27,7 +27,7 @@ const case1 = {
             output_delete_posi: [30, 31, 32, 33, 34, 35],
             output_create_posi: [],
             output_transform_posi: [],
-            step: 2,
+            step: [2, 2],
             pre: 1
         },
         {
@@ -39,7 +39,7 @@ const case1 = {
             output_delete_posi: [],
             output_create_posi: [3],
             output_transform_posi: [],
-            step: 3,
+            step: [3, 3],
             pre: 2
         },
         {
@@ -51,7 +51,7 @@ const case1 = {
             output_delete_posi: [],
             output_create_posi: [4],
             output_transform_posi: [],
-            step: 4,
+            step: [4, 8],
             pre: 3
         },
         {
@@ -63,7 +63,7 @@ const case1 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [4],
-            step: 5,
+            step: [5],
             pre: 4
         },
         {
@@ -75,7 +75,7 @@ const case1 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [4],
-            step: 6,
+            step: [6],
             pre: 5
         },
         {
@@ -87,7 +87,7 @@ const case1 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [4],
-            step: 7,
+            step: [7],
             pre: 6
         },
         {
@@ -99,7 +99,7 @@ const case1 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [4],
-            step: 8,
+            step: [8],
             pre: 7
         },
         {
@@ -112,7 +112,7 @@ const case1 = {
             output_create_posi: [],
             output_transform_posi: [3],
             sort_type: 'desc',
-            step: 9,
+            step: [9, 9],
             pre: 8
         }
     ],
@@ -403,6 +403,7 @@ const case1 = {
                 ],
                 input_nan_posi: [],
                 output_nan_posi: [],
+                step: 4
             }]
         }
     },
@@ -2591,4 +2592,4 @@ const case3 = {
 }
 
 
-export { data }
+export { case1, case2, case3 }

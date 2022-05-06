@@ -264,6 +264,7 @@ import * as monaco from "monaco-editor"; // https://www.cnblogs.com/xuhaoliang/p
 import {handel_overview} from "@/assets/js/overview_panel"
 import {handel_change} from "@/assets/js/change_panel"
 import { data } from '@/assets/js/case'
+import { case1, case2, case3 } from '@/assets/js/case_format'
 
 const request_api = "/backend";
 
@@ -404,11 +405,11 @@ studentScore = studentScore.sort_values("totalScore", ascending = False)`, //'pr
       //     showClose: true,
       //     message: 'Test'
       // });
-      handel_overview(data);
-      handel_change(data);
+      handel_overview(case1);
     },
     combinedChange(combined){
-      console.log(combined);
+      this.combined = combined
+      handel_overview(case1, + this.combined);
     }
   },
   mounted() {
@@ -508,7 +509,7 @@ rect.table:hover{
 }
 
 rect.select {
-  outline: #888888 solid;
+  outline: #888888 solid 3px;
 }
 
 .myContentClass2,

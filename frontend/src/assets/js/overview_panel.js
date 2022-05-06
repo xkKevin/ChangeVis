@@ -7,37 +7,69 @@ const ELK = require('elkjs')
 var select_rect = [] // 表示选中的矩形块
 var overall_data
 
-async function handel_overview(data) {
+/**
+ * 
+ * @param {*} data 
+ * @param {*} group_flag : 是否合并，1 表示合并，0表示不合并
+ */
+async function handel_overview(data, group_flag = 0) {
+    select_rect = []
     overall_data = data
-    let { graph, height_ratio } = generateGraph(data)
+    let { graph, height_ratio, end_step } = generateGraph(data, group_flag)
     await generatePos(graph)
-        // console.log(graph);
-    drawOverview(data.pipeline_data, graph, height_ratio)
+    drawOverview(data.pipeline_data, graph, height_ratio, group_flag)
+    handel_change(generate_select_data(0, end_step, group_flag))
 }
 
-function generate_select_data(start, end) {
-    let select_data = { change_data: {} }
+function generate_select_data(start, end, group_flag) {
+    let select_data = { change_data: {}, column_change_data: {} }
     let column_status_step = 0
+    let columns = ['index'] // change view 中应该显示哪些列
+    let timeline_point_data = {}
+    let transform_list = []
+
     for (let key in overall_data.column_change_data) {
-        if (key <= end) {
-            column_status_step = key
-        } else {
-            break
+        key = +key
+        if (key >= start && key <= end) {
+            let new_key = key - start
+            if (new_key === 0 || key === end || overall_data.column_change_data[key].type != 'unchange') {
+                let tran_cols = Object.keys(overall_data.column_change_data[key].columns)
+                columns = columns.concat(tran_cols.filter(c => !columns.includes(c))) // 取并集
+
+                timeline_point_data.columns_list = tran_cols
+                timeline_point_data.type = overall_data.column_change_data[key].type
+                transform_list.push(overall_data.column_change_data[key].transform)
+                timeline_point_data.transform_list = transform_list
+                select_data.column_change_data[new_key] = timeline_point_data
+
+                transform_list = []
+                timeline_point_data = {}
+            } else {
+                transform_list.push(overall_data.column_change_data[key].transform)
+            }
         }
     }
     let rows = []
-    let columns = ['index'].concat(overall_data.column_change_data[column_status_step].columns_list)
+
     columns.forEach(key => {
         select_data.change_data[key] = []
-        overall_data.change_data[key].forEach(trans => {
+        let trans_field = 'origin'
+        if (group_flag && (overall_data.change_data[key].combine != undefined)) {
+            trans_field = 'combine'
+        }
+        overall_data.change_data[key][trans_field].forEach(trans => {
+            let new_tran = Object.assign({}, trans) // 深拷贝对象
             if (trans.step >= start && trans.step <= end) {
                 rows.push(trans.output_row_num)
-                select_data.change_data[key].push(trans)
+                new_tran.step = trans.step - start
+                select_data.change_data[key].push(new_tran)
             }
         })
     })
     select_data.average_row = d3.mean(rows)
     select_data.max_row = d3.max(rows)
+
+    console.log(select_data);
     return select_data
 }
 
@@ -58,7 +90,7 @@ function generatePos(graph) {
 }
 
 
-function generateGraph(data) {
+function generateGraph(data, group_flag) {
     // 计算行列高度
     const height_ratio = overview_config.col_height / data.average_row
     let graph = {
@@ -76,17 +108,24 @@ function generateGraph(data) {
         id: "tbl0",
         width: data.source_column * overview_config.col_width,
         height: overview_config.col_height,
-        height_real: data.source_row * height_ratio
+        height_real: data.source_row * height_ratio,
+        index: -1,
+        step: group_flag ? "0_0" : "0" // 绘制矩形时绑定id
     })
 
     let edge_id = 1
+    let end_step = 1
 
-    data.pipeline_data.forEach(element => {
+    data.pipeline_data.forEach((element, index) => {
+        if (group_flag && element.step.length === 1) return
         let node = {}
-        node.id = "tbl" + element.id
+        if (element.step[group_flag] > end_step) end_step = element.step[group_flag]
+        node.id = "tbl" + element.step[group_flag]
         node.width = element.column_num * overview_config.col_width
         node.height = overview_config.col_height
         node.height_real = element.row_num * height_ratio
+        node.index = index // 额外保存 element 的index信息
+        node.step = group_flag ? element.step.join("_") : element.step[0]
         graph.children.push(node)
 
         let edge = {}
@@ -97,11 +136,11 @@ function generateGraph(data) {
 
     });
 
-    return { graph, height_ratio }
+    return { graph, height_ratio, end_step }
 }
 
 
-function drawOverview(pipeline_data, graph, height_ratio) {
+function drawOverview(pipeline_data, graph, height_ratio, group_flag) {
     let overview_svg = d3.select("#overview_svg") // overview_svg  tb_changes
     overview_svg.selectChildren().remove()
     d3.select("body").on("keydown", (event) => {
@@ -114,17 +153,19 @@ function drawOverview(pipeline_data, graph, height_ratio) {
 
 
     let line_flag = -1 // -1 表示上；1 表示下
-    graph.children.forEach((tbl, index) => {
+    graph.children.forEach(tbl => {
         // console.log(tbl);
         let rect_tbl = overview_svg.append('rect')
             .attr("id", tbl.id)
+            .attr("step", tbl.step)
             .attr("class", "table")
             .attr("x", tbl.x).attr("y", tbl.y).attr("width", tbl.width).attr("height", tbl.height_real)
             .attr("fill", change_color.unchange) //.attr("stroke", change_color.line)
             .attr("click_flag", "0")
             // .attr("pointer-events", "fill")
-        if (index === 0) return
-        let p_data = pipeline_data[index - 1]
+        let index = tbl.index
+        if (index === -1) return
+        let p_data = pipeline_data[index]
 
         d3.selectAll(".table")
             .on("mouseover", function() {
@@ -138,21 +179,23 @@ function drawOverview(pipeline_data, graph, height_ratio) {
             })
             .on("mouseup", function() {
                 let tbl_this = d3.select(this)
-                let index = select_rect.indexOf(tbl_this.attr("id"))
-                if (index != -1) {
+                let index = select_rect.indexOf(tbl_this.attr("step"))
+                if (index != -1) { // 找到了就去掉
                     tbl_this.attr("click_flag", '0').classed("select", false)
-                    select_rect.splice(index, 1)
-                } else {
+                    select_rect.splice(index, 1) // 去掉 index 位置的元素
+                } else { // 没找到就加上
                     tbl_this.attr("click_flag", '1').classed("select", true)
-                    select_rect.push(tbl_this.attr("id"))
+                    select_rect.push(tbl_this.attr("step"))
                     select_rect.slice(0, -2).forEach(remove_select => {
-                        d3.select("#" + remove_select).attr("click_flag", '0').classed("select", false)
+                        d3.select("#tbl" + remove_select.split("_").pop()).attr("click_flag", '0').classed("select", false)
                     })
                     select_rect = select_rect.slice(-2)
                 }
                 if (select_rect.length === 2) {
-                    let select_steps = [+select_rect[0].slice(3), +select_rect[1].slice(3)].sort()
-                    handel_change(generate_select_data(select_steps[0], select_steps[1]))
+                    let select_steps = [...select_rect[0].split("_"), ...select_rect[1].split("_")].map(Number).sort()
+
+                    // let select_steps = [+select_rect[0].slice(3), +select_rect[1].slice(3)].sort()
+                    handel_change(generate_select_data(select_steps[0], select_steps[select_steps.length - 1], group_flag))
                 }
             })
 
@@ -193,10 +236,10 @@ function drawOverview(pipeline_data, graph, height_ratio) {
         //     d3.select("#tbl_this").remove()
         // });
 
-        if (p_data.group != undefined) {
-            // rect_tbl.attr("class", "og" + p_data.group)
-            rect_tbl.classed("og" + p_data.group, true)
-        }
+        // if (p_data.group != undefined) {
+        //     // rect_tbl.attr("class", "og" + p_data.group)
+        //     rect_tbl.classed("og" + p_data.group, true)
+        // }
 
         let tbl_area = overview_svg.append('g').attr("class", "tbl_area")
         let tbl_line = overview_svg.append('g').attr("class", "tbl_line").lower()

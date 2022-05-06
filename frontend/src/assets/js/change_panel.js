@@ -38,7 +38,7 @@ function drawTimeline(column_change_data, margin_top) {
             .attr("text-anchor", "middle")
 
 
-        if (column_change_data[key].type) {
+        if (key > 0) {
             // 绘制 timeline
             change_svg.append("rect")
                 .classed("timeline", true)
@@ -52,7 +52,6 @@ function drawTimeline(column_change_data, margin_top) {
                 drawIcon(change_svg, type, icon_x, margin_top - (timeline_config.knot_interval + change_config.icon_size[1]) / 2, timeline_config.icon_width)
                 icon_x -= timeline_config.icon_width
             })
-
         }
         timeline.y = margin_top
 
@@ -230,10 +229,12 @@ function drawChanges(change_data, height_ratio, outer_col_height, margin_top = c
                 .attr("x", margin_left + change_config.col_width).attr("y", col_y - 1.5 * change_config.icon_margin_bottom)
                 .attr("text-anchor", "end")
             let text_box = text_step.node().getBBox()
-            text_g.append("rect")
-                .attr("x", text_box.x).attr("y", text_box.y)
-                .attr("width", text_box.width).attr("height", text_box.height)
-                .attr("fill", change_color[col.transform_icon.split('_')[0]])
+                // text_g.append("rect")
+                //     .attr("x", text_box.x - 2).attr("y", text_box.y - 1.5)
+                //     .attr("width", text_box.width + 4).attr("height", text_box.height + 3)
+                //     .attr("fill", "none")
+                //     .attr("stroke", change_color[col.transform_icon.split('_')[0]])
+                //     .attr("stroke-width", 2.5)
             text_step.raise()
 
             group = col.group ? col.group : 0
