@@ -34,6 +34,7 @@ const change_config = {
     'step_font_size': '16px',
     'dot_width': 1, // 虚线的宽度
     'dot_dasharray': "6 10", // 虚线与空白的长度
+    'right_step_width': 20,
 }
 
 const timeline_config = {

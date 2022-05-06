@@ -105,11 +105,7 @@
             style="height: 50px; width: 100%; background: #f5f5f5"
           >
           <div id="tag3"></div>
-          <div class="title_right">
-          <span style="margin-right: 5px">Combined:</span> 
-          <el-switch v-model="combined" active-color="#13ce66" inactive-color="#ff4949" @change="combinedChange">
-          </el-switch>
-        </div>
+
         </el-row>
         <el-row style="height: calc(100% - 50px);">
           
@@ -134,10 +130,14 @@
         >
         <div id="tag2"></div>
         <div class="title_right">
-          <span style="margin-right: 5px">Combined:</span> 
-          <el-switch v-model="combined" active-color="#13ce66" inactive-color="#ff4949" @change="combinedChange">
-          </el-switch>
-        </div>
+            <span style="margin-right: 5px">Combined:</span> 
+            <el-switch v-model="combined" active-color="#13ce66" inactive-color="#ff4949" @change="combinedChange">
+            </el-switch>
+
+            <span style="margin-right: 5px; margin-left: 10px">Show Proportion:</span> 
+            <el-switch v-model="proportion" active-color="#13ce66" inactive-color="#ff4949" @change="proportionChange">
+            </el-switch>
+          </div>
       </el-row>
       <el-row style="height: 180px">
         <svg id="overview_svg" width="100%" height="100%"></svg>
@@ -274,6 +274,7 @@ export default {
   data() {
     return {
       combined: false, // 是否合并
+      proportion: false, 
       editor: null, // 文本编辑器
       script_content: `import pandas as pd
 
@@ -409,8 +410,12 @@ studentScore = studentScore.sort_values("totalScore", ascending = False)`, //'pr
     },
     combinedChange(combined){
       this.combined = combined
-      handel_overview(case1, + this.combined);
-    }
+      handel_overview(case1, + this.combined, this.proportion);
+    },
+    proportionChange(proportion){
+      this.proportion = proportion
+      handel_overview(case1, + this.combined, this.proportion);
+    },
   },
   mounted() {
     this.initEditor();

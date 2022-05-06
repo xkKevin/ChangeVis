@@ -1,7 +1,7 @@
 import { change_color, change_config, timeline_config } from '@/assets/js/config'
 import * as d3 from "d3"
 
-function handel_change(data) {
+function handel_change(data, proportion_flag) {
     let change_svg = d3.select("#tb_changes") // overview_svg  tb_changes
     change_svg.selectChildren().remove()
         // 计算行列高度
@@ -9,7 +9,7 @@ function handel_change(data) {
     const outer_col_height = height_ratio * data.max_row + change_config.icon_size[1] + 2 * change_config.col_border_interval_y + change_config.icon_margin_bottom
 
     let margin_top = drawTimeline(data.column_change_data, timeline_config.margin_top)
-    drawChanges(data.change_data, height_ratio, outer_col_height, margin_top + change_config.margin_top)
+    drawChanges(data.change_data, height_ratio, outer_col_height, margin_top + change_config.margin_top, proportion_flag)
 
 }
 
@@ -97,7 +97,7 @@ function drawIcon(svg, transform_icon, x, y, icon_width) {
 }
 
 
-function drawChanges(change_data, height_ratio, outer_col_height, margin_top = change_config.margin_top) {
+function drawChanges(change_data, height_ratio, outer_col_height, margin_top = change_config.margin_top, proportion_flag = false) {
     let change_svg = d3.select("#tb_changes") // overview_svg  tb_changes
         // change_svg.selectChildren().remove()
 
@@ -166,21 +166,42 @@ function drawChanges(change_data, height_ratio, outer_col_height, margin_top = c
                 .attr("width", change_config.col_width).attr("height", col_height)
                 .attr("fill", change_color.unchange)
 
-            // 为主体改变列着色，并添加文本
+            // 为主体改变列着色，并添加文本，同时展示右侧比例
+            let step_text_flag = 0 // 是否空出 step_text 的间隔
             fill_block.forEach(fill_ai => {
                 if (fill_ai === 'nan') {
-                    if (col.output_nan_posi && col.output_nan_posi.length === 2) fillColorText(change_svg, margin_left, col_y + col.output_nan_posi[0] * col_height, (col.output_nan_posi[1] - col.output_nan_posi[0]) * col_height, change_color[fill_ai])
+                    if (col.output_nan_posi && col.output_nan_posi.length === 2) {
+                        let area_y = col_y + col.output_nan_posi[0] * col_height
+                        let area_proportion = col.output_nan_posi[1] - col.output_nan_posi[0]
+                        let text = proportion_flag ? area_proportion.toFixed(2) * 100 + '%' : ''
+                        fillColorText(change_svg, margin_left, area_y, area_proportion * col_height, change_color[fill_ai], text)
+                    }
                 } else if (col[fill_ai]) {
                     col[fill_ai].forEach(block => { // block 表示一个颜色块
                         let block_y = col_y + block.posi[0] * col_height
-                        let text_y = fillColorText(change_svg, margin_left, block_y, (block.posi[1] - block.posi[0]) * col_height, change_color[fill_ai], block.case.output_case[0])
-                        block.case.input_case.forEach((dependent_text, ci) => {
-                            change_svg.append("text").text(dependent_text[0])
+                        let area_proportion = block.posi[1] - block.posi[0]
+                        let text = proportion_flag ? area_proportion.toFixed(2) * 100 + '%' : block.case.output_case[0]
+                        let text_y = fillColorText(change_svg, margin_left, block_y, area_proportion * col_height, change_color[fill_ai], text)
+                        if (!proportion_flag) {
+                            block.case.input_case.forEach((dependent_text, ci) => {
+                                change_svg.append("text").text(dependent_text[0])
+                                    .attr("font-size", change_config.step_font_size)
+                                    .attr("x", dependent_col_x + ci * change_config.col_width).attr("y", text_y)
+                                    .attr("transform", `translate(${change_config.col_width/2}, 0)`)
+                                    .attr("text-anchor", "middle")
+                            })
+                        }
+
+                        // 添加右侧步骤文本
+                        if (block.step != undefined) {
+                            let text_x = margin_left + change_config.col_width
+                            change_svg.append("text").text(block.step)
                                 .attr("font-size", change_config.step_font_size)
-                                .attr("x", dependent_col_x + ci * change_config.col_width).attr("y", text_y)
-                                .attr("transform", `translate(${change_config.col_width/2}, 0)`)
+                                .attr("x", text_x).attr("y", text_y)
+                                .attr("transform", `translate(${change_config.right_step_width/2}, 0)`)
                                 .attr("text-anchor", "middle")
-                        })
+                            step_text_flag = 1
+                        }
                     })
                 }
             })
@@ -223,23 +244,26 @@ function drawChanges(change_data, height_ratio, outer_col_height, margin_top = c
             drawIcon(change_svg, col.transform_icon, margin_left, col_y - change_config.icon_size[1] - change_config.icon_margin_bottom, change_config.col_width)
 
             // 添加步骤序号
-            let text_g = change_svg.append("g").attr("id", "step" + col.step)
-            let text_step = text_g.append("text").text(col.step)
-                .attr("font-size", change_config.step_font_size)
-                .attr("x", margin_left + change_config.col_width).attr("y", col_y - 1.5 * change_config.icon_margin_bottom)
-                .attr("text-anchor", "end")
-            let text_box = text_step.node().getBBox()
-                // text_g.append("rect")
-                //     .attr("x", text_box.x - 2).attr("y", text_box.y - 1.5)
-                //     .attr("width", text_box.width + 4).attr("height", text_box.height + 3)
-                //     .attr("fill", "none")
-                //     .attr("stroke", change_color[col.transform_icon.split('_')[0]])
-                //     .attr("stroke-width", 2.5)
-            text_step.raise()
+            if (step_text_flag === 0) {
+                let text_g = change_svg.append("g").attr("id", "step" + col.step)
+                let text_step = text_g.append("text").text(col.step)
+                    .attr("font-size", change_config.step_font_size)
+                    .attr("x", margin_left + change_config.col_width).attr("y", col_y - 1.5 * change_config.icon_margin_bottom)
+                    .attr("text-anchor", "end")
+                    // let text_box = text_step.node().getBBox()
+                    // text_g.append("rect")
+                    //     .attr("x", text_box.x - 2).attr("y", text_box.y - 1.5)
+                    //     .attr("width", text_box.width + 4).attr("height", text_box.height + 3)
+                    //     .attr("fill", "none")
+                    //     .attr("stroke", change_color[col.transform_icon.split('_')[0]])
+                    //     .attr("stroke-width", 2.5)
+                text_step.raise()
+            }
 
             group = col.group ? col.group : 0
-            margin_left += change_config.col_width
-            outer_col_width += change_config.col_width
+            let move_dist = change_config.col_width + step_text_flag * change_config.right_step_width
+            margin_left += move_dist
+            outer_col_width += move_dist
         });
 
         if (change_data[key].length === 0) {

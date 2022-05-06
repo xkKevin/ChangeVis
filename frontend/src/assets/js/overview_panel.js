@@ -12,13 +12,13 @@ var overall_data
  * @param {*} data 
  * @param {*} group_flag : 是否合并，1 表示合并，0表示不合并
  */
-async function handel_overview(data, group_flag = 0) {
+async function handel_overview(data, group_flag = 0, proportion_flag = false) {
     select_rect = []
     overall_data = data
     let { graph, height_ratio, end_step } = generateGraph(data, group_flag)
     await generatePos(graph)
     drawOverview(data.pipeline_data, graph, height_ratio, group_flag)
-    handel_change(generate_select_data(0, end_step, group_flag))
+    handel_change(generate_select_data(0, end_step, group_flag), proportion_flag)
 }
 
 function generate_select_data(start, end, group_flag) {
