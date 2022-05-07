@@ -8,6 +8,7 @@ var select_rect = [] // 表示选中的矩形块
 var select_code = { lines: [], changes: [] }
 var overall_data
 var skip_step = 0 // 跳过的初始步骤
+var select_data = {}
 
 
 var vm = null
@@ -22,18 +23,23 @@ const sendVue = (_that) => {
  * @param {*} group_flag : 是否合并，1 表示合并，0表示不合并
  */
 async function handel_overview(data, group_flag = 0, proportion_flag = false) {
-    vm.codeGlyphHighlight(Object.values(data.step2code).map(Number))
     select_rect = []
     skip_step = 0
     overall_data = data
     let { graph, height_ratio, end_step } = generateGraph(data, group_flag)
     await generatePos(graph)
-    drawOverview(data.pipeline_data, graph, height_ratio, group_flag)
-    handel_change(generate_select_data(0, end_step, group_flag), proportion_flag)
-    add_event(group_flag)
+    drawOverview(data.pipeline_data, graph, height_ratio, group_flag, proportion_flag)
+    select_data = generate_select_data(0, end_step, group_flag)
+    changeProportionView(group_flag, proportion_flag)
+    vm.codeGlyphHighlight(Object.values(data.step2code).map(Number))
 }
 
-function add_event(group_flag) {
+function changeProportionView(group_flag, proportion_flag) {
+    handel_change(select_data, proportion_flag)
+    add_event(group_flag, proportion_flag)
+}
+
+function add_event(group_flag, proportion_flag) {
     // 为整个body添加事件
     d3.select("body").on("keydown", (event) => {
         // console.log(event)
@@ -74,10 +80,11 @@ function add_event(group_flag) {
                 let select_steps = [...select_rect[0].split("_"), ...select_rect[1].split("_")].map(Number).sort()
 
                 // let select_steps = [+select_rect[0].slice(3), +select_rect[1].slice(3)].sort()
-                handel_change(generate_select_data(select_steps[0], select_steps[select_steps.length - 1], group_flag))
+
+                select_data = generate_select_data(select_steps[0], select_steps[select_steps.length - 1], group_flag)
+                changeProportionView(group_flag, proportion_flag)
                 vm.codeLineHighlight(select_code.lines, select_code.changes)
                 d3.selectAll('div.glyph_margin').classed("myGlyphMarginClass", false)
-                add_event(group_flag)
             }
         })
 
@@ -269,7 +276,7 @@ function generateGraph(data, group_flag) {
 }
 
 
-function drawOverview(pipeline_data, graph, height_ratio, group_flag) {
+function drawOverview(pipeline_data, graph, height_ratio, group_flag, proportion_flag) {
     let overview_svg = d3.select("#overview_svg") // overview_svg  tb_changes
     overview_svg.selectChildren().remove()
 
@@ -442,4 +449,4 @@ function drawRows(svg, line_svg, output_posi_data, color, tbl, p_data, height_ra
     }
 }
 
-export { handel_overview, sendVue }
+export { handel_overview, sendVue, changeProportionView }

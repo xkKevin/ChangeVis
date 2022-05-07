@@ -5,36 +5,41 @@
         '--create-color': color.create,
       }">
     <el-header height="50px" style="background: black">
-        <div
-          style="
-            text-align: center;
-            color: white;
-            font-size: 20pt;
-            font-family: Arial;
-            font-weight: bold;
-            line-height: 50px;
-          "
-        >
-          <el-popover
-            placement="bottom"
-            width="410"
-            trigger="hover"
-            >
-            <div class="tips-content"> 
-              <!-- popover通过slot传入内容链接：https://www.jianshu.com/p/d4f36ee0598d -->
-              <h3 style="margin-top:5px;">Introduction</h3>
-              <p>Visaulizing Table Changes in Data Wrangling</p>
-              We develop Somnus to visualize the semantics of wrangling scripts.
-              Somnus accepts a script and data tables as input and results in a glyph-based provenance graph where nodes are tables while edges are data transformations.
-              <h3 style="margin-bottom:10px;">Reference</h3>
-              Kai Xiong, Siwei Fu, Guoming Ding, Zhongsu Luo, Rong Yu, Wei Chen, Hujun Bao, and Yingcai Wu. Visualizing the Scripts of Data Wrangling with SOMNUS. IEEE Transactions on Visualization and Computer Graphics, 2022.<br>
-              <a href="https://ieeexplore.ieee.org/document/9693232/" target="_blank">Somnus Paper</a><br>
-              <a href="/#/morpheus" target="_blank">MORPHEUS Revisited System</a><br>
-              <a href="https://www.youtube.com/watch?v=fQ-eN_4vhso" target="_blank">Demo Video</a>
-            </div>
-            <span slot="reference">ChangeVis</span>
-          </el-popover>
-        </div>
+            <el-row style="background: black; padding-top: 8px; flex: 1; padding-left: 1vh;">
+                <el-col :span="4" style="background: black">
+                <span style="font-family: Arial; font-size: 20px; color: white">Case:</span>
+                <el-dropdown @command="selectCase" style="margin-left: 20px">
+                    <span
+                        class="el-dropdown-link"
+                        style="
+                            width: 138px;
+                            display: inline-block;
+                            text-align: center;
+                            padding: 4px 0;
+                        "
+                    >
+                        {{ one_case }}
+                    </span>
+                    <i
+                        class="el-icon-arrow-down el-icon--right"
+                        style="position: relative; left: -3px"
+                    ></i>
+                    <el-dropdown-menu slot="dropdown" style="width: 138px; text-align: center;">
+                        <el-dropdown-item
+                            v-for="key in Object.keys(cases)"
+                            :key="key"
+                            :value="key"
+                            :command="key"
+                        >
+                            {{ key }}
+                        </el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+        </el-col>
+        <el-col :span="16" style="background: black; margin-top: 10px; text-align: center;line-height: 20px;">
+            <span style="font-family: Arial; font-size: 30px; color: white; font-weight: bold">ChangeVis</span>
+        </el-col>
+      </el-row>
     </el-header>
     <el-row type="flex" justify="center" style="height: calc(100vh - 70px); margin: 0">
     <el-col
@@ -265,9 +270,8 @@
 import * as d3 from "d3";
 import * as monaco from "monaco-editor"; // https://www.cnblogs.com/xuhaoliang/p/13803230.html
 
-import {handel_overview, sendVue} from "@/assets/js/overview_panel"
+import {handel_overview, sendVue, changeProportionView} from "@/assets/js/overview_panel"
 import {change_color} from "@/assets/js/config"
-import { data } from '@/assets/js/case'
 import { case1, case2, case3 } from '@/assets/js/case_format'
 
 const request_api = "/backend";
@@ -281,25 +285,35 @@ export default {
       proportion: false, 
       editor: null, // 文本编辑器
       color: change_color,
-      script_content: `import pandas as pd
-
-studentScore = pd.read_csv("students.csv")
-studentScore.id = studentScore.id.str.extract('(\d+)')
-studentScore.drop_duplicates(inplace=True)
-studentScore.loc[:, 'totalScore'] = studentScore.math + studentScore.art
-studentScore.loc[studentScore['totalScore'] < 120, 'scoreRate'] = 'F'
-studentScore.loc[(studentScore['totalScore'] >= 120) & (studentScore['totalScore'] < 140) , 'scoreRate'] = 'D'
-studentScore.loc[(studentScore['totalScore'] >= 140) & (studentScore['totalScore'] < 160) , 'scoreRate'] = 'C'
-studentScore.loc[(studentScore['totalScore'] >= 160) & (studentScore['totalScore'] < 180) , 'scoreRate'] = 'B'
-studentScore.loc[studentScore['totalScore'] >= 180 , 'scoreRate'] = 'A'
-studentScore = studentScore.sort_values("totalScore", ascending = False)`, //'print("hello world!")',  上一次运行的script脚本
+      script_content: '', //'print("hello world!")',  上一次运行的script脚本
       language: "python",
       all_langs: ["r", "python"],
+      cases: {
+                case1: 'case1script.txt',
+                case2: 'case2script.txt',
+                case3: 'Energy-Poverty 32641 homes.csv',
+            },
+      casesNum: {
+                case1: case1,
+                case2: case2,
+                case3: case3,
+            },
+      one_case: 'Select a case'
     };
   },
   components: {
   },
   methods: {
+    selectCase(one_case = 'case1') {
+            this.one_case = one_case;
+            this.getScriptData(this.cases[this.one_case]);
+            this.combined = false;
+            this.proportion = false;
+            // console.log(this.one_case);
+            handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion);
+            // console.log(this.one_case);
+            // this.getTableData(this.cases[this.one_case]);
+        },
     drawTag(id, text) {
       let svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       svg.setAttribute("id", `${id}svg`);
@@ -339,6 +353,9 @@ studentScore = studentScore.sort_values("totalScore", ascending = False)`, //'pr
         .attr("font-weight", "bold")
         .attr("font-family", "Arial")
         .text(text);
+    },
+    initData() {
+        this.selectCase();
     },
     initEditor() {
       // 初始化编辑器，确保dom已经渲染
@@ -421,7 +438,7 @@ studentScore = studentScore.sort_values("totalScore", ascending = False)`, //'pr
     },
     proportionChange(proportion){
       this.proportion = proportion
-      handel_overview(case1, + this.combined, this.proportion);
+      changeProportionView(+ this.combined, this.proportion);
     },
     codeGlyphHighlight(lines) {
       // d3.selectAll('div.cgmr.codicon').classed("myGlyphMarginClass", false)
@@ -463,10 +480,75 @@ studentScore = studentScore.sort_values("totalScore", ascending = False)`, //'pr
       //         glyphMarginClassName: "myGlyphMarginClass",
       //     },
       //   }, ]);
-    }
+    },
+    loadFile(name) {
+          const xhr = new XMLHttpRequest()
+          const okStatus = document.location.protocol === 'file:' ? 0 : 200
+          xhr.open('GET', name, false)
+          xhr.overrideMimeType('text/html;charset=utf-8')// 默认为utf-8
+          xhr.send(null)
+          return xhr.status === okStatus ? xhr.responseText : null
+        },
+        // unicode转utf-8
+        unicodeToUtf8(data) {
+          data = data.replace(/\\/g, '%')
+          return unescape(data)
+    },
+    getScriptData(case_file = "") {
+            // console.log(case_file);
+            var path = 'data/' + case_file
+            // console.log(path);
+            const file = this.unicodeToUtf8(this.loadFile(path))
+            if (case_file === 'case2script.txt'){
+              this.language = 'r'
+            }
+            else{
+              this.language = 'python'
+            }
+            this.changeModel(this.language, file, false);
+        },
+        changeModel(lang = "r", script_content = "", flag = true) {
+          //创建新模型，value为旧文本，lang 为语言
+          var oldModel = this.editor.getModel(); //获取旧模型
+          if (flag) {
+            // flag 为 true，说明是界面传来的，注意不能用 script_content === "" 来判断，因为 第二个参数传进来的是 VueComponent
+            if (lang === this.language) return;
+            // console.log("script_content:", script_content);
+            script_content = this.editor.getValue();
+            this.language = lang;
+          }
+          // modesIds即为支持语言
+          // var modesIds = monaco.languages.getLanguages().map(function (lang) {
+          //   return lang.id;
+          // });
+          var newModel = monaco.editor.createModel(script_content, lang);
+
+          //将旧模型销毁
+          if (oldModel) {
+            oldModel.dispose();
+          }
+          //设置新模型
+          this.editor.setModel(newModel);
+          this.decorations = this.editor.deltaDecorations(
+            [],
+            [
+              {
+                range: new monaco.Range(1, 1, 1, 1),
+                options: {
+                  isWholeLine: true,
+                  className: "myContentClass2",
+                  glyphMarginClassName: "myGlyphMarginClass2",
+                },
+              },
+            ]
+          );
+
+          // console.log(this.decorations);
+        },
   },
   mounted() {
     this.initEditor();
+    this.initData();
     this.drawTag("tag1", "Script Panel");
     // this.drawTag("tag2", "Overview Panel");
     // this.drawTag("tag3", "Change Panel");
@@ -475,7 +557,6 @@ studentScore = studentScore.sort_values("totalScore", ascending = False)`, //'pr
     window.d3 = d3;
     window.vue = this;
     sendVue(this)
-    this.generateVis()
   },
 };
 </script>
