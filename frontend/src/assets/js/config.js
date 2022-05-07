@@ -35,6 +35,7 @@ const change_config = {
     'dot_width': 1, // 虚线的宽度
     'dot_dasharray': "6 10", // 虚线与空白的长度
     'right_step_width': 20,
+    'text_max_len': 6,
 }
 
 const timeline_config = {

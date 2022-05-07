@@ -1,6 +1,8 @@
 import { change_color, change_config, timeline_config } from '@/assets/js/config'
 import * as d3 from "d3"
 
+var text_size_ratio = 6 * 16 / 65 / 20
+
 function handel_change(data, proportion_flag) {
     let change_svg = d3.select("#tb_changes") // overview_svg  tb_changes
     change_svg.selectChildren().remove()
@@ -58,11 +60,13 @@ function drawTimeline(column_change_data, skip_step, margin_top) {
         // 绘制列名
         margin_left += timeline_config.radius
         column_change_data[key].columns_list.forEach(coln => {
-            change_svg.append("text").text(coln)
-                .attr("font-size", change_config.title_font_size)
-                .attr("x", margin_left).attr("y", text_y)
-                .attr("transform", `translate(${timeline_config.col_width/2}, 0)`)
-                .attr("text-anchor", "middle")
+            drawText(change_svg, coln, change_config.title_font_size, margin_left, text_y, [timeline_config.col_width / 2, 0])
+
+            // change_svg.append("text").text(coln)
+            //     .attr("font-size", change_config.title_font_size)
+            //     .attr("x", margin_left).attr("y", text_y)
+            //     .attr("transform", `translate(${timeline_config.col_width/2}, 0)`)
+            //     .attr("text-anchor", "middle")
 
             margin_left += timeline_config.col_width
         })
@@ -148,11 +152,13 @@ function drawChanges(change_data, skip_step, height_ratio, outer_col_height, mar
                         .attr("stroke-dasharray", change_config.dot_dasharray)
 
                     // 依赖列列名
-                    change_step.append("text").text(dependent_col)
-                        .attr("font-size", change_config.content_font_size)
-                        .attr("x", margin_left).attr("y", col_y - 1.5 * change_config.icon_margin_bottom)
-                        .attr("transform", `translate(${change_config.col_width/2}, 0)`)
-                        .attr("text-anchor", "middle")
+                    drawText(change_step, dependent_col, change_config.content_font_size, margin_left, col_y - 1.5 * change_config.icon_margin_bottom, [change_config.col_width / 2, 0])
+
+                    // change_step.append("text").text(dependent_col)
+                    //     .attr("font-size", change_config.content_font_size)
+                    //     .attr("x", margin_left).attr("y", col_y - 1.5 * change_config.icon_margin_bottom)
+                    //     .attr("transform", `translate(${change_config.col_width/2}, 0)`)
+                    //     .attr("text-anchor", "middle")
 
                     margin_left += change_config.col_width
                     outer_col_width += change_config.col_width
@@ -186,11 +192,7 @@ function drawChanges(change_data, skip_step, height_ratio, outer_col_height, mar
                         let text_y = fillColorText(change_step, margin_left, block_y, area_proportion * col_height, change_color[fill_ai], text)
                         if (!proportion_flag) {
                             block.case.input_case.forEach((dependent_text, ci) => {
-                                change_step.append("text").text(dependent_text[0])
-                                    .attr("font-size", change_config.step_font_size)
-                                    .attr("x", dependent_col_x + ci * change_config.col_width).attr("y", text_y)
-                                    .attr("transform", `translate(${change_config.col_width/2}, 0)`)
-                                    .attr("text-anchor", "middle")
+                                drawText(change_step, dependent_text[0], change_config.step_font_size, dependent_col_x + ci * change_config.col_width, text_y, [change_config.col_width / 2, 0])
                             })
                         }
 
@@ -288,14 +290,33 @@ function drawChanges(change_data, skip_step, height_ratio, outer_col_height, mar
             .attr("fill", change_color.col_bg)
             .lower()
 
-        // 绘制列名
-        change_svg.append("text").text(key)
-            .attr("font-size", change_config.title_font_size)
-            .attr("x", outer_col_start_x).attr("y", outer_col_start_y - 10)
-            .attr("transform", `translate(${outer_col_width/2}, 0)`)
-            .attr("text-anchor", "middle")
+        // 绘制外侧列名
+        drawText(change_svg, key, change_config.title_font_size,
+            outer_col_start_x, outer_col_start_y - 10, [outer_col_width / 2, 0], text_size_ratio * (outer_col_width + change_config.col_outer_interval))
+
+        // change_svg.append("text").text(key)
+        //     .attr("font-size", change_config.title_font_size)
+        //     .attr("x", outer_col_start_x).attr("y", outer_col_start_y - 10)
+        //     .attr("transform", `translate(${outer_col_width/2}, 0)`)
+        //     .attr("text-anchor", "middle")
     }
 
+}
+
+function drawText(svg, text, font_size, x, y, transform, max_len = change_config.text_max_len, anchor = "middle") {
+
+    if (text === undefined) return
+
+    let text_element = svg.append("text").text(text)
+        .attr("font-size", font_size)
+        .attr("x", x).attr("y", y)
+        .attr("transform", `translate(${transform[0]}, ${transform[1]})`)
+        .attr("text-anchor", anchor)
+
+    if (text.length > max_len) {
+        let text_abbr = text.slice(0, max_len - 1) + '...'
+        text_element.text(text_abbr).append("svg:title").text(text)
+    }
 }
 
 function fillColorText(svg, x, y, height, color, text = undefined) {
@@ -306,11 +327,13 @@ function fillColorText(svg, x, y, height, color, text = undefined) {
 
     let text_y = y + height / 2 + 5
     if (text) {
-        svg.append("text").text(text)
-            .attr("font-size", change_config.step_font_size)
-            .attr("x", x).attr("y", text_y)
-            .attr("transform", `translate(${change_config.col_width/2}, 0)`)
-            .attr("text-anchor", "middle")
+        drawText(svg, text, change_config.step_font_size, x, text_y, [change_config.col_width / 2, 0])
+
+        // svg.append("text").text(text)
+        //     .attr("font-size", change_config.step_font_size)
+        //     .attr("x", x).attr("y", text_y)
+        //     .attr("transform", `translate(${change_config.col_width/2}, 0)`)
+        //     .attr("text-anchor", "middle")
     }
     return text_y
 }
