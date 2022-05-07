@@ -59,8 +59,9 @@ function drawTimeline(column_change_data, skip_step, margin_top) {
 
         // 绘制列名
         margin_left += timeline_config.radius
+        let max_len = text_size_ratio * timeline_config.col_width
         column_change_data[key].columns_list.forEach(coln => {
-            drawText(change_svg, coln, change_config.title_font_size, margin_left, text_y, [timeline_config.col_width / 2, 0])
+            drawText(change_svg, coln, change_config.title_font_size, margin_left, text_y, [timeline_config.col_width / 2, 0], max_len)
 
             // change_svg.append("text").text(coln)
             //     .attr("font-size", change_config.title_font_size)
@@ -68,7 +69,7 @@ function drawTimeline(column_change_data, skip_step, margin_top) {
             //     .attr("transform", `translate(${timeline_config.col_width/2}, 0)`)
             //     .attr("text-anchor", "middle")
 
-            margin_left += timeline_config.col_width
+            margin_left += timeline_config.col_width + timeline_config.col_interval
         })
         margin_top += timeline_config.knot_interval
     }

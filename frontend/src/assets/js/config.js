@@ -41,7 +41,8 @@ const change_config = {
 const timeline_config = {
     'margin_top': 60,
     'margin_left': 220,
-    'col_width': 120,
+    'col_width': 180,
+    'col_interval': 0,
     'knot_interval': 65,
     'radius': 16,
     'line_width': 10, // 时间轴的宽度

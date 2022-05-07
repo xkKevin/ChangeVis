@@ -53,7 +53,7 @@
           z-index: 1;
         "
       >
-      <el-row style="height: 40vh; margin: 0">
+      <el-row style="height: 42vh; margin: 0">
         <el-row
           type="flex"
           justify="space-between"
@@ -102,12 +102,12 @@
             >
           </div>
         </el-row>
-        <div style="height: calc(40vh - 55px); margin-top: 4px; align-items: center">
+        <div style="height: calc(42vh - 55px); margin-top: 4px; align-items: center">
           <div id="monaco" style="height: 98%; width: 99%"></div>
         </div>
       </el-row>
       <el-row style="background-color: #e3e6f0; height: 5px;"></el-row>
-      <el-row style="height: calc(60vh - 75px);">
+      <el-row style="height: calc(58vh - 75px);">
         <el-row
             type="flex"
             justify="space-between"

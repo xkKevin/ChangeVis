@@ -1826,6 +1826,7 @@ const case2 = {
         10: [14],
         11: [15],
         12: [16],
+        13: [17],
     },
     pipeline_data: [{
             type: 'columns',
@@ -1853,7 +1854,7 @@ const case2 = {
         },
         {
             type: 'columns',
-            column_num: 5,
+            column_num: 6,
             row_num: 31,
             change_type: 'delete',
             input_posi: [0, 1],

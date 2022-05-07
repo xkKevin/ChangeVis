@@ -148,7 +148,7 @@ function add_event(group_flag, proportion_flag) {
 }
 
 function generate_select_data(start, end, group_flag) {
-    let select_data = { change_data: {}, column_change_data: {} }
+    let tmp_data = { change_data: {}, column_change_data: {} }
     let column_status_step = 0
     let columns = ['index'] // change view 中应该显示哪些列
     let timeline_point_data = {}
@@ -193,7 +193,6 @@ function generate_select_data(start, end, group_flag) {
 
     columns.forEach(key => {
         tmp_data.change_data[key] = []
-        console.log(key, overall_data.change_data, overall_data.change_data[key]);
         let trans_field = 'origin'
         if (group_flag && (overall_data.change_data[key].combine != undefined)) {
             trans_field = 'combine'
