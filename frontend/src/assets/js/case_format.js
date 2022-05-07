@@ -3,9 +3,17 @@ const case1 = {
     max_row: 36,
     source_column: 3,
     source_row: 36,
-    group: [
-        [4, 5, 6, 7, 8]
-    ],
+    step2code: {
+        1: 4,
+        2: 5,
+        3: 6,
+        4: 7,
+        5: 8,
+        6: 9,
+        7: 10,
+        8: 11,
+        9: 12,
+    },
     pipeline_data: [{
             type: 'columns',
             column_num: 3,
@@ -16,7 +24,7 @@ const case1 = {
             output_create_posi: [],
             output_transform_posi: [0],
             step: [1, 1],
-            pre: 0
+            pre: 0,
         },
         {
             type: 'rows',
@@ -28,7 +36,7 @@ const case1 = {
             output_create_posi: [],
             output_transform_posi: [],
             step: [2, 2],
-            pre: 1
+            pre: 1,
         },
         {
             type: 'columns',
@@ -40,7 +48,7 @@ const case1 = {
             output_create_posi: [3],
             output_transform_posi: [],
             step: [3, 3],
-            pre: 2
+            pre: 2,
         },
         {
             type: 'columns',
@@ -52,7 +60,7 @@ const case1 = {
             output_create_posi: [4],
             output_transform_posi: [],
             step: [4, 8],
-            pre: 3
+            pre: 3,
         },
         {
             type: 'columns',
@@ -64,7 +72,7 @@ const case1 = {
             output_create_posi: [],
             output_transform_posi: [4],
             step: [5],
-            pre: 4
+            pre: 4,
         },
         {
             type: 'columns',
@@ -76,7 +84,7 @@ const case1 = {
             output_create_posi: [],
             output_transform_posi: [4],
             step: [6],
-            pre: 5
+            pre: 5,
         },
         {
             type: 'columns',
@@ -88,7 +96,7 @@ const case1 = {
             output_create_posi: [],
             output_transform_posi: [4],
             step: [7],
-            pre: 6
+            pre: 6,
         },
         {
             type: 'columns',
@@ -100,7 +108,7 @@ const case1 = {
             output_create_posi: [],
             output_transform_posi: [4],
             step: [8],
-            pre: 7
+            pre: 7,
         },
         {
             type: 'columns',
@@ -113,7 +121,7 @@ const case1 = {
             output_transform_posi: [3],
             sort_type: 'desc',
             step: [9, 9],
-            pre: 8
+            pre: 8,
         }
     ],
     change_data: {

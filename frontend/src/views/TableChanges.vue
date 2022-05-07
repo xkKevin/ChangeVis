@@ -1,5 +1,9 @@
 <template>
-  <div id="TableChanges">
+  <div id="TableChanges" :style="{
+        '--delete-color': color.delete,
+        '--transform-color': color.transform,
+        '--create-color': color.create,
+      }">
     <el-header height="50px" style="background: black">
         <div
           style="
@@ -261,8 +265,8 @@
 import * as d3 from "d3";
 import * as monaco from "monaco-editor"; // https://www.cnblogs.com/xuhaoliang/p/13803230.html
 
-import {handel_overview} from "@/assets/js/overview_panel"
-import {handel_change} from "@/assets/js/change_panel"
+import {handel_overview, sendVue} from "@/assets/js/overview_panel"
+import {change_color} from "@/assets/js/config"
 import { data } from '@/assets/js/case'
 import { case1, case2, case3 } from '@/assets/js/case_format'
 
@@ -276,6 +280,7 @@ export default {
       combined: false, // 是否合并
       proportion: false, 
       editor: null, // 文本编辑器
+      color: change_color,
       script_content: `import pandas as pd
 
 studentScore = pd.read_csv("students.csv")
@@ -345,8 +350,8 @@ studentScore = studentScore.sort_values("totalScore", ascending = False)`, //'pr
         fontSize: 16, //字体大小
         readOnly: false, // 只读
         theme: "vs", // 官方自带三种主题vs, hc-black, or vs-dark,
-        glyphMargin: false,
-        lineNumbersMinChars: 4,
+        glyphMargin: true,
+        lineNumbersMinChars: 1,
       });
 
       this.editor.onKeyUp((e) => {
@@ -385,19 +390,19 @@ studentScore = studentScore.sort_values("totalScore", ascending = False)`, //'pr
       }
       //设置新模型
       this.editor.setModel(newModel);
-      this.decorations = this.editor.deltaDecorations(
-        [],
-        [
-          {
-            range: new monaco.Range(1, 1, 1, 1),
-            options: {
-              isWholeLine: true,
-              className: "myContentClass2",
-              glyphMarginClassName: "myGlyphMarginClass2",
-            },
-          },
-        ]
-      );
+      // this.decorations = this.editor.deltaDecorations(
+      //   [],
+      //   [
+      //     {
+      //       range: new monaco.Range(1, 1, 1, 1),
+      //       options: {
+      //         isWholeLine: true,
+      //         className: "default",
+      //         glyphMarginClassName: "default",
+      //       },
+      //     },
+      //   ]
+      // );
 
       // console.log(this.decorations);
     },
@@ -410,12 +415,55 @@ studentScore = studentScore.sort_values("totalScore", ascending = False)`, //'pr
     },
     combinedChange(combined){
       this.combined = combined
+      this.codeLineHighlight([], [])
+      d3.selectAll('div.glyph_margin').classed("myGlyphMarginClass", false)
       handel_overview(case1, + this.combined, this.proportion);
     },
     proportionChange(proportion){
       this.proportion = proportion
       handel_overview(case1, + this.combined, this.proportion);
     },
+    codeGlyphHighlight(lines) {
+      // d3.selectAll('div.cgmr.codicon').classed("myGlyphMarginClass", false)
+      this.editor.deltaDecorations([], 
+        lines.map((line, key) => {
+          return {
+            range: new monaco.Range(line, 1, line, 1),
+            options: {
+                glyphMarginClassName: "glyph_margin",
+            },
+          }
+        })
+      );
+    },
+    codeLineHighlight(lines, changes) {
+      d3.selectAll('span[class^="mtk"]').classed("create", false).classed("transform", false).classed("delete", false)
+
+      this.editor.deltaDecorations([], 
+        lines.map((line, key) => {
+          return {
+            range: new monaco.Range(line, 1, line, 1),
+            options: {
+                isWholeLine: true,
+                inlineClassName: typeof(changes) === 'string' ? changes: changes[key],  
+                // inlineClassName: "myContentClass",
+                // glyphMarginClassName: "myGlyphMarginClass",
+            },
+          }
+        })
+      );
+      //  start, end 弃用，直接用数组绘制每一行
+      //  https://microsoft.github.io/monaco-editor/playground.html#interacting-with-the-editor-rendering-glyphs-in-the-margin
+      //   this.editor.deltaDecorations(this.decorations, [{
+      //     range: new monaco.Range(start, 1, end, 1),
+      //     options: {
+      //         isWholeLine: true,
+      //         className: "myContentClass",
+      //         inlineClassName: "myContentClass",
+      //         glyphMarginClassName: "myGlyphMarginClass",
+      //     },
+      //   }, ]);
+    }
   },
   mounted() {
     this.initEditor();
@@ -425,12 +473,15 @@ studentScore = studentScore.sort_values("totalScore", ascending = False)`, //'pr
     this.drawTag("tag2", "Visualization Panel");
     this.drawTag("tag3", "Data Panel");
     window.d3 = d3;
+    window.vue = this;
+    sendVue(this)
     this.generateVis()
   },
 };
 </script>
 
 <style>
+
 #TableChanges {
   border: 2px solid #e3e6f0;
   background-color: #e3e6f0;
@@ -493,9 +544,38 @@ footer.el-footer {
   font-size: 12px;
 }
 
+g.tbl_area {
+  pointer-events: none;
+}
+
+/*
+rect.table:hover{
+  stroke: red;
+  stroke-width: 2; 
+  outline: #888888 solid;
+}
+*/
+
+g.select,
+rect.select {
+  outline: #888888 solid 3px;
+}
+
+.transform {
+  background: var(--transform-color);
+}
+
+.delete {
+  background: var(--delete-color);
+}
+
+.create {
+  background: var(--create-color);
+}
+
 .myGlyphMarginClass {
   background: #6391d7;
-  margin-left: 35px !important;
+  margin-left: 15px !important;
   width: 6px !important;
 }
 
@@ -503,21 +583,4 @@ footer.el-footer {
   background: lightblue;
 }
 
-g.tbl_area {
-  pointer-events: none;
-}
-
-rect.table:hover{
-  /* stroke: red;
-  stroke-width: 2; 
-  outline: #888888 solid;*/
-}
-
-rect.select {
-  outline: #888888 solid 3px;
-}
-
-.myContentClass2,
-.myGlyphMarginClass2 {
-}
 </style>

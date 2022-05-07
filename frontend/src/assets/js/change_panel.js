@@ -8,13 +8,13 @@ function handel_change(data, proportion_flag) {
     const height_ratio = change_config.col_height / data.average_row
     const outer_col_height = height_ratio * data.max_row + change_config.icon_size[1] + 2 * change_config.col_border_interval_y + change_config.icon_margin_bottom
 
-    let margin_top = drawTimeline(data.column_change_data, timeline_config.margin_top)
-    drawChanges(data.change_data, height_ratio, outer_col_height, margin_top + change_config.margin_top, proportion_flag)
+    let margin_top = drawTimeline(data.column_change_data, data.skip_step, timeline_config.margin_top)
+    drawChanges(data.change_data, data.skip_step, height_ratio, outer_col_height, margin_top + change_config.margin_top, proportion_flag)
 
 }
 
 
-function drawTimeline(column_change_data, margin_top) {
+function drawTimeline(column_change_data, skip_step, margin_top) {
     let change_svg = d3.select("#tb_changes")
     let timeline = {
         x: timeline_config.margin_left - timeline_config.line_width / 2,
@@ -31,14 +31,14 @@ function drawTimeline(column_change_data, margin_top) {
             .attr("fill", 'white')
 
         let text_y = margin_top + timeline_config.radius / 2
-        change_svg.append("text").text(key)
+        change_svg.append("text").text(key - skip_step)
             .attr("font-size", change_config.title_font_size)
             .attr("x", margin_left).attr("y", text_y)
             // .attr("transform", `translate(${timeline_config.radius/2}, 0)`)
             .attr("text-anchor", "middle")
 
 
-        if (key > 0) {
+        if (key > skip_step) {
             // 绘制 timeline
             change_svg.append("rect")
                 .classed("timeline", true)
@@ -97,7 +97,7 @@ function drawIcon(svg, transform_icon, x, y, icon_width) {
 }
 
 
-function drawChanges(change_data, height_ratio, outer_col_height, margin_top = change_config.margin_top, proportion_flag = false) {
+function drawChanges(change_data, skip_step, height_ratio, outer_col_height, margin_top = change_config.margin_top, proportion_flag = false) {
     let change_svg = d3.select("#tb_changes") // overview_svg  tb_changes
         // change_svg.selectChildren().remove()
 
@@ -127,6 +127,8 @@ function drawChanges(change_data, height_ratio, outer_col_height, margin_top = c
                 outer_col_width += change_config.col_inner_interval
             }
 
+            let change_step = change_svg.append("g").classed("change_step", true).attr("step", col.step)
+
 
             let col_height = height_ratio * col.output_row_num
 
@@ -136,7 +138,7 @@ function drawChanges(change_data, height_ratio, outer_col_height, margin_top = c
                     if (dci === 0) {
                         dependent_col_x = margin_left
                     }
-                    change_svg.append("rect")
+                    change_step.append("rect")
                         .attr("id", 'col_t' + col.step + '_' + ci + '_' + dependent_col)
                         .attr("x", margin_left).attr("y", col_y)
                         .attr("width", change_config.col_width).attr("height", col_height)
@@ -146,7 +148,7 @@ function drawChanges(change_data, height_ratio, outer_col_height, margin_top = c
                         .attr("stroke-dasharray", change_config.dot_dasharray)
 
                     // 依赖列列名
-                    change_svg.append("text").text(dependent_col)
+                    change_step.append("text").text(dependent_col)
                         .attr("font-size", change_config.content_font_size)
                         .attr("x", margin_left).attr("y", col_y - 1.5 * change_config.icon_margin_bottom)
                         .attr("transform", `translate(${change_config.col_width/2}, 0)`)
@@ -160,7 +162,7 @@ function drawChanges(change_data, height_ratio, outer_col_height, margin_top = c
             }
 
             // 添加主体改变列
-            change_svg.append("rect")
+            change_step.append("rect")
                 .attr("id", 'col_t' + col.step + '_' + ci)
                 .attr("x", margin_left).attr("y", col_y)
                 .attr("width", change_config.col_width).attr("height", col_height)
@@ -174,17 +176,17 @@ function drawChanges(change_data, height_ratio, outer_col_height, margin_top = c
                         let area_y = col_y + col.output_nan_posi[0] * col_height
                         let area_proportion = col.output_nan_posi[1] - col.output_nan_posi[0]
                         let text = proportion_flag ? area_proportion.toFixed(2) * 100 + '%' : ''
-                        fillColorText(change_svg, margin_left, area_y, area_proportion * col_height, change_color[fill_ai], text)
+                        fillColorText(change_step, margin_left, area_y, area_proportion * col_height, change_color[fill_ai], text)
                     }
                 } else if (col[fill_ai]) {
                     col[fill_ai].forEach(block => { // block 表示一个颜色块
                         let block_y = col_y + block.posi[0] * col_height
                         let area_proportion = block.posi[1] - block.posi[0]
                         let text = proportion_flag ? area_proportion.toFixed(2) * 100 + '%' : block.case.output_case[0]
-                        let text_y = fillColorText(change_svg, margin_left, block_y, area_proportion * col_height, change_color[fill_ai], text)
+                        let text_y = fillColorText(change_step, margin_left, block_y, area_proportion * col_height, change_color[fill_ai], text)
                         if (!proportion_flag) {
                             block.case.input_case.forEach((dependent_text, ci) => {
-                                change_svg.append("text").text(dependent_text[0])
+                                change_step.append("text").text(dependent_text[0])
                                     .attr("font-size", change_config.step_font_size)
                                     .attr("x", dependent_col_x + ci * change_config.col_width).attr("y", text_y)
                                     .attr("transform", `translate(${change_config.col_width/2}, 0)`)
@@ -195,12 +197,16 @@ function drawChanges(change_data, height_ratio, outer_col_height, margin_top = c
                         // 添加右侧步骤文本
                         if (block.step != undefined) {
                             let text_x = margin_left + change_config.col_width
-                            change_svg.append("text").text(block.step)
+                            change_step.append("text").text(block.step - skip_step)
                                 .attr("font-size", change_config.step_font_size)
                                 .attr("x", text_x).attr("y", text_y)
                                 .attr("transform", `translate(${change_config.right_step_width/2}, 0)`)
                                 .attr("text-anchor", "middle")
                             step_text_flag = 1
+
+                            // 为 change_step 赋予新的 step 值
+                            let old_step = change_step.attr("step")
+                            change_step.attr("step", old_step + '_' + block.step)
                         }
                     })
                 }
@@ -212,7 +218,7 @@ function drawChanges(change_data, height_ratio, outer_col_height, margin_top = c
                 let ba_height = col_height / col.output_row_num
                 let ba_color
 
-                change_svg.selectAll('.changes_cg' + col.step).data(col.input_case).enter().append('rect')
+                change_step.selectAll('.changes_cg' + col.step).data(col.input_case).enter().append('rect')
                     .attr("x", margin_left).attr("y", (d, i) => col_y + i * ba_height)
                     .attr("width", change_config.col_width / 2).attr("height", ba_height)
                     .attr("fill", (d, i) => {
@@ -225,7 +231,7 @@ function drawChanges(change_data, height_ratio, outer_col_height, margin_top = c
                         return ba_color
                     })
 
-                change_svg.selectAll('.changes_cg' + col.step).data(col.output_case).enter().append('rect')
+                change_step.selectAll('.changes_cg' + col.step).data(col.output_case).enter().append('rect')
                     .attr("x", margin_left + change_config.col_width / 2).attr("y", (d, i) => col_y + i * ba_height)
                     .attr("width", change_config.col_width / 2).attr("height", ba_height)
                     .attr("fill", (d, i) => {
@@ -241,12 +247,12 @@ function drawChanges(change_data, height_ratio, outer_col_height, margin_top = c
 
 
             // 添加图标
-            drawIcon(change_svg, col.transform_icon, margin_left, col_y - change_config.icon_size[1] - change_config.icon_margin_bottom, change_config.col_width)
+            drawIcon(change_step, col.transform_icon, margin_left, col_y - change_config.icon_size[1] - change_config.icon_margin_bottom, change_config.col_width)
 
             // 添加步骤序号
             if (step_text_flag === 0) {
-                let text_g = change_svg.append("g").attr("id", "step" + col.step)
-                let text_step = text_g.append("text").text(col.step)
+                let text_g = change_step.append("g").attr("id", "step" + col.step)
+                let text_step = text_g.append("text").text(col.step - skip_step)
                     .attr("font-size", change_config.step_font_size)
                     .attr("x", margin_left + change_config.col_width).attr("y", col_y - 1.5 * change_config.icon_margin_bottom)
                     .attr("text-anchor", "end")

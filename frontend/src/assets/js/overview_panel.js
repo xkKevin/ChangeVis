@@ -5,7 +5,16 @@ import * as d3 from "d3"
 const ELK = require('elkjs')
 
 var select_rect = [] // 表示选中的矩形块
+var select_code = { lines: [], changes: [] }
 var overall_data
+var skip_step = 0 // 跳过的初始步骤
+
+
+var vm = null
+const sendVue = (_that) => {
+    vm = _that
+}
+
 
 /**
  * 
@@ -13,12 +22,124 @@ var overall_data
  * @param {*} group_flag : 是否合并，1 表示合并，0表示不合并
  */
 async function handel_overview(data, group_flag = 0, proportion_flag = false) {
+    vm.codeGlyphHighlight(Object.values(data.step2code).map(Number))
     select_rect = []
+    skip_step = 0
     overall_data = data
     let { graph, height_ratio, end_step } = generateGraph(data, group_flag)
     await generatePos(graph)
     drawOverview(data.pipeline_data, graph, height_ratio, group_flag)
     handel_change(generate_select_data(0, end_step, group_flag), proportion_flag)
+    add_event(group_flag)
+}
+
+function add_event(group_flag) {
+    // 为整个body添加事件
+    d3.select("body").on("keydown", (event) => {
+        // console.log(event)
+        if (event.keyCode === 27) { // escape
+            d3.selectAll(".table").attr("click_flag", '0').classed("select", false)
+            select_rect = []
+            vm.codeLineHighlight([], [])
+            d3.selectAll('div.glyph_margin').classed("myGlyphMarginClass", false)
+        }
+    })
+
+    // 为Pipeline表格添加事件
+    d3.selectAll(".table")
+        .on("mouseover", function() {
+            d3.select(this).classed("select", true)
+        })
+        .on("mouseout", function() {
+            let tbl_this = d3.select(this)
+            if (tbl_this.attr("click_flag") === '0') {
+                tbl_this.classed("select", false)
+            }
+        })
+        .on("mouseup", function() {
+            let tbl_this = d3.select(this)
+            let index = select_rect.indexOf(tbl_this.attr("step"))
+            if (index != -1) { // 找到了就去掉
+                tbl_this.attr("click_flag", '0').classed("select", false)
+                select_rect.splice(index, 1) // 去掉 index 位置的元素
+            } else { // 没找到就加上
+                tbl_this.attr("click_flag", '1').classed("select", true)
+                select_rect.push(tbl_this.attr("step"))
+                select_rect.slice(0, -2).forEach(remove_select => {
+                    d3.select("#tbl" + remove_select.split("_").pop()).attr("click_flag", '0').classed("select", false)
+                })
+                select_rect = select_rect.slice(-2)
+            }
+            if (select_rect.length === 2) {
+                let select_steps = [...select_rect[0].split("_"), ...select_rect[1].split("_")].map(Number).sort()
+
+                // let select_steps = [+select_rect[0].slice(3), +select_rect[1].slice(3)].sort()
+                handel_change(generate_select_data(select_steps[0], select_steps[select_steps.length - 1], group_flag))
+                vm.codeLineHighlight(select_code.lines, select_code.changes)
+                d3.selectAll('div.glyph_margin').classed("myGlyphMarginClass", false)
+                add_event(group_flag)
+            }
+        })
+
+    // d3.selectAll(".table").on("mouseleave", function() {
+    //     d3.select(this).classed("select", false)
+    // })
+
+    // d3.selectAll(".table").on("mousehover", function() {
+    //     // d3.select(this).attr("stroke", "red")
+    //     // d3.select(this).attr("transform", "scale(1.1)")
+    //     let tbl_this = d3.select(this)
+    //     let x = +tbl_this.attr("x")
+    //     let y = +tbl_this.attr("y")
+    //     let width = +tbl_this.attr("width")
+    //     let height = +tbl_this.attr("height")
+    //     let center = {
+    //         x: x + width / 2,
+    //         y: y + height / 2
+    //     }
+    //     let tbl_shadow = {
+    //         x: center.x - width * 0.6,
+    //         y: center.y - height * 0.6,
+    //         width: width * 1.2,
+    //         height: height * 1.2
+    //     }
+    //     overview_svg.append('rect')
+    //         .attr("id", "tbl_this")
+    //         .attr("x", tbl_shadow.x).attr("y", tbl_shadow.y)
+    //         .attr("width", tbl_shadow.width).attr("height", tbl_shadow.height)
+    //         .attr("fill", "#666666").attr("opacity", 0.3)
+
+    //     // .attr("stroke", "red").attr("stroke-width", 2)
+    // });
+
+    // d3.selectAll(".table").on("mouseleave", function() {
+    //     // d3.select(this).attr("stroke", "none")
+    //     // d3.select(this).attr("transform", "scale(0.9)")
+    //     d3.select("#tbl_this").remove()
+    // });
+
+    // if (p_data.group != undefined) {
+    //     // rect_tbl.attr("class", "og" + p_data.group)
+    //     rect_tbl.classed("og" + p_data.group, true)
+    // }
+
+    // 为ChangeView中的 change_step 添加事件
+    d3.selectAll(".change_step")
+        .on("mouseover", function() {
+            d3.select(this).classed("select", true)
+        })
+        .on("mouseout", function() {
+            d3.select(this).classed("select", false)
+        })
+        .on("mouseup", function() {
+            let steps = d3.select(this).attr("step").split("_").map(Number)
+            let glyph_margins = d3.selectAll('div.glyph_margin').classed("myGlyphMarginClass", false).nodes()
+            steps.forEach(si => {
+                    let hightlight_n = Object.values(overall_data.step2code).indexOf(overall_data.step2code[si])
+                    d3.select(glyph_margins[hightlight_n]).classed("myGlyphMarginClass", true)
+                })
+                // vm.codeGlyphHighlight(select_code.change_steps)
+        })
 }
 
 function generate_select_data(start, end, group_flag) {
@@ -27,12 +148,21 @@ function generate_select_data(start, end, group_flag) {
     let columns = ['index'] // change view 中应该显示哪些列
     let timeline_point_data = {}
     let transform_list = []
+    skip_step = start
+    select_data.skip_step = start
+
+    select_code = { lines: [], changes: [] }
+    overall_data.pipeline_data.forEach(tbl => {
+        if (tbl.step[0] >= start && tbl.step[0] <= end) {
+            select_code.lines.push(overall_data.step2code[tbl.step[0]])
+            select_code.changes.push(tbl.change_type)
+        }
+    })
 
     for (let key in overall_data.column_change_data) {
         key = +key
         if (key >= start && key <= end) {
-            let new_key = key - start
-            if (new_key === 0 || key === end || overall_data.column_change_data[key].type != 'unchange') {
+            if (key === start || key === end || overall_data.column_change_data[key].type != 'unchange') {
                 let tran_cols = Object.keys(overall_data.column_change_data[key].columns)
                 columns = columns.concat(tran_cols.filter(c => !columns.includes(c))) // 取并集
 
@@ -40,7 +170,7 @@ function generate_select_data(start, end, group_flag) {
                 timeline_point_data.type = overall_data.column_change_data[key].type
                 transform_list.push(overall_data.column_change_data[key].transform)
                 timeline_point_data.transform_list = transform_list
-                select_data.column_change_data[new_key] = timeline_point_data
+                select_data.column_change_data[key] = timeline_point_data
 
                 transform_list = []
                 timeline_point_data = {}
@@ -58,11 +188,10 @@ function generate_select_data(start, end, group_flag) {
             trans_field = 'combine'
         }
         overall_data.change_data[key][trans_field].forEach(trans => {
-            let new_tran = Object.assign({}, trans) // 深拷贝对象
+            // let new_tran = Object.assign({}, trans) // 深拷贝对象
             if (trans.step >= start && trans.step <= end) {
                 rows.push(trans.output_row_num)
-                new_tran.step = trans.step - start
-                select_data.change_data[key].push(new_tran)
+                select_data.change_data[key].push(trans)
             }
         })
     })
@@ -143,14 +272,6 @@ function generateGraph(data, group_flag) {
 function drawOverview(pipeline_data, graph, height_ratio, group_flag) {
     let overview_svg = d3.select("#overview_svg") // overview_svg  tb_changes
     overview_svg.selectChildren().remove()
-    d3.select("body").on("keydown", (event) => {
-        // console.log(event)
-        if (event.keyCode === 27) {
-            d3.selectAll(".table").attr("click_flag", '0').classed("select", false)
-            select_rect = []
-        }
-    })
-
 
     let line_flag = -1 // -1 表示上；1 表示下
     graph.children.forEach(tbl => {
@@ -167,79 +288,6 @@ function drawOverview(pipeline_data, graph, height_ratio, group_flag) {
         if (index === -1) return
         let p_data = pipeline_data[index]
 
-        d3.selectAll(".table")
-            .on("mouseover", function() {
-                d3.select(this).classed("select", true)
-            })
-            .on("mouseout", function() {
-                let tbl_this = d3.select(this)
-                if (tbl_this.attr("click_flag") === '0') {
-                    tbl_this.classed("select", false)
-                }
-            })
-            .on("mouseup", function() {
-                let tbl_this = d3.select(this)
-                let index = select_rect.indexOf(tbl_this.attr("step"))
-                if (index != -1) { // 找到了就去掉
-                    tbl_this.attr("click_flag", '0').classed("select", false)
-                    select_rect.splice(index, 1) // 去掉 index 位置的元素
-                } else { // 没找到就加上
-                    tbl_this.attr("click_flag", '1').classed("select", true)
-                    select_rect.push(tbl_this.attr("step"))
-                    select_rect.slice(0, -2).forEach(remove_select => {
-                        d3.select("#tbl" + remove_select.split("_").pop()).attr("click_flag", '0').classed("select", false)
-                    })
-                    select_rect = select_rect.slice(-2)
-                }
-                if (select_rect.length === 2) {
-                    let select_steps = [...select_rect[0].split("_"), ...select_rect[1].split("_")].map(Number).sort()
-
-                    // let select_steps = [+select_rect[0].slice(3), +select_rect[1].slice(3)].sort()
-                    handel_change(generate_select_data(select_steps[0], select_steps[select_steps.length - 1], group_flag))
-                }
-            })
-
-        // d3.selectAll(".table").on("mouseleave", function() {
-        //     d3.select(this).classed("select", false)
-        // })
-
-        // d3.selectAll(".table").on("mousehover", function() {
-        //     // d3.select(this).attr("stroke", "red")
-        //     // d3.select(this).attr("transform", "scale(1.1)")
-        //     let tbl_this = d3.select(this)
-        //     let x = +tbl_this.attr("x")
-        //     let y = +tbl_this.attr("y")
-        //     let width = +tbl_this.attr("width")
-        //     let height = +tbl_this.attr("height")
-        //     let center = {
-        //         x: x + width / 2,
-        //         y: y + height / 2
-        //     }
-        //     let tbl_shadow = {
-        //         x: center.x - width * 0.6,
-        //         y: center.y - height * 0.6,
-        //         width: width * 1.2,
-        //         height: height * 1.2
-        //     }
-        //     overview_svg.append('rect')
-        //         .attr("id", "tbl_this")
-        //         .attr("x", tbl_shadow.x).attr("y", tbl_shadow.y)
-        //         .attr("width", tbl_shadow.width).attr("height", tbl_shadow.height)
-        //         .attr("fill", "#666666").attr("opacity", 0.3)
-
-        //     // .attr("stroke", "red").attr("stroke-width", 2)
-        // });
-
-        // d3.selectAll(".table").on("mouseleave", function() {
-        //     // d3.select(this).attr("stroke", "none")
-        //     // d3.select(this).attr("transform", "scale(0.9)")
-        //     d3.select("#tbl_this").remove()
-        // });
-
-        // if (p_data.group != undefined) {
-        //     // rect_tbl.attr("class", "og" + p_data.group)
-        //     rect_tbl.classed("og" + p_data.group, true)
-        // }
 
         let tbl_area = overview_svg.append('g').attr("class", "tbl_area")
         let tbl_line = overview_svg.append('g').attr("class", "tbl_line").lower()
@@ -394,5 +442,4 @@ function drawRows(svg, line_svg, output_posi_data, color, tbl, p_data, height_ra
     }
 }
 
-
-export { handel_overview }
+export { handel_overview, sendVue }
