@@ -976,49 +976,70 @@ const case1 = {
                 },
             ],
             combine: [{
-                type: 'change',
-                input_row_num: 28,
-                output_row_num: 28,
-                input_col: ['total'],
-                transform_icon: 'transform_columns_replace',
-                unchange: [],
-                create: [],
-                delete: [],
-                transform: [{
-                        posi: [0, 0.464],
-                        case: {
-                            input_case: [
-                                ['Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department']
-                            ],
-                            output_case: ['TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD'],
+                    type: 'change',
+                    input_row_num: 28,
+                    output_row_num: 28,
+                    input_col: ['total'],
+                    transform_icon: 'transform_columns_replace',
+                    unchange: [],
+                    create: [],
+                    delete: [],
+                    transform: [{
+                            posi: [0, 0.464],
+                            case: {
+                                input_case: [
+                                    ['Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department', 'Technical Department']
+                                ],
+                                output_case: ['TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD'],
+                            },
+                            step: 3
                         },
-                        step: 3
-                    },
-                    {
-                        posi: [0.464, 0.714],
-                        case: {
-                            input_case: [
-                                ['Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Manage Department']
-                            ],
-                            output_case: ['MD', 'MD', 'MD', 'MD', 'MD', 'MD', 'MD'],
+                        {
+                            posi: [0.464, 0.714],
+                            case: {
+                                input_case: [
+                                    ['Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Manage Department']
+                                ],
+                                output_case: ['MD', 'MD', 'MD', 'MD', 'MD', 'MD', 'MD'],
+                            },
+                            step: 4
                         },
-                        step: 4
-                    },
-                    {
-                        posi: [0.714, 1],
+                        {
+                            posi: [0.714, 1],
+                            case: {
+                                input_case: [
+                                    ['Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department']
+                                ],
+                                output_case: ['SD', 'SD', 'SD', 'SD', 'SD', 'SD', 'SD', 'SD'],
+                            },
+                            step: 5
+                        }
+                    ],
+                    input_nan_posi: [],
+                    output_nan_posi: [],
+                    step: 3
+                },
+                {
+                    type: 'change',
+                    input_row_num: 23,
+                    output_row_num: 23,
+                    input_col: [],
+                    transform_icon: 'delete_columns_select_remove',
+                    unchange: [],
+                    create: [],
+                    delete: [{
+                        posi: [0, 1],
                         case: {
-                            input_case: [
-                                ['Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department']
-                            ],
-                            output_case: ['SD', 'SD', 'SD', 'SD', 'SD', 'SD', 'SD', 'SD'],
-                        },
-                        step: 5
-                    }
-                ],
-                input_nan_posi: [],
-                output_nan_posi: [],
-                step: 3
-            }]
+                            input_case: [],
+                            output_case: [],
+                        }
+                    }],
+                    transform: [],
+                    input_nan_posi: [],
+                    output_nan_posi: [],
+                    step: 14
+                },
+            ]
         },
         Attendance: {
             origin: [{
@@ -1027,7 +1048,7 @@ const case1 = {
                     input_col: [],
                     transform_icon: 'delete_rows_filter',
                     unchange: [{
-                        posi: [0.1, 1],
+                        posi: [0, 0.9],
                         case: {
                             input_case: [],
                             output_case: [27, 25, 24, 26, 22, 23, 14, 24, 23, 22, 15, 13, 24, 22, 22, 22, 19, 26, 22, 23, 23, 29, 26, 14, 27, 22, 25, 28],
@@ -1035,7 +1056,7 @@ const case1 = {
                     }],
                     create: [],
                     delete: [{
-                        posi: [0, 0.1],
+                        posi: [0.9, 1],
                         case: {
                             input_case: [],
                             output_case: [32, 35, 31],
@@ -1052,7 +1073,7 @@ const case1 = {
                     input_col: [],
                     transform_icon: 'delete_rows_filter',
                     unchange: [{
-                        posi: [0.179, 1],
+                        posi: [0, 0.821],
                         case: {
                             input_case: [],
                             output_case: [27, 25, 24, 26, 22, 23, 24, 23, 22, 24, 22, 22, 22, 26, 22, 23, 23, 29, 26, 27, 22, 25, 28],
@@ -1060,7 +1081,7 @@ const case1 = {
                     }],
                     create: [],
                     delete: [{
-                        posi: [0, 0.179],
+                        posi: [0.821, 1],
                         case: {
                             input_case: [],
                             output_case: [14, 15, 13, 19, 14],
@@ -1080,7 +1101,7 @@ const case1 = {
                 unchange: [],
                 create: [],
                 delete: [{
-                        posi: [0, 0.1],
+                        posi: [0.721, 0.821],
                         case: {
                             input_case: [],
                             output_case: [32, 35, 31],
@@ -1088,7 +1109,7 @@ const case1 = {
                         step: 1
                     },
                     {
-                        posi: [0.1, 0.279],
+                        posi: [0.821, 1],
                         case: {
                             input_case: [],
                             output_case: [14, 15, 13, 19, 14],
@@ -1881,7 +1902,7 @@ const case2 = {
             type: 'columns',
             column_num: 8,
             row_num: 31,
-            change_type: 'trasnsform',
+            change_type: 'transform',
             input_posi: [7],
             output_delete_posi: [],
             output_create_posi: [],
@@ -1893,7 +1914,7 @@ const case2 = {
             type: 'columns',
             column_num: 8,
             row_num: 31,
-            change_type: 'trasnsform',
+            change_type: 'transform',
             input_posi: [7],
             output_delete_posi: [],
             output_create_posi: [],
@@ -1905,7 +1926,7 @@ const case2 = {
             type: 'columns',
             column_num: 8,
             row_num: 31,
-            change_type: 'trasnsform',
+            change_type: 'transform',
             input_posi: [7],
             output_delete_posi: [],
             output_create_posi: [],
@@ -1946,15 +1967,14 @@ const case2 = {
             input_posi: [6, 7],
             output_delete_posi: [],
             output_create_posi: [],
-            output_transform_posi: [],
-            rearrange_seq: [0, 7, 6, 1, 2, 3, 4, 5, 6],
+            output_transform_posi: [1, 2],
             step: [12, 12],
             pre: 11
         },
         {
             type: 'rows',
             column_num: 8,
-            row_num: 10,
+            row_num: 31,
             change_type: 'delete',
             input_posi: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
             output_delete_posi: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
@@ -1965,11 +1985,11 @@ const case2 = {
         }
     ],
     change_data: {
-        Index: {
+        index: {
             origin: [{
                 type: 'change',
                 input_row_num: 31,
-                output_row_num: 10,
+                output_row_num: 31,
                 input_col: [],
                 transform_icon: 'delete_columns_select_keep',
                 unchange: [{
@@ -2036,9 +2056,7 @@ const case2 = {
                     transform: [{
                         posi: [0, 0.139],
                         case: {
-                            input_case: [
-                                [, , , , ]
-                            ],
+                            input_case: [],
                             output_case: ['Unknown', 'Unknown', 'Unknown', 'Unknown', 'Unknown'],
                         }
                     }],
@@ -2076,10 +2094,10 @@ const case2 = {
                 type: 'change',
                 input_row_num: 36,
                 output_row_num: 36,
-                input_col: [],
+                input_col: ['Launch_Date'],
                 transform_icon: 'delete_rows_drop_na',
                 unchange: [{
-                    posi: [0.139, 1],
+                    posi: [0, 0.861],
                     case: {
                         input_case: [
                             ['2015/12/10', '2016/1/1', '2016/2/10', '2016/7/10', '06/15/2018', '09/10/2015', '2016/9/10', '2016/9/10', '2016/9/10', '2016/8/15', '2016/7/15', '2016/7/15', '2014/10/10', '2016/6/20', '2011/5/10', '2016/3/10', '2016/11/10', '2016/9/20', '2016/3/10', '2015/3/10', '2015/7/10', '2016/8/1', '11/10/2015', '2016/11/20', '2016/5/10', '2016/5/10', '2015/11/15', '2015/11/15', '2015/11/15', '2016/8/10', '2016/8/10']
@@ -2089,16 +2107,14 @@ const case2 = {
                 }],
                 create: [],
                 delete: [{
-                    posi: [0, 0.139],
+                    posi: [0.861, 1],
                     case: {
-                        input_case: [
-                            [, , , , ]
-                        ],
-                        output_case: [, , , , ],
+                        input_case: [],
+                        output_case: [],
                     }
                 }],
                 transform: [],
-                input_nan_posi: [0, 0.139],
+                input_nan_posi: [0.861, 1],
                 output_nan_posi: [],
                 step: 2
             }]
@@ -2108,7 +2124,7 @@ const case2 = {
                 type: 'change',
                 input_row_num: 31,
                 output_row_num: 31,
-                input_col: [],
+                input_col: ['Launch_Date'],
                 transform_icon: 'create_columns_extract',
                 unchange: [],
                 create: [{
@@ -2186,9 +2202,7 @@ const case2 = {
                             input_case: [
                                 [0.863, 0.764, 0.69, 0.521, 0.607, 0.529, 0.81, 0.798, 0.674, 0.803, 0.794, 0.725, 0.676, 0.639, 0.386, 0.745, 0.676, 0.745, 0.824, 0.706, 0.65, 0.599, 0.39, 0.808, 0.694, 0.728, 0.779, 0.744, 0.646, 0.774, 0.757]
                             ],
-                            output_case: [
-                                ['A', '0.764', '0.69', '0.521', '0.607', '0.529', 'A', '0.798', '0.674', 'A', '0.794', '0.725', '0.676', '0.639', '0.386', '0.745', '0.676', '0.745', 'A', '0.706', '0.65', '0.599', '0.39', 'A', '0.694', '0.728', '0.779', '0.744', '0.646', '0.774', '0.757']
-                            ],
+                            output_case: ['A', '0.764', '0.69', '0.521', '0.607', '0.529', 'A', '0.798', '0.674', 'A', '0.794', '0.725', '0.676', '0.639', '0.386', '0.745', '0.676', '0.745', 'A', '0.706', '0.65', '0.599', '0.39', 'A', '0.694', '0.728', '0.779', '0.744', '0.646', '0.774', '0.757'],
                         }
                     }],
                     delete: [],
@@ -2209,9 +2223,7 @@ const case2 = {
                             input_case: [
                                 ['A', '0.69', '0.521', '0.607', '0.529', 'A', '0.674', 'A', '0.676', '0.639', '0.386', '0.676', 'A', '0.65', '0.599', '0.39', 'A', '0.694', '0.646']
                             ],
-                            output_case: [
-                                ['A', '0.69', '0.521', '0.607', '0.529', 'A', '0.674', 'A', '0.676', '0.639', '0.386', '0.676', 'A', '0.65', '0.599', '0.39', 'A', '0.694', '0.646']
-                            ],
+                            output_case: ['A', '0.69', '0.521', '0.607', '0.529', 'A', '0.674', 'A', '0.676', '0.639', '0.386', '0.676', 'A', '0.65', '0.599', '0.39', 'A', '0.694', '0.646'],
                         }
                     }],
                     create: [],
@@ -2241,9 +2253,7 @@ const case2 = {
                             input_case: [
                                 ['A', 'B', '0.521', '0.529', 'A', 'B', 'A', 'B', 'B', '0.386', 'B', 'B', 'A', 'B', '0.39', 'A', 'B', 'B', 'B', 'B', 'B']
                             ],
-                            output_case: [
-                                ['A', 'B', '0.521', '0.529', 'A', 'B', 'A', 'B', 'B', '0.386', 'B', 'B', 'A', 'B', '0.39', 'A', 'B', 'B', 'B', 'B', 'B']
-                            ],
+                            output_case: ['A', 'B', '0.521', '0.529', 'A', 'B', 'A', 'B', 'B', '0.386', 'B', 'B', 'A', 'B', '0.39', 'A', 'B', 'B', 'B', 'B', 'B'],
                         }
                     }],
                     create: [],
@@ -2273,9 +2283,7 @@ const case2 = {
                             input_case: [
                                 ['A', 'B', 'C', 'C', 'A', 'B', 'C', 'A', 'B', 'B', 'C', 'C', 'B', 'C', 'B', 'A', 'B', 'C', 'C', 'A', 'C', 'B', 'B', 'B', 'C', 'B', 'B']
                             ],
-                            output_case: [
-                                ['A', 'B', 'C', 'C', 'A', 'B', 'C', 'A', 'B', 'B', 'C', 'C', 'B', 'C', 'B', 'A', 'B', 'C', 'C', 'A', 'C', 'B', 'B', 'B', 'C', 'B', 'B']
-                            ],
+                            output_case: ['A', 'B', 'C', 'C', 'A', 'B', 'C', 'A', 'B', 'B', 'C', 'C', 'B', 'C', 'B', 'A', 'B', 'C', 'C', 'A', 'C', 'B', 'B', 'B', 'C', 'B', 'B'],
                         }
                     }],
                     create: [],
@@ -2353,13 +2361,13 @@ const case2 = {
                 'Launch_Date': {
                     type: 'date'
                 },
-                'Sale_Price	': {
+                'Sale_Price': {
                     type: 'num'
                 },
-                'Resale_Num	': {
+                'Resale_Num': {
                     type: 'num'
                 },
-                'Resale_Price	': {
+                'Resale_Price': {
                     type: 'num'
                 }
             }
@@ -2656,7 +2664,7 @@ const case2 = {
         },
         11: {
             type: 'transform',
-            transform: 'transform_tables_rearrange',
+            transform: 'transform_columns_rearrange',
             table_path: 'data/case2/L16 (car).csv',
             change: true,
             columns: {

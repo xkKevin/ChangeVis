@@ -88,13 +88,19 @@ function drawIcon(svg, transform_icon, x, y, icon_width) {
         icon_image.onload = function() {
             let icon_scale_ratio = change_config.icon_size[1] / icon_image.height
             let offset_x = icon_width / 2 - icon_image.width * icon_scale_ratio / 2
-            svg.append('image')
+            x += offset_x
+            let image_element = svg.append('image')
                 .attr('href', iconUrl)
                 .attr('x', x)
                 .attr('y', y)
                 // .attr('width', change_config.icon_size[0])
                 .attr('height', change_config.icon_size[1])
-                .attr("transform", `translate(${offset_x}, 0)`)
+            if (transform_icon === 'transform_columns_rearrange') {
+                let img_box = image_element.node().getBBox()
+                let cx = img_box.x + img_box.width / 2
+                let cy = img_box.y + img_box.height / 2
+                image_element.attr("transform", `translate(${-0.3*cx}, ${-0.3*cy}) scale(1.3)`)
+            }
             resolve()
         }
     })

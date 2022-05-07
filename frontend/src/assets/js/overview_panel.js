@@ -150,13 +150,13 @@ function add_event(group_flag, proportion_flag) {
 
 function generate_select_data(start, end, group_flag) {
     console.log(start, end, group_flag);
-    let select_data = { change_data: {}, column_change_data: {} }
+    let tmp_data = { change_data: {}, column_change_data: {} }
     let column_status_step = 0
     let columns = ['index'] // change view 中应该显示哪些列
     let timeline_point_data = {}
     let transform_list = []
     skip_step = start
-    select_data.skip_step = start
+    tmp_data.skip_step = start
 
     select_code = { lines: [], changes: [] }
     overall_data.pipeline_data.forEach(tbl => {
@@ -177,7 +177,7 @@ function generate_select_data(start, end, group_flag) {
                 timeline_point_data.type = overall_data.column_change_data[key].type
                 transform_list.push(overall_data.column_change_data[key].transform)
                 timeline_point_data.transform_list = transform_list
-                select_data.column_change_data[key] = timeline_point_data
+                tmp_data.column_change_data[key] = timeline_point_data
 
                 transform_list = []
                 timeline_point_data = {}
@@ -189,24 +189,26 @@ function generate_select_data(start, end, group_flag) {
     let rows = []
 
     columns.forEach(key => {
-        select_data.change_data[key] = []
+        tmp_data.change_data[key] = []
+        console.log(key, overall_data.change_data, overall_data.change_data[key]);
         let trans_field = 'origin'
         if (group_flag && (overall_data.change_data[key].combine != undefined)) {
             trans_field = 'combine'
         }
+        // console.log(key, trans_field, overall_data.change_data[key][trans_field]);
         overall_data.change_data[key][trans_field].forEach(trans => {
             // let new_tran = Object.assign({}, trans) // 深拷贝对象
             if (trans.step >= start && trans.step <= end) {
                 rows.push(trans.output_row_num)
-                select_data.change_data[key].push(trans)
+                tmp_data.change_data[key].push(trans)
             }
         })
     })
-    select_data.average_row = d3.mean(rows)
-    select_data.max_row = d3.max(rows)
+    tmp_data.average_row = d3.mean(rows)
+    tmp_data.max_row = d3.max(rows)
 
-    console.log(select_data);
-    return select_data
+    console.log(tmp_data);
+    return tmp_data
 }
 
 
