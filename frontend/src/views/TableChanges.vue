@@ -291,7 +291,7 @@ export default {
       cases: {
                 case1: 'case1script.txt',
                 case2: 'case2script.txt',
-                case3: 'Energy-Poverty 32641 homes.csv',
+                case3: 'case3script.txt',
             },
       casesNum: {
                 case1: case1,
@@ -434,7 +434,7 @@ export default {
       this.combined = combined
       this.codeLineHighlight([], [])
       d3.selectAll('div.glyph_margin').classed("myGlyphMarginClass", false)
-      handel_overview(case1, + this.combined, this.proportion);
+      handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion);
     },
     proportionChange(proportion){
       this.proportion = proportion

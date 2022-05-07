@@ -1,4 +1,4 @@
-const case1 = {
+const case3 = {
     average_row: 30.67,
     max_row: 36,
     source_column: 3,
@@ -200,7 +200,11 @@ const case1 = {
                     transform: [],
                     input_nan_posi: [],
                     output_nan_posi: [],
-                    step: 3
+                    step: 3,
+                    total_case: [
+                        [],
+                        []
+                    ]
                 },
                 {
                     type: 'sort',
@@ -508,7 +512,8 @@ const case1 = {
             change: false,
             columns: {
                 'id': {
-                    type: 'str'
+                    type: 'str',
+                    data: []
                 },
                 'math': {
                     type: 'num'
@@ -615,16 +620,29 @@ const case1 = {
     }
 }
 
-const case2 = {
+const case1 = {
     average_row: 25.1875,
     max_row: 31,
     source_column: 4,
     source_row: 31,
-    group: [
-        [3, 4, 5],
-        [9, 10, 11, 12, 13],
-        [1, 7]
-    ],
+    step2code: {
+        1: [17],
+        2: [18],
+        3: [5, 19],
+        4: [5, 19],
+        5: [5, 19],
+        6: [20],
+        7: [21],
+        8: [22],
+        9: [10, 23],
+        10: [12, 23],
+        11: [12, 23],
+        12: [12, 23],
+        13: [13, 23],
+        14: [24],
+        15: [25],
+        16: [26],
+    },
     pipeline_data: [{
             type: 'rows',
             column_num: 4,
@@ -634,7 +652,7 @@ const case2 = {
             output_delete_posi: [27, 28, 29],
             output_create_posi: [],
             output_transform_posi: [],
-            step: 1,
+            step: [1, 1],
             pre: 0
         },
         {
@@ -646,7 +664,7 @@ const case2 = {
             output_delete_posi: [],
             output_create_posi: [4],
             output_transform_posi: [],
-            step: 2,
+            step: [2, 2],
             pre: 1
         },
         {
@@ -658,7 +676,7 @@ const case2 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [1],
-            step: 3,
+            step: [3, 5],
             pre: 2
         },
         {
@@ -670,7 +688,7 @@ const case2 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [1],
-            step: 4,
+            step: [4],
             pre: 3
         },
         {
@@ -682,7 +700,7 @@ const case2 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [1],
-            step: 5,
+            step: [5],
             pre: 4
         },
         {
@@ -694,7 +712,7 @@ const case2 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [4],
-            step: 6,
+            step: [6, 6],
             pre: 5
         },
         {
@@ -706,19 +724,19 @@ const case2 = {
             output_delete_posi: [22, 23, 24, 25, 26],
             output_create_posi: [],
             output_transform_posi: [],
-            step: 7,
+            step: [7, 7],
             pre: 6
         },
         {
             type: 'columns',
             column_num: 6,
             row_num: 23,
-            change_type: 'transform',
+            change_type: 'create',
             input_posi: [3, 4],
             output_delete_posi: [],
-            output_create_posi: [6],
+            output_create_posi: [5],
             output_transform_posi: [],
-            step: 8,
+            step: [8, 8],
             pre: 7
         },
         {
@@ -726,11 +744,11 @@ const case2 = {
             column_num: 7,
             row_num: 23,
             change_type: 'create',
-            input_posi: [6],
+            input_posi: [5],
             output_delete_posi: [],
-            output_create_posi: [],
-            output_transform_posi: [7],
-            step: 9,
+            output_create_posi: [6],
+            output_transform_posi: [],
+            step: [9, 13],
             pre: 8
         },
         {
@@ -738,11 +756,11 @@ const case2 = {
             column_num: 7,
             row_num: 23,
             change_type: 'transform',
-            input_posi: [6],
+            input_posi: [5],
             output_delete_posi: [],
             output_create_posi: [],
-            output_transform_posi: [7],
-            step: 10,
+            output_transform_posi: [6],
+            step: [10],
             pre: 9
         },
         {
@@ -750,11 +768,11 @@ const case2 = {
             column_num: 7,
             row_num: 23,
             change_type: 'transform',
-            input_posi: [6],
+            input_posi: [5],
             output_delete_posi: [],
             output_create_posi: [],
-            output_transform_posi: [7],
-            step: 11,
+            output_transform_posi: [6],
+            step: [11],
             pre: 10
         },
         {
@@ -762,11 +780,11 @@ const case2 = {
             column_num: 7,
             row_num: 23,
             change_type: 'transform',
-            input_posi: [6],
+            input_posi: [5],
             output_delete_posi: [],
             output_create_posi: [],
-            output_transform_posi: [7],
-            step: 12,
+            output_transform_posi: [6],
+            step: [12],
             pre: 11
         },
         {
@@ -774,23 +792,23 @@ const case2 = {
             column_num: 7,
             row_num: 23,
             change_type: 'transform',
-            input_posi: [6],
+            input_posi: [5],
             output_delete_posi: [],
             output_create_posi: [],
-            output_transform_posi: [7],
-            step: 13,
+            output_transform_posi: [6],
+            step: [13],
             pre: 12
         },
         {
             type: 'columns',
-            column_num: 5,
+            column_num: 7,
             row_num: 23,
             change_type: 'delete',
             input_posi: [0, 1],
             output_delete_posi: [0, 1],
             output_create_posi: [],
             output_transform_posi: [],
-            step: 14,
+            step: [14, 14],
             pre: 13
         },
         {
@@ -802,7 +820,7 @@ const case2 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [0, 1, 2],
-            step: 15,
+            step: [15, 15],
             pre: 14
         },
         {
@@ -815,11 +833,14 @@ const case2 = {
             output_create_posi: [],
             output_transform_posi: [2],
             sort_type: 'desc',
-            step: 16,
+            step: [16, 16],
             pre: 15
         }
     ],
     change_data: {
+        index: {
+            origin: []
+        },
         Info: {
             origin: [{
                 type: 'change',
@@ -829,7 +850,13 @@ const case2 = {
                 transform_icon: 'delete_columns_select_remove',
                 unchange: [],
                 create: [],
-                delete: [],
+                delete: [{
+                    posi: [0, 1],
+                    case: {
+                        input_case: [],
+                        output_case: [],
+                    }
+                }],
                 transform: [],
                 input_nan_posi: [],
                 output_nan_posi: [],
@@ -846,7 +873,9 @@ const case2 = {
                     unchange: [{
                         posi: [0.464, 1],
                         case: {
-                            input_case: ['Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department'],
+                            input_case: [
+                                ['Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department']
+                            ],
                             output_case: ['Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Manage Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department', 'Sales Department'],
                         }
                     }],
@@ -869,8 +898,8 @@ const case2 = {
                     type: 'change',
                     input_row_num: 28,
                     output_row_num: 28,
-                    input_col: [],
-                    transform_icon: 'delete_rows_filter',
+                    input_col: ['Department'],
+                    transform_icon: 'transform_columns_replace',
                     unchange: [{
                         posi: [0.25, 1],
                         case: {
@@ -899,12 +928,14 @@ const case2 = {
                     type: 'change',
                     input_row_num: 28,
                     output_row_num: 28,
-                    input_col: [],
-                    transform_icon: 'delete_rows_filter',
+                    input_col: ['Department'],
+                    transform_icon: 'transform_columns_replace',
                     unchange: [{
                         posi: [0.286, 1],
                         case: {
-                            input_case: ['TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'MD', 'MD', 'MD', 'MD', 'MD', 'MD', 'MD'],
+                            input_case: [
+                                ['TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'MD', 'MD', 'MD', 'MD', 'MD', 'MD', 'MD']
+                            ],
                             output_case: ['TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'MD', 'MD', 'MD', 'MD', 'MD', 'MD', 'MD'],
                         }
                     }],
@@ -922,6 +953,26 @@ const case2 = {
                     input_nan_posi: [],
                     output_nan_posi: [],
                     step: 5
+                },
+                {
+                    type: 'change',
+                    input_row_num: 23,
+                    output_row_num: 23,
+                    input_col: [],
+                    transform_icon: 'delete_columns_select_remove',
+                    unchange: [],
+                    create: [],
+                    delete: [{
+                        posi: [0, 1],
+                        case: {
+                            input_case: [],
+                            output_case: [],
+                        }
+                    }],
+                    transform: [],
+                    input_nan_posi: [],
+                    output_nan_posi: [],
+                    step: 14
                 },
             ],
             combine: [{
@@ -966,6 +1017,7 @@ const case2 = {
                 ],
                 input_nan_posi: [],
                 output_nan_posi: [],
+                step: 3
             }]
         },
         Attendance: {
@@ -1047,10 +1099,35 @@ const case2 = {
                 transform: [],
                 input_nan_posi: [],
                 output_nan_posi: [],
+                step: 1
             }]
         },
         Performance: {
             origin: []
+        },
+        Staff: {
+            origin: [{
+                type: 'change',
+                input_row_num: 31,
+                output_row_num: 31,
+                input_col: ['Info'],
+                transform_icon: 'create_columns_extract',
+                unchange: [],
+                create: [],
+                delete: [],
+                transform: [{
+                    posi: [0, 1],
+                    case: {
+                        input_case: [
+                            ['01-Bob', '02-Lily', '03-Ivy', '04-Alan', '05-John', '07-Iris', '08-David', '09-Tony', '10-Eric', '11-Jim', '12-Ken', '13-Judy', '14-Mandy', '01-Tina', '02-Sara', '03-Diana', '04-Amy', '05-Kelly', '06-Leo', '07-Tom', '01-Mark', '03-William', '04-Gary', '06-Marlon', '07-Evan', '08-Hardy', '09-Betty', '10-Polly']
+                        ],
+                        output_case: ['Bob', 'Lily', 'Ivy', 'Alan', 'John', 'Iris', 'David', 'Tony', 'Eric', 'Jim', 'Ken', 'Judy', 'Mandy', 'Tina', 'Sara', 'Diana', 'Amy', 'Kelly', 'Leo', 'Tom', 'Mark', 'William', 'Gary', 'Marlon', 'Evan', 'Hardy', 'Betty', 'Polly'],
+                    }
+                }],
+                input_nan_posi: [],
+                output_nan_posi: [],
+                step: 2
+            }]
         },
         Achievements: {
             origin: [{
@@ -1086,8 +1163,7 @@ const case2 = {
                     transform_icon: 'transform_tables_sort_desc',
                     step: 16
                 }
-            ],
-            combine: []
+            ]
         },
         Perf_rate: {
             origin: [{
@@ -1286,6 +1362,7 @@ const case2 = {
                 ],
                 input_nan_posi: [],
                 output_nan_posi: [],
+                step: 9
             }]
         }
     },
@@ -1417,6 +1494,7 @@ const case2 = {
             type: 'unchange',
             transform: 'transform_columns_merge',
             change: false,
+            table_path: 'data/case1/.csv',
             columns: {
                 'Info': {
                     type: 'str'
@@ -1692,14 +1770,25 @@ const case2 = {
     }
 }
 
-const case3 = {
+const case2 = {
     average_row: 29.77,
     max_row: 36,
     source_column: 6,
     source_row: 36,
-    group: [
-        [7, 9]
-    ],
+    step2code: {
+        1: [5],
+        2: [6],
+        3: [7],
+        4: [8],
+        5: [9],
+        6: [10],
+        7: [11],
+        8: [12],
+        9: [13],
+        10: [14],
+        11: [15],
+        12: [16],
+    },
     pipeline_data: [{
             type: 'columns',
             column_num: 6,
