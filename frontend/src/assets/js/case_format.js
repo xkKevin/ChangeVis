@@ -4,15 +4,15 @@ const case3 = {
     source_column: 3,
     source_row: 36,
     step2code: {
-        1: 4,
-        2: 5,
-        3: 6,
-        4: 7,
-        5: 8,
-        6: 9,
-        7: 10,
-        8: 11,
-        9: 12,
+        1: [4],
+        2: [5],
+        3: [6],
+        4: [7],
+        5: [8],
+        6: [9],
+        7: [10],
+        8: [11],
+        9: [12],
     },
     pipeline_data: [{
             type: 'columns',
@@ -1368,6 +1368,7 @@ const case1 = {
     },
     column_change_data: {
         0: {
+            table_path: 'data/case1/L3 (staff).csv',
             columns: {
                 'Info': {
                     type: 'str'
@@ -1386,6 +1387,7 @@ const case1 = {
         1: {
             type: 'unchange',
             transform: 'delete_rows_filter',
+            table_path: 'data/case1/L4 (staff).csv',
             change: false,
             columns: {
                 'Info': {
@@ -1405,6 +1407,7 @@ const case1 = {
         2: {
             type: 'create',
             transform: 'create_columns_extract',
+            table_path: 'data/case1/L5 (staff).csv',
             change: true,
             columns: {
                 'Info': {
@@ -1427,6 +1430,7 @@ const case1 = {
         3: {
             type: 'unchange',
             transform: 'transform_columns_replace',
+            table_path: 'data/case1/L6 (staff).csv',
             change: false,
             columns: {
                 'Info': {
@@ -1449,6 +1453,7 @@ const case1 = {
         4: {
             type: 'unchange',
             transform: 'transform_columns_replace',
+            table_path: 'data/case1/L7 (staff).csv',
             change: false,
             columns: {
                 'Info': {
@@ -1471,6 +1476,7 @@ const case1 = {
         5: {
             type: 'unchange',
             transform: 'transform_columns_replace',
+            table_path: 'data/case1/L8 (staff).csv',
             change: false,
             columns: {
                 'Info': {
@@ -1493,8 +1499,8 @@ const case1 = {
         6: {
             type: 'unchange',
             transform: 'transform_columns_merge',
+            table_path: 'data/case1/L9 (staff).csv',
             change: false,
-            table_path: 'data/case1/.csv',
             columns: {
                 'Info': {
                     type: 'str'
@@ -1516,6 +1522,7 @@ const case1 = {
         7: {
             type: 'unchange',
             transform: 'delete_rows_filter',
+            table_path: 'data/case1/L10 (staff).csv',
             change: false,
             columns: {
                 'Info': {
@@ -1538,6 +1545,7 @@ const case1 = {
         8: {
             type: 'create',
             transform: 'create_columns_mutate',
+            table_path: 'data/case1/L11 (staff).csv',
             change: true,
             columns: {
                 'Info': {
@@ -1563,6 +1571,7 @@ const case1 = {
         9: {
             type: 'create',
             transform: 'create_columns_mutate',
+            table_path: 'data/case1/L12 (staff).csv',
             change: true,
             columns: {
                 'Info': {
@@ -1591,6 +1600,7 @@ const case1 = {
         10: {
             type: 'unchange',
             transform: 'transform_columns_mutate',
+            table_path: 'data/case1/L13 (staff).csv',
             change: false,
             columns: {
                 'Info': {
@@ -1619,6 +1629,7 @@ const case1 = {
         11: {
             type: 'unchange',
             transform: 'transform_columns_mutate',
+            table_path: 'data/case1/L14 (staff).csv',
             change: false,
             columns: {
                 'Info': {
@@ -1647,6 +1658,7 @@ const case1 = {
         12: {
             type: 'unchange',
             transform: 'transform_columns_mutate',
+            table_path: 'data/case1/L15 (staff).csv',
             change: false,
             columns: {
                 'Info': {
@@ -1675,6 +1687,7 @@ const case1 = {
         13: {
             type: 'unchange',
             transform: 'transform_columns_mutate',
+            table_path: 'data/case1/L16 (staff).csv',
             change: false,
             columns: {
                 'Info': {
@@ -1703,6 +1716,7 @@ const case1 = {
         14: {
             type: 'delete',
             transform: 'delete_columns_select_remove',
+            table_path: 'data/case1/L17 (staff).csv',
             change: true,
             columns: {
                 'Attendance': {
@@ -1725,6 +1739,7 @@ const case1 = {
         15: {
             type: 'transform',
             transform: 'transform_columns_rearrange',
+            table_path: 'data/case1/L18 (staff).csv',
             change: true,
             columns: {
                 'Staff': {
@@ -1748,6 +1763,7 @@ const case1 = {
         16: {
             type: 'unchange',
             transform: 'transform_tables_sort_desc',
+            table_path: 'data/case1/L19 (staff).csv',
             change: false,
             columns: {
                 'Staff': {
@@ -1798,7 +1814,7 @@ const case2 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [1],
-            step: 1,
+            step: [1, 1],
             pre: 0
         },
         {
@@ -1810,7 +1826,7 @@ const case2 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [31, 32, 33, 34, 35],
-            step: 2,
+            step: [2, 2],
             pre: 1
         },
         {
@@ -1822,7 +1838,7 @@ const case2 = {
             output_delete_posi: [0],
             output_create_posi: [],
             output_transform_posi: [1],
-            step: 3,
+            step: [3, 3],
             pre: 2
         },
         {
@@ -1834,7 +1850,7 @@ const case2 = {
             output_delete_posi: [],
             output_create_posi: [2],
             output_transform_posi: [],
-            step: 4,
+            step: [4, 4],
             pre: 3
         },
         {
@@ -1846,7 +1862,7 @@ const case2 = {
             output_delete_posi: [],
             output_create_posi: [6],
             output_transform_posi: [],
-            step: 5,
+            step: [5, 5],
             pre: 4
         },
         {
@@ -1858,7 +1874,7 @@ const case2 = {
             output_delete_posi: [],
             output_create_posi: [7],
             output_transform_posi: [],
-            step: 6,
+            step: [6, 9],
             pre: 5
         },
         {
@@ -1870,7 +1886,7 @@ const case2 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [7],
-            step: 7,
+            step: [7],
             pre: 6
         },
         {
@@ -1882,7 +1898,7 @@ const case2 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [7],
-            step: 8,
+            step: [8],
             pre: 7
         },
         {
@@ -1894,7 +1910,7 @@ const case2 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [7],
-            step: 9,
+            step: [9],
             pre: 8
         },
         {
@@ -1907,7 +1923,7 @@ const case2 = {
             output_create_posi: [],
             output_transform_posi: [6],
             sort_type: 'asc',
-            step: 10,
+            step: [10, 10],
             pre: 9
         },
         {
@@ -1919,7 +1935,7 @@ const case2 = {
             output_delete_posi: [],
             output_create_posi: [6],
             output_transform_posi: [],
-            step: 11,
+            step: [11, 11],
             pre: 10
         },
         {
@@ -1932,7 +1948,7 @@ const case2 = {
             output_create_posi: [],
             output_transform_posi: [],
             rearrange_seq: [0, 7, 6, 1, 2, 3, 4, 5, 6],
-            step: 12,
+            step: [12, 12],
             pre: 11
         },
         {
@@ -1944,7 +1960,7 @@ const case2 = {
             output_delete_posi: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
             output_create_posi: [],
             output_transform_posi: [],
-            step: 13,
+            step: [13, 13],
             pre: 12
         }
     ],
@@ -2009,7 +2025,9 @@ const case2 = {
                     unchange: [{
                         posi: [0.139, 1],
                         case: {
-                            input_case: ['A4', 'A6', 'A8', 'S3', 'S4', 'S5', '320i', '325Li', '330i', '520Li', '528Li', '535Li', 'Regal', 'Encore', 'Park Avenue', 'Larcosse', 'Civic', 'Accord', 'Passport', 'Odyssey', 'Focus', 'Mustang', 'Mondeo', 'C180', 'C200', 'GLC200', 'GLC300', 'E200L', 'E300L', 'DeVille', 'Escalade'],
+                            input_case: [
+                                ['A4', 'A6', 'A8', 'S3', 'S4', 'S5', '320i', '325Li', '330i', '520Li', '528Li', '535Li', 'Regal', 'Encore', 'Park Avenue', 'Larcosse', 'Civic', 'Accord', 'Passport', 'Odyssey', 'Focus', 'Mustang', 'Mondeo', 'C180', 'C200', 'GLC200', 'GLC300', 'E200L', 'E300L', 'DeVille', 'Escalade']
+                            ],
                             output_case: ['A4', 'A6', 'A8', 'S3', 'S4', 'S5', '320i', '325Li', '330i', '520Li', '528Li', '535Li', 'Regal', 'Encore', 'Park Avenue', 'Larcosse', 'Civic', 'Accord', 'Passport', 'Odyssey', 'Focus', 'Mustang', 'Mondeo', 'C180', 'C200', 'GLC200', 'GLC300', 'E200L', 'E300L', 'DeVille', 'Escalade'],
                         }
                     }],
@@ -2063,7 +2081,9 @@ const case2 = {
                 unchange: [{
                     posi: [0.139, 1],
                     case: {
-                        input_case: ['2015/12/10', '2016/1/1', '2016/2/10', '2016/7/10', '06/15/2018', '09/10/2015', '2016/9/10', '2016/9/10', '2016/9/10', '2016/8/15', '2016/7/15', '2016/7/15', '2014/10/10', '2016/6/20', '2011/5/10', '2016/3/10', '2016/11/10', '2016/9/20', '2016/3/10', '2015/3/10', '2015/7/10', '2016/8/1', '11/10/2015', '2016/11/20', '2016/5/10', '2016/5/10', '2015/11/15', '2015/11/15', '2015/11/15', '2016/8/10', '2016/8/10'],
+                        input_case: [
+                            ['2015/12/10', '2016/1/1', '2016/2/10', '2016/7/10', '06/15/2018', '09/10/2015', '2016/9/10', '2016/9/10', '2016/9/10', '2016/8/15', '2016/7/15', '2016/7/15', '2014/10/10', '2016/6/20', '2011/5/10', '2016/3/10', '2016/11/10', '2016/9/20', '2016/3/10', '2015/3/10', '2015/7/10', '2016/8/1', '11/10/2015', '2016/11/20', '2016/5/10', '2016/5/10', '2015/11/15', '2015/11/15', '2015/11/15', '2016/8/10', '2016/8/10']
+                        ],
                         output_case: ['2015/12/10', '2016/1/1', '2016/2/10', '2016/7/10', '06/15/2018', '09/10/2015', '2016/9/10', '2016/9/10', '2016/9/10', '2016/8/15', '2016/7/15', '2016/7/15', '2014/10/10', '2016/6/20', '2011/5/10', '2016/3/10', '2016/11/10', '2016/9/20', '2016/3/10', '2015/3/10', '2015/7/10', '2016/8/1', '11/10/2015', '2016/11/20', '2016/5/10', '2016/5/10', '2015/11/15', '2015/11/15', '2015/11/15', '2016/8/10', '2016/8/10'],
                     }
                 }],
@@ -2150,8 +2170,7 @@ const case2 = {
                     transform_icon: 'transform_tables_sort_asc',
                     step: 10
                 }
-            ],
-            combine: []
+            ]
         },
         Rate: {
             origin: [{
@@ -2315,6 +2334,7 @@ const case2 = {
                         step: 9
                     }
                 ],
+                step: 7,
                 input_nan_posi: [],
                 output_nan_posi: [],
             }]
@@ -2322,6 +2342,7 @@ const case2 = {
     },
     column_change_data: {
         0: {
+            table_path: 'data/case2/L4 (car).csv',
             columns: {
                 'Manufacturer': {
                     type: 'str'
@@ -2346,6 +2367,7 @@ const case2 = {
         1: {
             type: 'unchange',
             transform: 'transform_columns_replace_na',
+            table_path: 'data/case2/L5 (car).csv',
             change: false,
             columns: {
                 'Manufacturer': {
@@ -2371,6 +2393,7 @@ const case2 = {
         2: {
             type: 'unchange',
             transform: 'delete_rows_drop_na',
+            table_path: 'data/case2/L6 (car).csv',
             change: false,
             columns: {
                 'Manufacturer': {
@@ -2396,6 +2419,7 @@ const case2 = {
         3: {
             type: 'delete',
             transform: 'combine_columns_merge',
+            table_path: 'data/case2/L7 (car).csv',
             change: true,
             columns: {
                 'Model': {
@@ -2418,6 +2442,7 @@ const case2 = {
         4: {
             type: 'create',
             transform: 'create_columns_extract',
+            table_path: 'data/case2/L8 (car).csv',
             change: true,
             columns: {
                 'Model': {
@@ -2443,6 +2468,7 @@ const case2 = {
         5: {
             type: 'create',
             transform: 'create_columns_mutate',
+            table_path: 'data/case2/L10 (car).csv',
             change: true,
             columns: {
                 'Model': {
@@ -2471,6 +2497,7 @@ const case2 = {
         6: {
             type: 'create',
             transform: 'create_columns_mutate',
+            table_path: 'data/case2/L11 (car).csv',
             change: true,
             columns: {
                 'Model': {
@@ -2502,6 +2529,7 @@ const case2 = {
         7: {
             type: 'unchange',
             transform: 'transform_columns_mutate',
+            table_path: 'data/case2/L12 (car).csv',
             change: false,
             columns: {
                 'Model': {
@@ -2533,6 +2561,7 @@ const case2 = {
         8: {
             type: 'unchange',
             transform: 'transform_columns_mutate',
+            table_path: 'data/case2/L13 (car).csv',
             change: false,
             columns: {
                 'Model': {
@@ -2564,6 +2593,7 @@ const case2 = {
         9: {
             type: 'unchange',
             transform: 'transform_columns_mutate',
+            table_path: 'data/case2/L14 (car).csv',
             change: false,
             columns: {
                 'Model': {
@@ -2595,6 +2625,7 @@ const case2 = {
         10: {
             type: 'unchange',
             transform: 'transform_tables_sort_asc',
+            table_path: 'data/case2/L15 (car).csv',
             change: false,
             columns: {
                 'Model': {
@@ -2626,6 +2657,7 @@ const case2 = {
         11: {
             type: 'transform',
             transform: 'transform_tables_rearrange',
+            table_path: 'data/case2/L16 (car).csv',
             change: true,
             columns: {
                 'Model': {
@@ -2657,6 +2689,7 @@ const case2 = {
         12: {
             type: 'unchange',
             transform: 'delete_rows_slice_keep',
+            table_path: 'data/case2/L17 (car).csv',
             change: false,
             columns: {
                 'Model': {
