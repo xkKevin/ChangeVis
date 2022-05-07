@@ -181,14 +181,14 @@ function drawChanges(change_data, skip_step, height_ratio, outer_col_height, mar
                     if (col.output_nan_posi && col.output_nan_posi.length === 2) {
                         let area_y = col_y + col.output_nan_posi[0] * col_height
                         let area_proportion = col.output_nan_posi[1] - col.output_nan_posi[0]
-                        let text = proportion_flag ? area_proportion.toFixed(2) * 100 + '%' : ''
+                        let text = proportion_flag ? (area_proportion * 100).toFixed(0) + '%' : ''
                         fillColorText(change_step, margin_left, area_y, area_proportion * col_height, change_color[fill_ai], text)
                     }
                 } else if (col[fill_ai]) {
                     col[fill_ai].forEach(block => { // block 表示一个颜色块
                         let block_y = col_y + block.posi[0] * col_height
                         let area_proportion = block.posi[1] - block.posi[0]
-                        let text = proportion_flag ? area_proportion.toFixed(2) * 100 + '%' : block.case.output_case[0]
+                        let text = proportion_flag ? (area_proportion * 100).toFixed(0) + '%' : block.case.output_case[0]
                         let text_y = fillColorText(change_step, margin_left, block_y, area_proportion * col_height, change_color[fill_ai], text)
                         if (!proportion_flag) {
                             block.case.input_case.forEach((dependent_text, ci) => {

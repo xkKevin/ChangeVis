@@ -1,12 +1,26 @@
 import pandas as pd
 
-studentScore = pd.read_csv("students.csv")
-studentScore.id = studentScore.id.str.extract('(\d+)')
-studentScore.drop_duplicates(inplace=True)
-studentScore.loc[:, 'totalScore'] = studentScore.math + studentScore.art
-studentScore.loc[studentScore['totalScore'] < 120, 'scoreRate'] = 'F'
-studentScore.loc[(studentScore['totalScore'] >= 120) & (studentScore['totalScore'] < 140) , 'scoreRate'] = 'D'
-studentScore.loc[(studentScore['totalScore'] >= 140) & (studentScore['totalScore'] < 160) , 'scoreRate'] = 'C'
-studentScore.loc[(studentScore['totalScore'] >= 160) & (studentScore['totalScore'] < 180) , 'scoreRate'] = 'B'
-studentScore.loc[studentScore['totalScore'] >= 180 , 'scoreRate'] = 'A'
-studentScore = studentScore.sort_values("totalScore", ascending = False)
+def abbreviated(df, column, source, target):
+    for i in range(0,len(source)):
+        df[column].replace(source[i], target[i], inplace=True)
+    return df
+
+def generateRate(df, rateInterval, rate, inputCol, outputCol):
+    intervalNum = len(rateInterval)
+    df.loc[df[inputCol] < rateInterval[0], outputCol] = rate[0]
+    for i in range(1, intervalNum):
+        df.loc[(df[inputCol] >= rateInterval[i-1]) & (df[inputCol] < rateInterval[i]), outputCol] = rate[i]
+    df.loc[df[inputCol] >= rateInterval[intervalNum - 1], outputCol] = rate[intervalNum]
+    return df
+
+staff = pd.read_csv(r"C:\Users\Luo Zhongsu\Desktop\difference\case1\case1.csv")
+staff = staff[staff.Attendance <= 30]
+staff['Staff'] = staff.Info.str.extract('([A-z]+)')
+staff = abbreviated(staff, 'Department', ['Technical Department', 'Manage Department', 'Sales Department'], ['TD', 'MD', 'SD'])
+staff['Staff'] = staff['Department'].str.cat(staff['Staff'], sep='-')
+staff = staff[staff.Attendance >= 22]
+staff['Achievements'] = (staff.Performance / staff.Attendance * 100).round(2)
+staff = generateRate(staff, [70, 80, 100, 120], ['F', 'D', 'C', 'B', 'A'], 'Achievements',  'Perf_rate')
+staff.drop(staff.columns[[0, 1]], axis=1, inplace=True)
+staff = staff[['Staff', 'Perf_rate', 'Achievements', 'Attendance', 'Performance']]
+staff.sort_values('Achievements', ascending=False ,inplace=True)

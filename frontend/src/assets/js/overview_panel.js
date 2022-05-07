@@ -77,9 +77,8 @@ function add_event(group_flag, proportion_flag) {
                 select_rect = select_rect.slice(-2)
             }
             if (select_rect.length === 2) {
-                let select_steps = [...select_rect[0].split("_"), ...select_rect[1].split("_")].map(Number).sort()
-
-                // let select_steps = [+select_rect[0].slice(3), +select_rect[1].slice(3)].sort()
+                let select_steps = [...select_rect[0].split("_"), ...select_rect[1].split("_")].map(Number).sort(function(a, b) { return a - b })
+                    // let select_steps = [+select_rect[0].slice(3), +select_rect[1].slice(3)].sort()
 
                 select_data = generate_select_data(select_steps[0], select_steps[select_steps.length - 1], group_flag)
                 changeProportionView(group_flag, proportion_flag)
@@ -150,6 +149,7 @@ function add_event(group_flag, proportion_flag) {
 }
 
 function generate_select_data(start, end, group_flag) {
+    console.log(start, end, group_flag);
     let select_data = { change_data: {}, column_change_data: {} }
     let column_status_step = 0
     let columns = ['index'] // change view 中应该显示哪些列
