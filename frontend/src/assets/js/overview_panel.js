@@ -31,7 +31,6 @@ async function handel_overview(data, group_flag = 0, proportion_flag = false) {
     drawOverview(data.pipeline_data, graph, height_ratio, group_flag, proportion_flag)
     select_data = generate_select_data(0, end_step, group_flag)
     changeProportionView(group_flag, proportion_flag)
-    vm.codeGlyphHighlight(Object.values(data.step2code).map(Number))
 }
 
 function changeProportionView(group_flag, proportion_flag) {
@@ -46,8 +45,8 @@ function add_event(group_flag, proportion_flag) {
         if (event.keyCode === 27) { // escape
             d3.selectAll(".table").attr("click_flag", '0').classed("select", false)
             select_rect = []
-            vm.codeLineHighlight([], [])
-            d3.selectAll('div.glyph_margin').classed("myGlyphMarginClass", false)
+            vm.codeLineHighlight()
+            vm.codeGlyphHighlight()
         }
     })
 
@@ -82,8 +81,9 @@ function add_event(group_flag, proportion_flag) {
 
                 select_data = generate_select_data(select_steps[0], select_steps[select_steps.length - 1], group_flag)
                 changeProportionView(group_flag, proportion_flag)
+                console.log(select_code);
                 vm.codeLineHighlight(select_code.lines, select_code.changes)
-                d3.selectAll('div.glyph_margin').classed("myGlyphMarginClass", false)
+                vm.codeGlyphHighlight()
             }
         })
 
@@ -139,17 +139,15 @@ function add_event(group_flag, proportion_flag) {
         })
         .on("mouseup", function() {
             let steps = d3.select(this).attr("step").split("_").map(Number)
-            let glyph_margins = d3.selectAll('div.glyph_margin').classed("myGlyphMarginClass", false).nodes()
+            let code_glyph_lines = []
             steps.forEach(si => {
-                    let hightlight_n = Object.values(overall_data.step2code).indexOf(overall_data.step2code[si])
-                    d3.select(glyph_margins[hightlight_n]).classed("myGlyphMarginClass", true)
-                })
-                // vm.codeGlyphHighlight(select_code.change_steps)
+                code_glyph_lines = code_glyph_lines.concat(overall_data.step2code[si])
+            })
+            vm.codeGlyphHighlight(code_glyph_lines)
         })
 }
 
 function generate_select_data(start, end, group_flag) {
-    console.log(start, end, group_flag);
     let select_data = { change_data: {}, column_change_data: {} }
     let column_status_step = 0
     let columns = ['index'] // change view 中应该显示哪些列
@@ -161,8 +159,13 @@ function generate_select_data(start, end, group_flag) {
     select_code = { lines: [], changes: [] }
     overall_data.pipeline_data.forEach(tbl => {
         if (tbl.step[0] >= start && tbl.step[0] <= end) {
-            select_code.lines.push(overall_data.step2code[tbl.step[0]])
-            select_code.changes.push(tbl.change_type)
+            // select_code.lines.push(overall_data.step2code[tbl.step[0]])
+            // select_code.changes.push(tbl.change_type)
+            overall_data.step2code[tbl.step[0]].forEach((si, ki) => {
+                select_code.lines.push(si)
+                if (ki === 0) select_code.changes.push(tbl.change_type)
+                else select_code.changes.push('transform')
+            })
         }
     })
 
