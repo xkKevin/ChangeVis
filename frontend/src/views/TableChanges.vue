@@ -284,6 +284,8 @@ export default {
       combined: false, // 是否合并
       proportion: false, 
       editor: null, // 文本编辑器
+      line_decorations: null,
+      glyph_decorations: null,
       color: change_color,
       script_content: '', //'print("hello world!")',  上一次运行的script脚本
       language: "python",
@@ -385,44 +387,6 @@ export default {
         this.fireKeyEvent(document.getElementById("tag3"), "keyup", 27);  // Escape code is 27
       }
     },
-    changeModel(lang = "r", script_content = "", flag = true) {
-      //创建新模型，value为旧文本，lang 为语言
-      var oldModel = this.editor.getModel(); //获取旧模型
-      if (flag) {
-        // flag 为 true，说明是界面传来的，注意不能用 script_content === "" 来判断，因为 第二个参数传进来的是 VueComponent
-        if (lang === this.language) return;
-        // console.log("script_content:", script_content);
-        script_content = this.editor.getValue();
-        this.language = lang;
-      }
-      // modesIds即为支持语言
-      // var modesIds = monaco.languages.getLanguages().map(function (lang) {
-      //   return lang.id;
-      // });
-      var newModel = monaco.editor.createModel(script_content, lang);
-
-      //将旧模型销毁
-      if (oldModel) {
-        oldModel.dispose();
-      }
-      //设置新模型
-      this.editor.setModel(newModel);
-      // this.decorations = this.editor.deltaDecorations(
-      //   [],
-      //   [
-      //     {
-      //       range: new monaco.Range(1, 1, 1, 1),
-      //       options: {
-      //         isWholeLine: true,
-      //         className: "default",
-      //         glyphMarginClassName: "default",
-      //       },
-      //     },
-      //   ]
-      // );
-
-      // console.log(this.decorations);
-    },
     generateVis(){
       // this.$message({
       //     showClose: true,
@@ -432,31 +396,30 @@ export default {
     },
     combinedChange(combined){
       this.combined = combined
-      this.codeLineHighlight([], [])
-      d3.selectAll('div.glyph_margin').classed("myGlyphMarginClass", false)
+      this.codeLineHighlight()
+      this.codeGlyphHighlight()
       handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion);
     },
     proportionChange(proportion){
       this.proportion = proportion
       changeProportionView(+ this.combined, this.proportion);
     },
-    codeGlyphHighlight(lines) {
-      // d3.selectAll('div.cgmr.codicon').classed("myGlyphMarginClass", false)
-      this.editor.deltaDecorations([], 
+    codeGlyphHighlight(lines = []) {
+      this.glyph_decorations = this.editor.deltaDecorations(this.glyph_decorations, 
         lines.map((line, key) => {
           return {
             range: new monaco.Range(line, 1, line, 1),
             options: {
-                glyphMarginClassName: "glyph_margin",
+                glyphMarginClassName: "myGlyphMarginClass",
             },
           }
         })
       );
     },
-    codeLineHighlight(lines, changes) {
-      d3.selectAll('span[class^="mtk"]').classed("create", false).classed("transform", false).classed("delete", false)
+    codeLineHighlight(lines = [], changes = []) {
+      // d3.selectAll('span[class^="mtk"]').classed("create", false).classed("transform", false).classed("delete", false)
 
-      this.editor.deltaDecorations([], 
+      this.line_decorations = this.editor.deltaDecorations(this.line_decorations, 
         lines.map((line, key) => {
           return {
             range: new monaco.Range(line, 1, line, 1),
@@ -471,7 +434,7 @@ export default {
       );
       //  start, end 弃用，直接用数组绘制每一行
       //  https://microsoft.github.io/monaco-editor/playground.html#interacting-with-the-editor-rendering-glyphs-in-the-margin
-      //   this.editor.deltaDecorations(this.decorations, [{
+      //   this.editor.deltaDecorations(this.line_decorations, [{
       //     range: new monaco.Range(start, 1, end, 1),
       //     options: {
       //         isWholeLine: true,
@@ -495,56 +458,64 @@ export default {
           return unescape(data)
     },
     getScriptData(case_file = "") {
-            // console.log(case_file);
-            var path = 'data/' + case_file
-            // console.log(path);
-            const file = this.unicodeToUtf8(this.loadFile(path))
-            if (case_file === 'case2script.txt'){
-              this.language = 'r'
-            }
-            else{
-              this.language = 'python'
-            }
-            this.changeModel(this.language, file, false);
-        },
-        changeModel(lang = "r", script_content = "", flag = true) {
-          //创建新模型，value为旧文本，lang 为语言
-          var oldModel = this.editor.getModel(); //获取旧模型
-          if (flag) {
-            // flag 为 true，说明是界面传来的，注意不能用 script_content === "" 来判断，因为 第二个参数传进来的是 VueComponent
-            if (lang === this.language) return;
-            // console.log("script_content:", script_content);
-            script_content = this.editor.getValue();
-            this.language = lang;
-          }
-          // modesIds即为支持语言
-          // var modesIds = monaco.languages.getLanguages().map(function (lang) {
-          //   return lang.id;
-          // });
-          var newModel = monaco.editor.createModel(script_content, lang);
+        // console.log(case_file);
+        var path = 'data/' + case_file
+        // console.log(path);
+        const file = this.unicodeToUtf8(this.loadFile(path))
+        if (case_file === 'case2script.txt'){
+          this.language = 'r'
+        }
+        else{
+          this.language = 'python'
+        }
+        this.changeModel(this.language, file, false);
+    },
+    changeModel(lang = "r", script_content = "", flag = true) {
+      //创建新模型，value为旧文本，lang 为语言
+      var oldModel = this.editor.getModel(); //获取旧模型
+      if (flag) {
+        // flag 为 true，说明是界面传来的，注意不能用 script_content === "" 来判断，因为 第二个参数传进来的是 VueComponent
+        if (lang === this.language) return;
+        // console.log("script_content:", script_content);
+        script_content = this.editor.getValue();
+        this.language = lang;
+      }
+      // modesIds即为支持语言
+      // var modesIds = monaco.languages.getLanguages().map(function (lang) {
+      //   return lang.id;
+      // });
+      var newModel = monaco.editor.createModel(script_content, lang);
 
-          //将旧模型销毁
-          if (oldModel) {
-            oldModel.dispose();
-          }
-          //设置新模型
-          this.editor.setModel(newModel);
-          this.decorations = this.editor.deltaDecorations(
-            [],
-            [
-              {
-                range: new monaco.Range(1, 1, 1, 1),
-                options: {
-                  isWholeLine: true,
-                  className: "myContentClass2",
-                  glyphMarginClassName: "myGlyphMarginClass2",
-                },
-              },
-            ]
-          );
-
-          // console.log(this.decorations);
-        },
+      //将旧模型销毁
+      if (oldModel) {
+        oldModel.dispose();
+      }
+      //设置新模型
+      this.editor.setModel(newModel);
+      this.line_decorations = this.editor.deltaDecorations(
+        [],
+        [
+          {
+            range: new monaco.Range(1, 1, 1, 1),
+            options: {
+              isWholeLine: true,
+              className: "default"
+            },
+          },
+        ]
+      );
+      this.glyph_decorations = this.editor.deltaDecorations(
+        [],
+        [
+          {
+            range: new monaco.Range(1, 1, 1, 1),
+            options: {
+              glyphMarginClassName: "default",
+            },
+          },
+        ]
+      );
+    },
   },
   mounted() {
     this.initEditor();

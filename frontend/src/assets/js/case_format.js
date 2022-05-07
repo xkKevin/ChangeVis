@@ -1121,6 +1121,7 @@ const case1 = {
                 input_nan_posi: [],
                 output_nan_posi: [],
                 step: 1
+
             }]
         },
         Performance: {
@@ -1134,9 +1135,7 @@ const case1 = {
                 input_col: ['Info'],
                 transform_icon: 'create_columns_extract',
                 unchange: [],
-                create: [],
-                delete: [],
-                transform: [{
+                create: [{
                     posi: [0, 1],
                     case: {
                         input_case: [
@@ -1145,6 +1144,8 @@ const case1 = {
                         output_case: ['Bob', 'Lily', 'Ivy', 'Alan', 'John', 'Iris', 'David', 'Tony', 'Eric', 'Jim', 'Ken', 'Judy', 'Mandy', 'Tina', 'Sara', 'Diana', 'Amy', 'Kelly', 'Leo', 'Tom', 'Mark', 'William', 'Gary', 'Marlon', 'Evan', 'Hardy', 'Betty', 'Polly'],
                     }
                 }],
+                delete: [],
+                transform: [],
                 input_nan_posi: [],
                 output_nan_posi: [],
                 step: 2
