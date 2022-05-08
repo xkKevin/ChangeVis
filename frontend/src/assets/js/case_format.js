@@ -1826,7 +1826,6 @@ const case2 = {
         10: [14],
         11: [15],
         12: [16],
-        13: [17],
     },
     pipeline_data: [{
             type: 'columns',
@@ -1846,9 +1845,9 @@ const case2 = {
             row_num: 31,
             change_type: 'delete',
             input_posi: [31, 32, 33, 34, 35],
-            output_delete_posi: [],
+            output_delete_posi: [31, 32, 33, 34, 35],
             output_create_posi: [],
-            output_transform_posi: [31, 32, 33, 34, 35],
+            output_transform_posi: [],
             step: [2, 2],
             pre: 1
         },
@@ -1954,24 +1953,12 @@ const case2 = {
             column_num: 8,
             row_num: 31,
             change_type: 'transform',
-            input_posi: [3, 4],
-            output_delete_posi: [],
-            output_create_posi: [6],
-            output_transform_posi: [],
-            step: [11, 11],
-            pre: 10
-        },
-        {
-            type: 'columns',
-            column_num: 8,
-            row_num: 31,
-            change_type: 'transform',
             input_posi: [6, 7],
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [1, 2],
-            step: [12, 12],
-            pre: 11
+            step: [11, 11],
+            pre: 10
         },
         {
             type: 'rows',
@@ -1982,8 +1969,8 @@ const case2 = {
             output_delete_posi: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
             output_create_posi: [],
             output_transform_posi: [],
-            step: [13, 13],
-            pre: 12
+            step: [12, 12],
+            pre: 11
         }
     ],
     change_data: {
@@ -1993,7 +1980,7 @@ const case2 = {
                 input_row_num: 31,
                 output_row_num: 31,
                 input_col: [],
-                transform_icon: 'delete_columns_select_keep',
+                transform_icon: 'delete_rows_slice_keep',
                 unchange: [{
                     posi: [0, 0.323],
                     case: {
@@ -2043,7 +2030,7 @@ const case2 = {
                     input_row_num: 36,
                     output_row_num: 36,
                     input_col: ['Model'],
-                    transform_icon: 'transform_columns_repalce_na',
+                    transform_icon: 'transform_columns_replace_na',
                     unchange: [{
                         posi: [0.139, 1],
                         case: {
@@ -2305,49 +2292,80 @@ const case2 = {
                 }
             ],
             combine: [{
-                type: 'change',
-                input_row_num: 31,
-                output_row_num: 31,
-                input_col: ['Rate'],
-                transform_icon: 'transform_columns_mutate',
-                unchange: [],
-                create: [],
-                delete: [],
-                transform: [{
-                        posi: [0, 0.387],
+                    type: 'change',
+                    input_row_num: 31,
+                    output_row_num: 31,
+                    input_col: ['Value_Retention'],
+                    transform_icon: 'create_columns_mutate',
+                    unchange: [],
+                    create: [{
+                        posi: [0, 1],
                         case: {
                             input_case: [
-                                [0.764, 0.798, 0.794, 0.725, 0.745, 0.745, 0.706, 0.728, 0.779, 0.744, 0.774, 0.757]
+                                [0.863, 0.764, 0.69, 0.521, 0.607, 0.529, 0.81, 0.798, 0.674, 0.803, 0.794, 0.725, 0.676, 0.639, 0.386, 0.745, 0.676, 0.745, 0.824, 0.706, 0.65, 0.599, 0.39, 0.808, 0.694, 0.728, 0.779, 0.744, 0.646, 0.774, 0.757]
                             ],
-                            output_case: ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B']
-                        },
-                        step: 7
-                    },
-                    {
-                        posi: [0, 0.322],
+                            output_case: ['A', '0.764', '0.69', '0.521', '0.607', '0.529', 'A', '0.798', '0.674', 'A', '0.794', '0.725', '0.676', '0.639', '0.386', '0.745', '0.676', '0.745', 'A', '0.706', '0.65', '0.599', '0.39', 'A', '0.694', '0.728', '0.779', '0.744', '0.646', '0.774', '0.757'],
+                        }
+                    }],
+                    delete: [],
+                    transform: [],
+                    input_nan_posi: [],
+                    output_nan_posi: [],
+                    step: 6
+                },
+                {
+                    type: 'change',
+                    input_row_num: 31,
+                    output_row_num: 31,
+                    input_col: ['Rate'],
+                    transform_icon: 'transform_columns_mutate',
+                    unchange: [{
+                        posi: [0, 0.161],
                         case: {
                             input_case: [
-                                [0.69, 0.607, 0.674, 0.676, 0.639, 0.676, 0.65, 0.599, 0.694, 0.646]
+                                ['A', 'A', 'A', 'A', 'A']
                             ],
-                            output_case: ['C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C']
+                            output_case: ['A', 'A', 'A', 'A', 'A']
+                        }
+                    }],
+                    create: [],
+                    delete: [],
+                    transform: [{
+                            posi: [0.161, 0.548],
+                            case: {
+                                input_case: [
+                                    [0.764, 0.798, 0.794, 0.725, 0.745, 0.745, 0.706, 0.728, 0.779, 0.744, 0.774, 0.757]
+                                ],
+                                output_case: ['B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B', 'B']
+                            },
+                            step: 7
                         },
-                        step: 8
-                    },
-                    {
-                        posi: [0, 0.129],
-                        case: {
-                            input_case: [
-                                [0.521, 0.529, 0.386, 0.39]
-                            ],
-                            output_case: ['F', 'F', 'F', 'F']
+                        {
+                            posi: [0.548, 0.871],
+                            case: {
+                                input_case: [
+                                    [0.69, 0.607, 0.674, 0.676, 0.639, 0.676, 0.65, 0.599, 0.694, 0.646]
+                                ],
+                                output_case: ['C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C']
+                            },
+                            step: 8
                         },
-                        step: 9
-                    }
-                ],
-                step: 7,
-                input_nan_posi: [],
-                output_nan_posi: [],
-            }]
+                        {
+                            posi: [0.871, 1],
+                            case: {
+                                input_case: [
+                                    [0.521, 0.529, 0.386, 0.39]
+                                ],
+                                output_case: ['F', 'F', 'F', 'F']
+                            },
+                            step: 9
+                        }
+                    ],
+                    step: 7,
+                    input_nan_posi: [],
+                    output_nan_posi: [],
+                }
+            ]
         }
     },
     column_change_data: {

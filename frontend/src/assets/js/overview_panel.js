@@ -81,7 +81,7 @@ function add_event(group_flag, proportion_flag) {
 
                 select_data = generate_select_data(select_steps[0], select_steps[select_steps.length - 1], group_flag)
                 changeProportionView(group_flag, proportion_flag)
-                console.log(select_code);
+                    // console.log(select_code);
                 vm.codeLineHighlight(select_code.lines, select_code.changes)
                 vm.codeGlyphHighlight()
             }
