@@ -13,7 +13,7 @@ def generateRate(df, rateInterval, rate, inputCol, outputCol):
     df.loc[df[inputCol] >= rateInterval[intervalNum - 1], outputCol] = rate[intervalNum]
     return df
 
-staff = pd.read_csv(r"C:\Users\Luo Zhongsu\Desktop\difference\case1\case1.csv")
+staff = pd.read_csv("staff.csv")
 staff = staff[staff.Attendance <= 30]
 staff['Staff'] = staff.Info.str.extract('([A-z]+)')
 staff = abbreviated(staff, 'Department', ['Technical Department', 'Manage Department', 'Sales Department'], ['TD', 'MD', 'SD'])

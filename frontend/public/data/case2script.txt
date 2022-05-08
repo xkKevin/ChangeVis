@@ -1,16 +1,17 @@
 library(tidyr)
 library(dplyr)
 
-car = read.csv('C:/Users/Luo Zhongsu/Desktop/difference/case2/a.csv', na.strings = "")
-car = replace_na(car, list(Model = "Unknown"))
-car = drop_na(car, Launch_Date)
-car = unite(car, "Model", Manufacturer,Model)
-car = extract(car, 'Launch_Date', "Launch_Year", '(^\\d+)', remove = FALSE)
-car=mutate(car, Value_Retention=Resale_Price / Sale_Price)
-car <- mutate(car, Rate = replace(Value_Retention, Value_Retention > 0.8, "A"))
-car <- mutate(car, Rate = replace(Rate, Value_Retention > 0.7 & Value_Retention<=0.8, "B"))
-car <- mutate(car, Rate = replace(Rate, Value_Retention > 0.55 & Value_Retention<=0.7, "C"))
-car <- mutate(car, Rate= replace(Rate, Value_Retention < 0.55, "F"))
-car = arrange(car, Value_Retention)
-car = select(car, 1, 8, 7, 2, 3, 4, 5, 6)
-car = slice(car, 1:10)
+car = read.table('car.xlsx', na.strings = "")
+car %>% 
+    replace_na(list(Model = "Unknown")) %>%
+    drop_na(Launch_Date) %>%
+    unite("Model", Manufacturer,Model) %>%
+    extract('Launch_Date', "Launch_Year", '(^\\d+)', remove = FALSE) %>%
+    mutate(Value_Retention=Resale_Price / Sale_Price) %>%
+    mutate(Rate = replace(Value_Retention, Value_Retention > 0.8, "A")) %>%
+    mutate(Rate = replace(Rate, Value_Retention > 0.7 & Value_Retention<=0.8, "B")) %>%
+    mutate(Rate = replace(Rate, Value_Retention > 0.55 & Value_Retention<=0.7, "C")) %>%
+    mutate(Rate= replace(Rate, Value_Retention < 0.55, "F")) %>%
+    arrange(Value_Retention) %>%
+    select(1, 7, 6, 2, 3, 4, 5) %>%
+    slice(1:10)
