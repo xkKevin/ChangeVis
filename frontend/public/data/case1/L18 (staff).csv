@@ -9,12 +9,12 @@ TD-Tony,C,87.5,24,21
 TD-Eric,B,100.0,23,23
 TD-Jim,C,95.45,22,21
 TD-Mandy,B,104.17,24,25
-Manage Department-Tina,A,122.73,22,27
-Manage Department-Sara,A,127.27,22,28
-Manage Department-Diana,B,109.09,22,24
-Manage Department-Kelly,B,100.0,26,26
-Manage Department-Leo,B,109.09,22,24
-Manage Department-Tom,C,95.65,23,22
+MD-Tina,A,122.73,22,27
+MD-Sara,A,127.27,22,28
+MD-Diana,B,109.09,22,24
+MD-Kelly,B,100.0,26,26
+MD-Leo,B,109.09,22,24
+MD-Tom,C,95.65,23,22
 SD-Mark,D,78.26,23,18
 SD-William,F,68.97,29,20
 SD-Gary,C,88.46,26,23

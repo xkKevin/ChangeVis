@@ -1,12 +1,12 @@
 Staff,Perf_rate,Achievements,Attendance,Performance
-Manage Department-Sara,A,127.27,22,28
-Manage Department-Tina,A,122.73,22,27
-Manage Department-Diana,B,109.09,22,24
-Manage Department-Leo,B,109.09,22,24
+MD-Sara,A,127.27,22,28
+MD-Tina,A,122.73,22,27
+MD-Diana,B,109.09,22,24
+MD-Leo,B,109.09,22,24
 TD-Mandy,B,104.17,24,25
-Manage Department-Kelly,B,100.0,26,26
+MD-Kelly,B,100.0,26,26
 TD-Eric,B,100.0,23,23
-Manage Department-Tom,C,95.65,23,22
+MD-Tom,C,95.65,23,22
 TD-Iris,C,95.65,23,22
 TD-Jim,C,95.45,22,21
 TD-Alan,C,92.31,26,24

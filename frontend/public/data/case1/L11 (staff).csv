@@ -9,12 +9,12 @@ Info,Department,Attendance,Performance,Staff,Achievements
 10-Eric,TD,23,23,TD-Eric,100.0
 11-Jim,TD,22,21,TD-Jim,95.45
 14-Mandy,TD,24,25,TD-Mandy,104.17
-01-Tina,Manage Department,22,27,Manage Department-Tina,122.73
-02-Sara,Manage Department,22,28,Manage Department-Sara,127.27
-03-Diana,Manage Department,22,24,Manage Department-Diana,109.09
-05-Kelly,Manage Department,26,26,Manage Department-Kelly,100.0
-06-Leo,Manage Department,22,24,Manage Department-Leo,109.09
-07-Tom,Manage Department,23,22,Manage Department-Tom,95.65
+01-Tina,MD,22,27,MD-Tina,122.73
+02-Sara,MD,22,28,MD-Sara,127.27
+03-Diana,MD,22,24,MD-Diana,109.09
+05-Kelly,MD,26,26,MD-Kelly,100.0
+06-Leo,MD,22,24,MD-Leo,109.09
+07-Tom,MD,23,22,MD-Tom,95.65
 01-Mark,SD,23,18,SD-Mark,78.26
 03-William,SD,29,20,SD-William,68.97
 04-Gary,SD,26,23,SD-Gary,88.46
