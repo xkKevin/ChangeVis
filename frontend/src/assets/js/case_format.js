@@ -421,6 +421,7 @@ const case3 = {
     },
     column_change_data: {
         0: {
+            table_path: 'data/case3/L3 (studentScore).csv',
             columns: {
                 'id': {
                     type: 'str'
@@ -436,6 +437,7 @@ const case3 = {
         1: {
             type: 'unchange',
             transform: 'transform_columns_extract',
+            table_path: 'data/case3/L4 (studentScore).csv',
             change: false,
             columns: {
                 'id': {
@@ -452,6 +454,7 @@ const case3 = {
         2: {
             type: 'unchange',
             transform: 'delete_rows_deduplicate',
+            table_path: 'data/case3/L5 (studentScore).csv',
             change: false,
             columns: {
                 'id': {
@@ -468,6 +471,7 @@ const case3 = {
         3: {
             type: 'create',
             transform: 'create_columns_mutate',
+            table_path: 'data/case3/L6 (studentScore).csv',
             change: true,
             columns: {
                 'id': {
@@ -487,6 +491,7 @@ const case3 = {
         4: {
             type: 'create',
             transform: 'create_columns_mutate',
+            table_path: 'data/case3/L7 (studentScore).csv',
             change: true,
             columns: {
                 'id': {
@@ -509,6 +514,7 @@ const case3 = {
         5: {
             type: 'unchange',
             transform: 'transform_columns_mutate',
+            table_path: 'data/case3/L8 (studentScore).csv',
             change: false,
             columns: {
                 'id': {
@@ -532,6 +538,7 @@ const case3 = {
         6: {
             type: 'unchange',
             transform: 'transform_columns_mutate',
+            table_path: 'data/case3/L9 (studentScore).csv',
             change: false,
             columns: {
                 'id': {
@@ -554,6 +561,7 @@ const case3 = {
         7: {
             type: 'unchange',
             transform: 'transform_columns_mutate',
+            table_path: 'data/case3/L10 (studentScore).csv',
             change: false,
             columns: {
                 'id': {
@@ -576,6 +584,7 @@ const case3 = {
         8: {
             type: 'unchange',
             transform: 'transform_columns_mutate',
+            table_path: 'data/case3/L11 (studentScore).csv',
             change: false,
             columns: {
                 'id': {
@@ -598,6 +607,7 @@ const case3 = {
         9: {
             type: 'unchange',
             transform: 'transform_tables_sort_desc',
+            table_path: 'data/case3/L12 (studentScore).csv',
             change: false,
             columns: {
                 'id': {
