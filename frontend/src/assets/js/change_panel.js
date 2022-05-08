@@ -11,7 +11,7 @@ async function handel_change(data, proportion_flag) {
     const height_ratio = change_config.col_height / data.average_row
     const outer_col_height = height_ratio * data.max_row + change_config.icon_size[1] + 2 * change_config.col_border_interval_y + change_config.icon_margin_bottom
 
-    let margin_top = await drawTimeline(data.column_change_data, data.skip_step, timeline_config.margin_top)
+    let margin_top = await drawTimeline(data.column_change_data, data.skip_step, timeline_config.margin_top, data.maxlen)
     let view_width = drawChanges(data.change_data, data.skip_step, height_ratio, outer_col_height, margin_top + change_config.margin_top, proportion_flag)
     return view_width
 }
@@ -24,8 +24,8 @@ function readcsv(path) {
     })
 }
 
-async function drawTimeline(column_change_data, skip_step, margin_top) {
-    let change_svg = d3.select("#tb_changes")
+async function drawTimeline(column_change_data, skip_step, margin_top, maxlen) {
+    let change_svg = d3.select("#tb_changes").append("g")
     let timeline = {
         x: timeline_config.margin_left - timeline_config.line_width / 2,
         y: null
@@ -34,6 +34,9 @@ async function drawTimeline(column_change_data, skip_step, margin_top) {
     let cdi = 0
     let csv_data = null
     let col_data = {}
+    let offset_x = maxlen * timeline_config.icon_width // 向右偏移量
+    console.log(offset_x);
+    timeline.x += offset_x
 
     for (let key in column_change_data) {
 
@@ -46,10 +49,9 @@ async function drawTimeline(column_change_data, skip_step, margin_top) {
                     col_data[cname].push(ci[cname])
                 })
             })
-            console.log(col_data);
         }
 
-        let margin_left = timeline_config.margin_left
+        let margin_left = timeline_config.margin_left + offset_x
 
         change_svg.append("circle")
             .attr("r", timeline_config.radius)
@@ -211,6 +213,9 @@ function drawIcon(svg, transform_icon, x, y, icon_width) {
                 .attr('y', y)
                 // .attr('width', change_config.icon_size[0])
                 .attr('height', change_config.icon_size[1])
+
+            image_element.append("svg:title").text(transform_icon.split("_").join(" "))
+
             if (transform_icon === 'transform_columns_rearrange') {
                 let img_box = image_element.node().getBBox()
                 let cx = img_box.x + img_box.width / 2

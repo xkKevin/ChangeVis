@@ -40,7 +40,7 @@ const change_config = {
 
 const timeline_config = {
     'margin_top': 80,
-    'margin_left': 220,
+    'margin_left': 30,
     'col_width': 180,
     'col_interval': 0,
     'knot_interval': 65,

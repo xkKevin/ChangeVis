@@ -375,7 +375,7 @@ export default {
             this.proportion = false;
             // console.log(this.one_case);
             let { overview_width, changeview_width } = await handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion);
-            console.log(overview_width, changeview_width);
+            // console.log(overview_width, changeview_width);
             this.overview_width = overview_width;
             this.changeview_width = changeview_width;
             // console.log(this.one_case);

@@ -175,6 +175,7 @@ function generate_select_data(start, end, group_flag) {
     let columns = ['index'] // change view 中应该显示哪些列
     let timeline_point_data = {}
     let transform_list = []
+    let transform_list_maxlen = 0
     skip_step = start
     tmp_data.skip_step = start
 
@@ -204,6 +205,9 @@ function generate_select_data(start, end, group_flag) {
                 timeline_point_data.type = overall_data.column_change_data[key].type
                 transform_list.push(overall_data.column_change_data[key].transform)
                 timeline_point_data.transform_list = transform_list
+                if (transform_list.length > transform_list_maxlen) {
+                    transform_list_maxlen = transform_list.length
+                }
                 tmp_data.column_change_data[key] = timeline_point_data
 
                 transform_list = []
@@ -232,6 +236,7 @@ function generate_select_data(start, end, group_flag) {
     })
     tmp_data.average_row = d3.mean(rows)
     tmp_data.max_row = d3.max(rows)
+    tmp_data.maxlen = transform_list_maxlen
 
     console.log(tmp_data);
     return tmp_data
