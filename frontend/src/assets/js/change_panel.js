@@ -1,5 +1,6 @@
 import { change_color, change_config, timeline_config } from '@/assets/js/config'
 import * as d3 from "d3"
+import * as d3box from "d3-boxplot"
 
 var text_size_ratio = 6 * 16 / 65 / 20
 
@@ -11,8 +12,8 @@ async function handel_change(data, proportion_flag) {
     const outer_col_height = height_ratio * data.max_row + change_config.icon_size[1] + 2 * change_config.col_border_interval_y + change_config.icon_margin_bottom
 
     let margin_top = await drawTimeline(data.column_change_data, data.skip_step, timeline_config.margin_top)
-    drawChanges(data.change_data, data.skip_step, height_ratio, outer_col_height, margin_top + change_config.margin_top, proportion_flag)
-
+    let view_width = drawChanges(data.change_data, data.skip_step, height_ratio, outer_col_height, margin_top + change_config.margin_top, proportion_flag)
+    return view_width
 }
 
 function readcsv(path) {
@@ -32,12 +33,20 @@ async function drawTimeline(column_change_data, skip_step, margin_top) {
 
     let cdi = 0
     let csv_data = null
+    let col_data = {}
 
     for (let key in column_change_data) {
 
-        if (cdi === 0) {
+        if (cdi === 0 || cdi === Object.keys(column_change_data).length - 1) {
+            col_data = {}
             csv_data = await readcsv(column_change_data[key].table_path)
-            console.log(csv_data);
+            csv_data.forEach(ci => {
+                csv_data.columns.forEach(cname => {
+                    if (col_data[cname] === undefined) col_data[cname] = []
+                    col_data[cname].push(ci[cname])
+                })
+            })
+            console.log(col_data);
         }
 
         let margin_left = timeline_config.margin_left
@@ -81,9 +90,16 @@ async function drawTimeline(column_change_data, skip_step, margin_top) {
         for (let ci in columns) {
             drawText(change_svg, ci, change_config.title_font_size, margin_left, text_y, [timeline_config.col_width / 2, 0], max_len)
 
-            if (cdi === 0) {
-                if (columns[ci].type === 'num') {
 
+            if (cdi === 0 || cdi === Object.keys(column_change_data).length - 1) {
+                let glyph_y = cdi === 0 ? text_y - 55 : text_y + 30
+                switch (columns[ci].type) {
+                    case 'num':
+                        drawBox(change_svg, margin_left + 10, glyph_y, timeline_config.col_width - 20, 30, col_data[ci].map(Number))
+                        break
+                    case 'str':
+                        drawBar(change_svg, margin_left + 10, glyph_y, timeline_config.col_width - 20, 30, typeCount(col_data[ci]))
+                        break
                 }
             }
 
@@ -95,7 +111,86 @@ async function drawTimeline(column_change_data, skip_step, margin_top) {
     }
     d3.selectAll(".timeline").lower()
 
-    return margin_top
+    return margin_top + 50
+}
+
+function typeCount(data) {
+    let count = {}
+    data.forEach(d => {
+        if (count[d] === undefined) count[d] = 0
+        count[d] += 1
+    })
+
+    // let values = Object.values(count)
+    // return { count, d3.min(values), d3.max(values) }
+    return count
+}
+
+function drawBar(svg, x, y, width, height, data, color = '#666') {
+    const plot = svg.append("g").classed("plot", "true")
+    const data_values = Object.values(data)
+    const data_keys = Object.keys(data)
+    const max_k = data_keys[d3.maxIndex(data_values)]
+    const max_v = data[max_k]
+    const min_k = data_keys[d3.minIndex(data_values)]
+    const min_v = data[min_k]
+
+    let text = max_k + ': ' + max_v + ' (Max)\n'
+    text += min_k + ': ' + min_v + ' (Min)'
+
+    const xScale = d3.scaleBand()
+        .domain(Object.keys(data))
+        .range([0, width])
+
+    const yScale = d3.scaleLinear()
+        .domain([0, max_v])
+        .range([0, height])
+
+    for (let i in data) {
+        plot.append('rect')
+            .attr("height", yScale(data[i]))
+            .attr("width", xScale.bandwidth())
+            .attr("fill", color)
+            // .attr("stroke", color)
+            .attr("x", xScale(i))
+            .attr("y", height - yScale(data[i]))
+            .attr("opacity", 0.8)
+            // .attr("y", (height - yScale(data[i]) / 2))
+    }
+    plot.attr("transform", `translate(${x}, ${y-5})`)
+        .append("svg:title").text(text)
+}
+
+function drawBox(svg, x, y, width, height, data, color = '#666') {
+
+    // https://github.com/akngs/d3-boxplot
+    const plot = svg.append("g").classed("plot", "true")
+
+    const stats = d3box.boxplotStats(data)
+    const scale = d3.scaleLinear()
+        .domain(d3.extent(data))
+        .range([0, width])
+
+    let outliers = []
+    const boxplot = d3box.boxplot()
+        .jitter(0)
+        .showInnerDots(false)
+        .scale(scale)
+        .vertical(0)
+        .boxwidth(height)
+        .key(i => outliers.push(i))
+
+
+    plot.datum(stats).call(boxplot)
+    plot.attr("transform", `translate(${x}, ${y})`)
+        .selectAll('*').attr('color', color)
+
+
+    let text = "Max: " + d3.max(data)
+    text += "\nMean: " + (+d3.mean(data).toFixed(2))
+    text += "\nMin: " + d3.min(data)
+    text += "\nOutliers: " + outliers.sort(d3.ascending).join(",")
+    plot.append("svg:title").text(text)
 }
 
 /**
@@ -129,8 +224,7 @@ function drawIcon(svg, transform_icon, x, y, icon_width) {
 
 
 function drawChanges(change_data, skip_step, height_ratio, outer_col_height, margin_top = change_config.margin_top, proportion_flag = false) {
-    let change_svg = d3.select("#tb_changes") // overview_svg  tb_changes
-        // change_svg.selectChildren().remove()
+    let change_svg = d3.select("#tb_changes").append("g") // overview_svg  tb_changes
 
     let margin_left = change_config.margin_left
     let start_flag = true
@@ -327,7 +421,7 @@ function drawChanges(change_data, skip_step, height_ratio, outer_col_height, mar
         //     .attr("transform", `translate(${outer_col_width/2}, 0)`)
         //     .attr("text-anchor", "middle")
     }
-
+    return change_svg.node().getBBox().width + change_config.margin_left * 2
 }
 
 function drawText(svg, text, font_size, x, y, transform, max_len = change_config.text_max_len, anchor = "middle") {

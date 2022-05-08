@@ -1,7 +1,6 @@
 import { change_color, overview_config } from '@/assets/js/config'
 import { handel_change } from "@/assets/js/change_panel"
 import * as d3 from "d3"
-import * as d3box from "d3-boxplot"
 
 const ELK = require('elkjs')
 
@@ -29,14 +28,16 @@ async function handel_overview(data, group_flag = 0, proportion_flag = false) {
     overall_data = data
     let { graph, height_ratio, end_step } = generateGraph(data, group_flag)
     await generatePos(graph)
-    drawOverview(data.pipeline_data, graph, height_ratio, group_flag, proportion_flag)
+    let overview_width = drawOverview(data.pipeline_data, graph, height_ratio, group_flag, proportion_flag)
     select_data = generate_select_data(0, end_step, group_flag)
-    await changeProportionView(group_flag, proportion_flag)
+    let changeview_width = await changeProportionView(group_flag, proportion_flag)
+    return { overview_width, changeview_width }
 }
 
 async function changeProportionView(group_flag, proportion_flag) {
-    await handel_change(select_data, proportion_flag)
+    let view_width = await handel_change(select_data, proportion_flag)
     add_event(group_flag, proportion_flag)
+    return view_width
 }
 
 function add_event(group_flag, proportion_flag) {
@@ -50,6 +51,14 @@ function add_event(group_flag, proportion_flag) {
             vm.codeGlyphHighlight()
         }
     })
+
+    d3.selectAll(".plot")
+        .on("mouseover", function() {
+            d3.select(this).classed("select", true)
+        })
+        .on("mouseout", function() {
+            d3.select(this).classed("select", false)
+        })
 
     // 为Pipeline表格添加事件
     d3.selectAll(".table")
@@ -286,6 +295,7 @@ function generateGraph(data, group_flag) {
 function drawOverview(pipeline_data, graph, height_ratio, group_flag, proportion_flag) {
     let overview_svg = d3.select("#overview_svg") // overview_svg  tb_changes
     overview_svg.selectChildren().remove()
+    overview_svg = overview_svg.append("g")
 
     let line_flag = -1 // -1 表示上；1 表示下
     graph.children.forEach(tbl => {
@@ -399,6 +409,8 @@ function drawOverview(pipeline_data, graph, height_ratio, group_flag, proportion
             drawRows(tbl_area, tbl_line, p_data.output_create_posi, change_color.create, tbl, p_data, height_ratio)
         }
     })
+
+    return overview_svg.node().getBBox().width + 35
 }
 
 /**

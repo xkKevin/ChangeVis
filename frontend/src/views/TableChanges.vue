@@ -148,7 +148,7 @@
             </el-switch>
           </div>
       </el-row>
-      <el-row style="height: 180px">
+      <el-row style="height: 180px;">
         <svg id="overview_svg" width="100%" height="100%"></svg>
       </el-row>
       <el-row style="height: calc(100% - 230px)">
@@ -301,19 +301,24 @@ export default {
                 case2: case2,
                 case3: case3,
             },
-      one_case: 'Select a case'
+      one_case: 'Select a case',
+      overview_width: 0, 
+      changeview_width: 0
     };
   },
   components: {
   },
   methods: {
-    selectCase(one_case = 'case3') {
+    async selectCase(one_case = 'case3') {
             this.one_case = one_case;
             this.getScriptData(this.cases[this.one_case]);
             this.combined = false;
             this.proportion = false;
             // console.log(this.one_case);
-            handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion);
+            let { overview_width, changeview_width } = await handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion);
+            console.log(overview_width, changeview_width);
+            this.overview_width = overview_width;
+            this.changeview_width = changeview_width;
             // console.log(this.one_case);
             // this.getTableData(this.cases[this.one_case]);
         },
@@ -389,17 +394,17 @@ export default {
       }
     },
     generateVis(){
-      // this.$message({
-      //     showClose: true,
-      //     message: 'Test'
-      // });
-      handel_overview(this.one_case);
+      let { overview_width, changeview_width } = handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion);
+      this.overview_width = overview_width;
+      this.changeview_width = changeview_width;
     },
     combinedChange(combined){
       this.combined = combined
       this.codeLineHighlight()
       this.codeGlyphHighlight()
-      handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion);
+      let { overview_width, changeview_width } = handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion);
+      this.overview_width = overview_width;
+      this.changeview_width = changeview_width;
     },
     proportionChange(proportion){
       this.proportion = proportion
