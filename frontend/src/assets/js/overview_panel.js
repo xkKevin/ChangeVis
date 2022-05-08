@@ -1,6 +1,7 @@
 import { change_color, overview_config } from '@/assets/js/config'
 import { handel_change } from "@/assets/js/change_panel"
 import * as d3 from "d3"
+import * as d3box from "d3-boxplot"
 
 const ELK = require('elkjs')
 
@@ -30,11 +31,11 @@ async function handel_overview(data, group_flag = 0, proportion_flag = false) {
     await generatePos(graph)
     drawOverview(data.pipeline_data, graph, height_ratio, group_flag, proportion_flag)
     select_data = generate_select_data(0, end_step, group_flag)
-    changeProportionView(group_flag, proportion_flag)
+    await changeProportionView(group_flag, proportion_flag)
 }
 
-function changeProportionView(group_flag, proportion_flag) {
-    handel_change(select_data, proportion_flag)
+async function changeProportionView(group_flag, proportion_flag) {
+    await handel_change(select_data, proportion_flag)
     add_event(group_flag, proportion_flag)
 }
 
@@ -176,7 +177,9 @@ function generate_select_data(start, end, group_flag) {
                 let tran_cols = Object.keys(overall_data.column_change_data[key].columns)
                 columns = columns.concat(tran_cols.filter(c => !columns.includes(c))) // 取并集
 
-                timeline_point_data.columns_list = tran_cols
+                timeline_point_data.table_path = overall_data.column_change_data[key].table_path
+                    // timeline_point_data.columns_list = tran_cols
+                timeline_point_data.columns = overall_data.column_change_data[key].columns
                 timeline_point_data.type = overall_data.column_change_data[key].type
                 transform_list.push(overall_data.column_change_data[key].transform)
                 timeline_point_data.transform_list = transform_list

@@ -268,6 +268,7 @@
 <script>
 // import axios from "axios";
 import * as d3 from "d3";
+import * as d3box from "d3-boxplot"
 import * as monaco from "monaco-editor"; // https://www.cnblogs.com/xuhaoliang/p/13803230.html
 
 import {handel_overview, sendVue, changeProportionView} from "@/assets/js/overview_panel"
@@ -306,7 +307,7 @@ export default {
   components: {
   },
   methods: {
-    selectCase(one_case = 'case1') {
+    selectCase(one_case = 'case3') {
             this.one_case = one_case;
             this.getScriptData(this.cases[this.one_case]);
             this.combined = false;
@@ -392,7 +393,7 @@ export default {
       //     showClose: true,
       //     message: 'Test'
       // });
-      handel_overview(case1);
+      handel_overview(this.one_case);
     },
     combinedChange(combined){
       this.combined = combined
@@ -526,6 +527,7 @@ export default {
     this.drawTag("tag2", "Visualization Panel");
     this.drawTag("tag3", "Data Panel");
     window.d3 = d3;
+    window.d3box = d3box;
     window.vue = this;
     sendVue(this)
   },
