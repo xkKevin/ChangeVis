@@ -152,6 +152,7 @@ function add_event(group_flag, proportion_flag) {
             let code_glyph_lines = []
             steps.forEach(si => {
                 code_glyph_lines = code_glyph_lines.concat(overall_data.step2code[si])
+                    // console.log(vm.language);
             })
             vm.codeGlyphHighlight(code_glyph_lines)
         })

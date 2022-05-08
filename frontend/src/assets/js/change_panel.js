@@ -460,4 +460,4 @@ function fillColorText(svg, x, y, height, color, text = undefined) {
 }
 
 
-export { handel_change }
+export { handel_change, readcsv }
