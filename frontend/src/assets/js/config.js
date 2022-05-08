@@ -6,7 +6,8 @@ const change_color = {
     'nan': '#ffffff',
     'sort': ['#d4fcff', '#1f78b4'], // [min, max]
     'line': "black",
-    'col_bg': "#f5f4ff"
+    'col_bg': "#f5f4ff",
+    'glyph': "#ff7f00"
 }
 
 const overview_config = {

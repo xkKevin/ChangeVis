@@ -2099,6 +2099,7 @@ const case2 = {
                 transform_icon: 'delete_rows_slice_keep',
                 unchange: [{
                     posi: [0, 0.323],
+                    triangle: '1:10',
                     case: {
                         input_case: [],
                         output_case: [],
@@ -2493,7 +2494,7 @@ const case2 = {
                     type: 'str'
                 },
                 'Launch_Date': {
-                    type: 'date'
+                    type: 'str'
                 },
                 'Sale_Price': {
                     type: 'num'
