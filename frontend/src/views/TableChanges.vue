@@ -353,7 +353,6 @@ export default {
       // console.log(column.property.slice(2,));
             if (column.property.slice(0,10) !== 'ChangeVis_') {
               let tempColName = 'ChangeVis_' + column.property
-              console.log(row);
               if (row[tempColName] == -1) {
                 return 'col-white'
               } else if (row[tempColName] == 0) {
@@ -362,7 +361,6 @@ export default {
                 this.existCreate = true
                 return 'col-green'
               } else if (row[tempColName] == 2) {
-                console.log(row);
                 this.existDelete = true
                 return 'col-red'
               } else if (row[tempColName] == 3) {

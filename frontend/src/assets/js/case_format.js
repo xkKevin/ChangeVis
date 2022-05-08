@@ -2519,7 +2519,7 @@ const case2 = {
                     type: 'str'
                 },
                 'Launch_Date': {
-                    type: 'date'
+                    type: 'str'
                 },
                 'Sale_Price': {
                     type: 'num'
@@ -2545,7 +2545,7 @@ const case2 = {
                     type: 'str'
                 },
                 'Launch_Date': {
-                    type: 'date'
+                    type: 'str'
                 },
                 'Sale_Price': {
                     type: 'num'
@@ -2568,7 +2568,7 @@ const case2 = {
                     type: 'str'
                 },
                 'Launch_Date': {
-                    type: 'date'
+                    type: 'str'
                 },
                 'Sale_Price': {
                     type: 'num'
@@ -2591,7 +2591,7 @@ const case2 = {
                     type: 'str'
                 },
                 'Launch_Date': {
-                    type: 'date'
+                    type: 'str'
                 },
                 'Launch_Year': {
                     type: 'num'
@@ -2617,7 +2617,7 @@ const case2 = {
                     type: 'str'
                 },
                 'Launch_Date': {
-                    type: 'date'
+                    type: 'str'
                 },
                 'Launch_Year': {
                     type: 'num'
@@ -2646,7 +2646,7 @@ const case2 = {
                     type: 'str'
                 },
                 'Launch_Date': {
-                    type: 'date'
+                    type: 'str'
                 },
                 'Launch_Year': {
                     type: 'num'
@@ -2678,7 +2678,7 @@ const case2 = {
                     type: 'str'
                 },
                 'Launch_Date': {
-                    type: 'date'
+                    type: 'str'
                 },
                 'Launch_Year': {
                     type: 'num'
@@ -2710,7 +2710,7 @@ const case2 = {
                     type: 'str'
                 },
                 'Launch_Date': {
-                    type: 'date'
+                    type: 'str'
                 },
                 'Launch_Year': {
                     type: 'num'
@@ -2742,7 +2742,7 @@ const case2 = {
                     type: 'str'
                 },
                 'Launch_Date': {
-                    type: 'date'
+                    type: 'str'
                 },
                 'Launch_Year': {
                     type: 'num'
@@ -2774,7 +2774,7 @@ const case2 = {
                     type: 'str'
                 },
                 'Launch_Date': {
-                    type: 'date'
+                    type: 'str'
                 },
                 'Launch_Year': {
                     type: 'num'
@@ -2812,7 +2812,7 @@ const case2 = {
                     type: 'num'
                 },
                 'Launch_Date': {
-                    type: 'date'
+                    type: 'str'
                 },
                 'Launch_Year': {
                     type: 'num'
@@ -2844,7 +2844,7 @@ const case2 = {
                     type: 'num'
                 },
                 'Launch_Date': {
-                    type: 'date'
+                    type: 'str'
                 },
                 'Launch_Year': {
                     type: 'num'
