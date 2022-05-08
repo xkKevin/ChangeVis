@@ -3,27 +3,43 @@ import * as d3 from "d3"
 
 var text_size_ratio = 6 * 16 / 65 / 20
 
-function handel_change(data, proportion_flag) {
+async function handel_change(data, proportion_flag) {
     let change_svg = d3.select("#tb_changes") // overview_svg  tb_changes
     change_svg.selectChildren().remove()
         // 计算行列高度
     const height_ratio = change_config.col_height / data.average_row
     const outer_col_height = height_ratio * data.max_row + change_config.icon_size[1] + 2 * change_config.col_border_interval_y + change_config.icon_margin_bottom
 
-    let margin_top = drawTimeline(data.column_change_data, data.skip_step, timeline_config.margin_top)
+    let margin_top = await drawTimeline(data.column_change_data, data.skip_step, timeline_config.margin_top)
     drawChanges(data.change_data, data.skip_step, height_ratio, outer_col_height, margin_top + change_config.margin_top, proportion_flag)
 
 }
 
+function readcsv(path) {
+    return new Promise((resolve, reject) => {
+        d3.csv(path).then(data => {
+            resolve(data)
+        })
+    })
+}
 
-function drawTimeline(column_change_data, skip_step, margin_top) {
+async function drawTimeline(column_change_data, skip_step, margin_top) {
     let change_svg = d3.select("#tb_changes")
     let timeline = {
         x: timeline_config.margin_left - timeline_config.line_width / 2,
         y: null
     }
 
+    let cdi = 0
+    let csv_data = null
+
     for (let key in column_change_data) {
+
+        if (cdi === 0) {
+            csv_data = await readcsv(column_change_data[key].table_path)
+            console.log(csv_data);
+        }
+
         let margin_left = timeline_config.margin_left
 
         change_svg.append("circle")
@@ -60,18 +76,22 @@ function drawTimeline(column_change_data, skip_step, margin_top) {
         // 绘制列名
         margin_left += timeline_config.radius
         let max_len = text_size_ratio * timeline_config.col_width
-        column_change_data[key].columns_list.forEach(coln => {
-            drawText(change_svg, coln, change_config.title_font_size, margin_left, text_y, [timeline_config.col_width / 2, 0], max_len)
+        let columns = column_change_data[key].columns
 
-            // change_svg.append("text").text(coln)
-            //     .attr("font-size", change_config.title_font_size)
-            //     .attr("x", margin_left).attr("y", text_y)
-            //     .attr("transform", `translate(${timeline_config.col_width/2}, 0)`)
-            //     .attr("text-anchor", "middle")
+        for (let ci in columns) {
+            drawText(change_svg, ci, change_config.title_font_size, margin_left, text_y, [timeline_config.col_width / 2, 0], max_len)
+
+            if (cdi === 0) {
+                if (columns[ci].type === 'num') {
+
+                }
+            }
 
             margin_left += timeline_config.col_width + timeline_config.col_interval
-        })
+        }
+
         margin_top += timeline_config.knot_interval
+        cdi++
     }
     d3.selectAll(".timeline").lower()
 
@@ -346,4 +366,4 @@ function fillColorText(svg, x, y, height, color, text = undefined) {
 }
 
 
-export { handel_change }
+export { handel_change, readcsv }

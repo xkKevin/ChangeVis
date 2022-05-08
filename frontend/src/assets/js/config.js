@@ -39,7 +39,7 @@ const change_config = {
 }
 
 const timeline_config = {
-    'margin_top': 60,
+    'margin_top': 80,
     'margin_left': 220,
     'col_width': 180,
     'col_interval': 0,
