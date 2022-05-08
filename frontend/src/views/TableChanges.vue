@@ -117,7 +117,20 @@
 
         </el-row>
         <el-row style="height: calc(100% - 50px);">
-          
+          <div>
+            <vxe-table
+          border
+          class="mytable-style"
+          :cell-class-name="cellClassName"
+          :data="tableData"
+          >
+            <vxe-column v-for="a in showCol" :key="a" :field="a" :title="a"></vxe-column>
+          <!-- <vxe-column field="sex" title="Sex"></vxe-column>
+          <vxe-column field="age" title="Age"></vxe-column>
+          <vxe-column field="attr1" title="Attr1"></vxe-column>
+          <vxe-column field="address" title="Address" show-overflow></vxe-column> -->
+        </vxe-table>
+          </div>
         </el-row>
       </el-row>
     </el-col>
@@ -300,12 +313,26 @@ export default {
                 case2: case2,
                 case3: case3,
             },
-      one_case: 'Select a case'
+      one_case: 'Select a case',
+      tableData: [],
+      testData:'',
+              selectRow: null,
+              selectColumn: null,
+              showCol: ['id', 'name', 'role']
     };
   },
   components: {
   },
   methods: {
+    cellClassName ({ row, rowIndex, column, columnIndex }) {
+      // console.log(column.property.slice(2,));
+              if (column.property === 'name') {
+                if (row.sex >= 30) {
+                  return 'col-red'
+                } else if (row.age < 30) {
+                  return 'col-orange'
+                }
+              }},
     selectCase(one_case = 'case1') {
             this.one_case = one_case;
             this.getScriptData(this.cases[this.one_case]);
@@ -358,6 +385,8 @@ export default {
     },
     initData() {
         this.selectCase();
+        var Data = d3.csv("data/case1/L3 (staff).csv");
+        console.log(Data);
     },
     initEditor() {
       // 初始化编辑器，确保dom已经渲染
@@ -634,5 +663,22 @@ rect.select {
 .myContentClass {
   background: lightblue;
 }
+
+.mytable-style .vxe-body--row.row-green {
+          background-color: #187;
+          color: #fff;
+        }
+        .mytable-style .vxe-header--column.col-blue {
+          background-color: #2db7f5;
+          color: #fff;
+        }
+        .mytable-style .vxe-body--column.col-red {
+          background-color: red;
+          color: #fff;
+        }
+        .mytable-style .vxe-body--column.col-orange {
+          background-color: #f60;
+          color: #fff;
+        }
 
 </style>
