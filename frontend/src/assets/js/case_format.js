@@ -14,6 +14,38 @@ const case3 = {
         8: [11],
         9: [12],
     },
+    step2data: {
+        0: 'data/data_panel_3/step0.csv',
+        1: 'data/data_panel_3/step1.csv',
+        2: 'data/data_panel_3/step2.csv',
+        3: 'data/data_panel_3/step3.csv',
+        4: 'data/data_panel_3/step4.csv',
+        5: 'data/data_panel_3/step5.csv',
+        6: 'data/data_panel_3/step6.csv',
+        7: 'data/data_panel_3/step7.csv',
+        8: 'data/data_panel_3/step8.csv',
+        9: 'data/data_panel_3/step9.csv',
+    },
+    step2datac: {
+        0: 'data/data_panel_3/step0.csv',
+        1: 'data/data_panel_3/step1.csv',
+        2: 'data/data_panel_3/step2.csv',
+        3: 'data/data_panel_3/step3.csv',
+        8: 'data/data_panel_3/step8c.csv',
+        9: 'data/data_panel_3/step9.csv',
+    },
+    step2columnshow: {
+        0: ['id', 'math', 'art'],
+        1: ['id_0', 'id_1'],
+        2: ['id', 'math', 'art'],
+        3: ['math', 'art', 'total'],
+        4: ['total', 'rate'],
+        5: ['total', 'rate'],
+        6: ['total', 'rate'],
+        7: ['total', 'rate'],
+        8: ['total', 'rate'],
+        9: ['total_8', 'total_9'],
+    },
     pipeline_data: [{
             type: 'columns',
             column_num: 3,
@@ -168,7 +200,7 @@ const case3 = {
                         input_case: [
                             ['01-Bob', '02-Lily', '02-Lily', '03-Ivy', '04-Alan', '05-John', '05-John', '06-Tom', '07-Iris', '07-Iris', '08-David', '09-Tony', '10-Eric', '11-Jim', '11-Jim', '12-Ken', '13-Judy', '14-Mandy', '15-Tina', '15-Tina', '16-Sara', '17-Diana', '18-Amy', '19-Kelly', '20-Leo', '21-Mark', '22-Nick', '23-William', '21-Mark', '24-Gary', '25-Peter', '26-Marlon', '27-Evan', '28-Hardy', '29-Betty', '30-Polly']
                         ],
-                        output_case: ['16', '30', '21', '21', '18', '24', '10', '26', '09', '17', '19', '13', '06', '02', '02', '27', '01', '03', '05', '05', '07', '07', '25', '29', '22', '15', '15', '28', '08', '12', '23', '04', '11', '11', '20', '14'],
+                        output_case: ['01', '02', '02', '03', '04', '05', '05', '06', '07', '07', '08', '09', '10', '11', '11', '12', '13', '14', '15', '15', '16', '17', '18', '19', '20', '21', '22', '23', '21', '24', '25', '26', '27', '28', '29', '30'],
                     }
                 }],
                 input_nan_posi: [],
@@ -653,6 +685,50 @@ const case1 = {
         15: [25],
         16: [26],
     },
+    step2data: {
+        0: 'data/data_panel_1/step0.csv',
+        1: 'data/data_panel_1/step1.csv',
+        2: 'data/data_panel_1/step2.csv',
+        3: 'data/data_panel_1/step3.csv',
+        4: 'data/data_panel_1/step4.csv',
+        5: 'data/data_panel_1/step5.csv',
+        6: 'data/data_panel_1/step6.csv',
+        7: 'data/data_panel_1/step7.csv',
+        8: 'data/data_panel_1/step8.csv',
+        9: 'data/data_panel_1/step9.csv',
+        10: 'data/data_panel_1/step10.csv',
+        11: 'data/data_panel_1/step11.csv',
+        12: 'data/data_panel_1/step12.csv',
+        13: 'data/data_panel_1/step13.csv',
+        14: 'data/data_panel_1/step14.csv',
+        16: 'data/data_panel_1/step16.csv',
+    },
+    step2datac: {
+        0: 'data/data_panel_3/step0.csv',
+        1: 'data/data_panel_3/step1.csv',
+        2: 'data/data_panel_3/step2.csv',
+        3: 'data/data_panel_3/step3.csv',
+        8: 'data/data_panel_3/step8c.csv',
+        9: 'data/data_panel_3/step9.csv',
+    },
+    step2columnshow: {
+        0: ['Info', 'Department', 'Attendance', 'Performence'],
+        1: ['Attendance_0', 'Attendance_1'],
+        2: ['Info', 'Staff'],
+        3: ['Department_2', 'Department_3'],
+        4: ['Department_3', 'Department_4'],
+        5: ['Department_4', 'Department_5'],
+        6: ['Department', 'Staff_5', 'Staff_6'],
+        7: ['Attendance_6', 'Attendance_7'],
+        8: ['Attendance', 'Performence', 'Achievements'],
+        9: ['Achievements', 'Perf_rate'],
+        10: ['Achievements', 'Perf_rate'],
+        11: ['Achievements', 'Perf_rate'],
+        12: ['Achievements', 'Perf_rate'],
+        13: ['Achievements', 'Perf_rate'],
+        14: ['Info', 'Department'],
+        16: ['Achievements_15', 'Achievements_16'],
+    },
     pipeline_data: [{
             type: 'rows',
             column_num: 4,
@@ -1108,7 +1184,13 @@ const case1 = {
                 output_row_num: 31,
                 input_col: [],
                 transform_icon: 'transform_columns_replace',
-                unchange: [],
+                unchange: [{
+                    posi: [0, 0.721],
+                    case: {
+                        input_case: [],
+                        output_case: [27],
+                    }
+                }, ],
                 create: [],
                 delete: [{
                         posi: [0.721, 0.821],
@@ -1139,27 +1221,51 @@ const case1 = {
         },
         Staff: {
             origin: [{
-                type: 'change',
-                input_row_num: 31,
-                output_row_num: 31,
-                input_col: ['Info'],
-                transform_icon: 'create_columns_extract',
-                unchange: [],
-                create: [{
-                    posi: [0, 1],
-                    case: {
-                        input_case: [
-                            ['01-Bob', '02-Lily', '03-Ivy', '04-Alan', '05-John', '07-Iris', '08-David', '09-Tony', '10-Eric', '11-Jim', '12-Ken', '13-Judy', '14-Mandy', '01-Tina', '02-Sara', '03-Diana', '04-Amy', '05-Kelly', '06-Leo', '07-Tom', '01-Mark', '03-William', '04-Gary', '06-Marlon', '07-Evan', '08-Hardy', '09-Betty', '10-Polly']
-                        ],
-                        output_case: ['Bob', 'Lily', 'Ivy', 'Alan', 'John', 'Iris', 'David', 'Tony', 'Eric', 'Jim', 'Ken', 'Judy', 'Mandy', 'Tina', 'Sara', 'Diana', 'Amy', 'Kelly', 'Leo', 'Tom', 'Mark', 'William', 'Gary', 'Marlon', 'Evan', 'Hardy', 'Betty', 'Polly'],
-                    }
-                }],
-                delete: [],
-                transform: [],
-                input_nan_posi: [],
-                output_nan_posi: [],
-                step: 2
-            }]
+                    type: 'change',
+                    input_row_num: 31,
+                    output_row_num: 31,
+                    input_col: ['Info'],
+                    transform_icon: 'create_columns_extract',
+                    unchange: [],
+                    create: [{
+                        posi: [0, 1],
+                        case: {
+                            input_case: [
+                                ['01-Bob', '02-Lily', '03-Ivy', '04-Alan', '05-John', '07-Iris', '08-David', '09-Tony', '10-Eric', '11-Jim', '12-Ken', '13-Judy', '14-Mandy', '01-Tina', '02-Sara', '03-Diana', '04-Amy', '05-Kelly', '06-Leo', '07-Tom', '01-Mark', '03-William', '04-Gary', '06-Marlon', '07-Evan', '08-Hardy', '09-Betty', '10-Polly']
+                            ],
+                            output_case: ['Bob', 'Lily', 'Ivy', 'Alan', 'John', 'Iris', 'David', 'Tony', 'Eric', 'Jim', 'Ken', 'Judy', 'Mandy', 'Tina', 'Sara', 'Diana', 'Amy', 'Kelly', 'Leo', 'Tom', 'Mark', 'William', 'Gary', 'Marlon', 'Evan', 'Hardy', 'Betty', 'Polly'],
+                        }
+                    }],
+                    delete: [],
+                    transform: [],
+                    input_nan_posi: [],
+                    output_nan_posi: [],
+                    step: 2
+                },
+                {
+                    type: 'change',
+                    input_row_num: 31,
+                    output_row_num: 31,
+                    input_col: ['Department', 'Staff'],
+                    transform_icon: 'transform_columns_merge',
+                    unchange: [],
+                    create: [],
+                    delete: [],
+                    transform: [{
+                        posi: [0, 1],
+                        case: {
+                            input_case: [
+                                ['TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'TD', 'MD', 'MD', 'MD', 'MD', 'MD', 'MD', 'MD', 'SD', 'SD', 'SD', 'SD', 'SD', 'SD', 'SD', 'SD'],
+                                ['Bob', 'Lily', 'Ivy', 'Alan', 'John', 'Iris', 'David', 'Tony', 'Eric', 'Jim', 'Ken', 'Judy', 'Mandy', 'Tina', 'Sara', 'Diana', 'Amy', 'Kelly', 'Leo', 'Tom', 'Mark', 'William', 'Gary', 'Marlon', 'Evan', 'Hardy', 'Betty', 'Polly']
+                            ],
+                            output_case: ['TD-Bob', 'TD-Lily', 'TD-Ivy', 'TD-Alan', 'TD-John', 'TD-Iris', 'TD-David', 'TD-Tony', 'TD-Eric', 'TD-Jim', 'TD-Ken', 'TD-Judy', 'TD-Mandy', 'MD-Tina', 'MD-Sara', 'MD-Diana', 'MD-Amy', 'MD-Kelly', 'MD-Leo', 'MD-Tom', 'SD-Mark', 'SD-William', 'SD-Gary', 'SD-Marlon', 'SD-Evan', 'SD-Hardy', 'SD-Betty', 'SD-Polly'],
+                        }
+                    }],
+                    input_nan_posi: [],
+                    output_nan_posi: [],
+                    step: 6
+                }
+            ]
         },
         Achievements: {
             origin: [{

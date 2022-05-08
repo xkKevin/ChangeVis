@@ -12,13 +12,13 @@ Info,Department,Attendance,Performance,Staff
 12-Ken,TD,15,12,Ken
 13-Judy,TD,13,10,Judy
 14-Mandy,TD,24,25,Mandy
-01-Tina,Manage Department,22,27,Tina
-02-Sara,Manage Department,22,28,Sara
-03-Diana,Manage Department,22,24,Diana
-04-Amy,Manage Department,19,20,Amy
-05-Kelly,Manage Department,26,26,Kelly
-06-Leo,Manage Department,22,24,Leo
-07-Tom,Manage Department,23,22,Tom
+01-Tina,MD,22,27,Tina
+02-Sara,MD,22,28,Sara
+03-Diana,MD,22,24,Diana
+04-Amy,MD,19,20,Amy
+05-Kelly,MD,26,26,Kelly
+06-Leo,MD,22,24,Leo
+07-Tom,MD,23,22,Tom
 01-Mark,SD,23,18,Mark
 03-William,SD,29,20,William
 04-Gary,SD,26,23,Gary

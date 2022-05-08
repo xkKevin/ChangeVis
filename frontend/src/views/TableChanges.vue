@@ -114,17 +114,23 @@
             style="height: 50px; width: 100%; background: #f5f5f5"
           >
           <div id="tag3"></div>
-
+          <div>
+            <el-button v-if="existCreate" style="background-color: #b2df8a" circle></el-button>
+            <el-button v-if="existDelete" style="background-color: #fb9a99" circle></el-button>
+            <el-button v-if="existTransform" style="background-color: #a6cee3" circle></el-button>
+          </div>
         </el-row>
         <el-row style="height: calc(100% - 50px);">
-          <div>
+          <div id="data_panel" style="height: 100%">
             <vxe-table
           border
-          class="mytable-style"
+          class="mytable-scrollbar"
+          :height= "dataview_height"
+          empty-text="No Data"
           :cell-class-name="cellClassName"
           :data="tableData"
           >
-            <vxe-column v-for="a in showCol" :key="a" :field="a" :title="a"></vxe-column>
+            <vxe-column v-for="col in showCol" :key="col" :field="col" :title="col"></vxe-column>
           <!-- <vxe-column field="sex" title="Sex"></vxe-column>
           <vxe-column field="age" title="Age"></vxe-column>
           <vxe-column field="attr1" title="Attr1"></vxe-column>
@@ -315,28 +321,56 @@ export default {
                 case3: case3,
             },
       one_case: 'Select a case',
+      screen_size: 0,
+      dataview_height: 400,
       overview_width: 0, 
       changeview_width: 0,
       tableData: [],
-      testData:'',
-              selectRow: null,
-              selectColumn: null,
-              showCol: ['id', 'name', 'role']
+      selectRow: null,
+      selectColumn: null,
+      showCol: [],
+      existCreate: false,
+      existTransform: false,
+      existDelete: false,
     };
   },
   components: {
   },
+  watch: {
+    screen_size(val) {
+      this.dataview_height = d3.select("#data_panel").node().offsetHeight
+    }
+  },
+  computed: {
+    // dataview_height: function() {
+    //   console.log(d3.select("#data_panel").node().offsetHeight);
+    //   if (d3.select("#data_panel").node() === null) return 400
+    //   return d3.select("#data_panel").node().offsetHeight
+    // }
+  },
   methods: {
     cellClassName ({ row, rowIndex, column, columnIndex }) {
       // console.log(column.property.slice(2,));
-              if (column.property === 'name') {
-                if (row.sex >= 30) {
-                  return 'col-red'
-                } else if (row.age < 30) {
-                  return 'col-orange'
-                }
-              }},
-    async selectCase(one_case = 'case1') {
+            if (column.property.slice(0,10) !== 'ChangeVis_') {
+              let tempColName = 'ChangeVis_' + column.property
+              console.log(row);
+              if (row[tempColName] == -1) {
+                return 'col-white'
+              } else if (row[tempColName] == 0) {
+                return 'col-gray'
+              } else if (row[tempColName] == 1) {
+                this.existCreate = true
+                return 'col-green'
+              } else if (row[tempColName] == 2) {
+                console.log(row);
+                this.existDelete = true
+                return 'col-red'
+              } else if (row[tempColName] == 3) {
+                this.existTransform = true
+                return 'col-blue'
+              }
+            }},
+    async selectCase(one_case = 'case3') {
             this.one_case = one_case;
             this.getScriptData(this.cases[this.one_case]);
             this.combined = false;
@@ -391,8 +425,7 @@ export default {
     },
     initData() {
         this.selectCase();
-        var Data = d3.csv("data/case1/L3 (staff).csv");
-        console.log(Data);
+        this.dataview_height = d3.select("#data_panel").node().offsetHeight;
     },
     initEditor() {
       // 初始化编辑器，确保dom已经渲染
@@ -564,6 +597,12 @@ export default {
     window.d3box = d3box;
     window.vue = this;
     sendVue(this)
+    const that = this
+    window.onresize = () => {
+        return (() => {
+            that.screen_size = document.body.clientWidth + document.body.clientHeight
+        })()
+    }
   },
 };
 </script>
@@ -671,21 +710,56 @@ rect.select {
   background: lightblue;
 }
 
-.mytable-style .vxe-body--row.row-green {
-          background-color: #187;
-          color: #fff;
+.mytable-scrollbar .vxe-body--column.col-white {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.mytable-scrollbar .vxe-body--column.col-gray {
+  background-color: #e6e6e6;
+  color: #000000;
+}
+
+.mytable-scrollbar .vxe-body--column.col-green {
+  background-color: #b2df8a;
+  color: #000000;
+}
+
+.mytable-scrollbar .vxe-body--column.col-red {
+  background-color: #fb9a99;
+  color: #000000;
+}
+
+.mytable-scrollbar .vxe-body--column.col-blue {
+  background-color: #a6cee3;
+  color: #000000;
+}
+
+.mytable-scrollbar ::-webkit-scrollbar {
+          width: 10px;
+          height: 10px;
         }
-        .mytable-style .vxe-header--column.col-blue {
-          background-color: #2db7f5;
-          color: #fff;
-        }
-        .mytable-style .vxe-body--column.col-red {
-          background-color: red;
-          color: #fff;
-        }
-        .mytable-style .vxe-body--column.col-orange {
-          background-color: #f60;
-          color: #fff;
-        }
+
+.mytable-scrollbar ::-webkit-scrollbar-track {
+  background-color: #FFFFFF;
+}
+/*滚动条里面的小方块，能向上向下移动*/
+.mytable-scrollbar ::-webkit-scrollbar-thumb {
+  background-color: #bfbfbf;
+  border-radius: 5px;
+  border: 1px solid #F1F1F1;
+  box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+}
+.mytable-scrollbar ::-webkit-scrollbar-thumb:hover {
+  background-color: #A8A8A8;
+}
+.mytable-scrollbar ::-webkit-scrollbar-thumb:active {
+  background-color: #787878;
+}
+/*边角，即两个滚动条的交汇处*/
+.mytable-scrollbar ::-webkit-scrollbar-corner {
+  background-color: #FFFFFF;
+}
+
 
 </style>
