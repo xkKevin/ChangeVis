@@ -2099,6 +2099,7 @@ const case2 = {
                 transform_icon: 'delete_rows_slice_keep',
                 unchange: [{
                     posi: [0, 0.323],
+                    triangle: '1:10',
                     case: {
                         input_case: [],
                         output_case: [],
