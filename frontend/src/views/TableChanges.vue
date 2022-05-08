@@ -167,120 +167,14 @@
             </el-switch>
           </div>
       </el-row>
-      <el-row style="height: 180px;">
-        <svg id="overview_svg" width="100%" height="100%"></svg>
-      </el-row>
-      <el-row style="height: calc(100% - 230px)">
-        <svg id="tb_changes" width="100%" height="100%"></svg>
+      <el-row id="vis_panel" style="height: calc(100% - 50px);">
+        <div id="vis_panel_div" style="display: inline-block; overflow: auto;">
+          <svg id="vis_svg" :width="visview_width" :height="visview_height"></svg>
+        </div>
       </el-row>
     </el-col>
     </el-row>
 
-    <!-- <el-row type="flex" justify="center" style="height: 42vh; margin: 0">
-      <el-col
-        style="
-          width: 30vw;
-          padding: 0 0 0 0;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          margin-right: 5px;
-          z-index: 1;
-        "
-      >
-      <el-row
-          type="flex"
-          justify="space-between"
-          style="height: 50px; background: #f5f5f5; width: 100%"
-        >
-          <div id="tag1"></div>
-          <div class="title_right">
-            Language:
-            <el-dropdown @command="changeModel" style="margin-left: 8px">
-              <span
-                class="el-dropdown-link"
-                style="width: 69px; display: inline-block; text-align: center; padding: 2px 0;"
-              >
-                {{ language }}
-              </span>
-              <i class="el-icon-arrow-down el-icon--right" style="position: relative; left: -4px;"></i>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item
-                  v-for="item in all_langs"
-                  :key="item"
-                  :value="item"
-                  :command="item"
-                >
-                  {{ item }}
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
-            <el-button
-              round
-              @click="generateVis"
-              style="
-                background: #6391d7;
-                font-family: PingFangSC-Regular;
-                font-size: 18px;
-                color: #ffffff;
-                letter-spacing: -0.7px;
-                line-height: 17px;
-                font-weight: 400;
-                display: flex;
-                align-items: center;
-                height: 32px;
-                margin-top: 3px;
-                margin-left: 8px;
-              "
-              >Run</el-button
-            >
-          </div>
-        </el-row>
-        <div style="flex: 1; display: flex; align-items: center">
-          <div id="monaco" style="height: 98%; width: 99%"></div>
-        </div>
-      </el-col>
-      <el-col
-        style="
-          flex:1;
-          padding: 0 0 0 0;
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          z-index: 1;
-        "
-      >
-        <el-row
-            type="flex"
-            justify="space-between"
-            style="height: 50px; background: #f5f5f5"
-          >
-          <div id="tag2"></div>
-          <div class="title_right">
-            <span style="margin-right: 5px">Combined:</span> 
-            <el-switch v-model="combined" active-color="#13ce66" inactive-color="#ff4949" @change="combinedChange">
-            </el-switch>
-          </div>
-        </el-row>
-        <div style="flex: 1; display: flex; align-items: center; padding: 3px 4px;">
-          <svg id="overview_svg" width="100%" height="100%"></svg>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row type="flex" justify="center" style="height: calc(58vh - 75px); width: 100%; margin-top:5px; flex-direction: column;">
-        <el-row
-            type="flex"
-            justify="space-between"
-            style="height: 50px; width: 100%; background: #f5f5f5"
-          >
-          <div id="tag3"></div>
-        </el-row>
-        <div style="flex: 1; display: flex; align-items: center;">
-          <div style="height: 100%; width: 100%; background-color:white">
-            <svg id="tb_changes" width="100%" height="100%"></svg>
-          </div>
-        </div>
-    </el-row> -->
   </div>
 </template>
 
@@ -322,9 +216,11 @@ export default {
             },
       one_case: 'Select a case',
       screen_size: 0,
+      allview: {},
+      vis_panel: {},
       dataview_height: 400,
-      overview_width: 0, 
-      changeview_width: 0,
+      visview_width: 1000, 
+      visview_height: 800,
       tableData: [],
       selectRow: null,
       selectColumn: null,
@@ -339,6 +235,11 @@ export default {
   watch: {
     screen_size(val) {
       this.dataview_height = d3.select("#data_panel").node().offsetHeight
+    },
+    allview(val) {
+      this.visview_width = this.allview.width;
+      this.visview_height = this.allview.height;
+      // console.log(this.visview_width, this.visview_height);
     }
   },
   computed: {
@@ -368,17 +269,19 @@ export default {
                 return 'col-blue'
               }
             }},
-    async selectCase(one_case = 'case3') {
+    selectCase(one_case = 'case3') {
             this.one_case = one_case;
             this.getScriptData(this.cases[this.one_case]);
             this.combined = false;
             this.proportion = false;
             // console.log(this.one_case);
-            let { overview_width, changeview_width } = await handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion);
-            // console.log(overview_width, changeview_width);
-            this.overview_width = overview_width;
-            this.changeview_width = changeview_width;
-            // console.log(this.one_case);
+            let that = this
+            handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion).then(data => {
+              let allview = {}
+              allview.width = Math.max(data.level1.width, data.level2.width, data.level3.width)
+              allview.height = data.level3.height
+              that.allview = allview
+            });
             // this.getTableData(this.cases[this.one_case]);
         },
     drawTag(id, text) {
@@ -422,8 +325,10 @@ export default {
         .text(text);
     },
     initData() {
-        this.selectCase();
         this.dataview_height = d3.select("#data_panel").node().offsetHeight;
+        document.getElementById("vis_panel_div").style.width = document.getElementById("vis_panel").offsetWidth + 'px';
+        document.getElementById("vis_panel_div").style.height = document.getElementById("vis_panel").offsetHeight + 'px';
+        this.selectCase();
     },
     initEditor() {
       // 初始化编辑器，确保dom已经渲染
@@ -454,17 +359,25 @@ export default {
       }
     },
     generateVis(){
-      let { overview_width, changeview_width } = handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion);
-      this.overview_width = overview_width;
-      this.changeview_width = changeview_width;
+      let that = this
+      handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion).then(data => {
+        let allview = {}
+        allview.width = Math.max(data.level1.width, data.level2.width, data.level3.width)
+        allview.height = data.level3.height
+        that.allview = allview
+      });
     },
     combinedChange(combined){
       this.combined = combined
       this.codeLineHighlight()
       this.codeGlyphHighlight()
-      let { overview_width, changeview_width } = handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion);
-      this.overview_width = overview_width;
-      this.changeview_width = changeview_width;
+      let that = this
+      handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion).then(data => {
+        let allview = {}
+        allview.width = Math.max(data.level1.width, data.level2.width, data.level3.width)
+        allview.height = data.level3.height
+        that.allview = allview
+      });
     },
     proportionChange(proportion){
       this.proportion = proportion
@@ -598,7 +511,9 @@ export default {
     const that = this
     window.onresize = () => {
         return (() => {
-            that.screen_size = document.body.clientWidth + document.body.clientHeight
+            that.screen_size = document.body.clientWidth + document.body.clientHeight;
+            document.getElementById("vis_panel_div").style.width = document.getElementById("vis_panel").offsetWidth + 'px';
+            document.getElementById("vis_panel_div").style.height = document.getElementById("vis_panel").offsetHeight + 'px';
         })()
     }
   },

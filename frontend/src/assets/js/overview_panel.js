@@ -1,5 +1,5 @@
 import { change_color, overview_config } from '@/assets/js/config'
-import { handel_change, readcsv } from "@/assets/js/change_panel"
+import { handel_change, readcsv, drawChanges, drawColline } from "@/assets/js/change_panel"
 import * as d3 from "d3"
 
 const ELK = require('elkjs')
@@ -9,6 +9,7 @@ var select_code = { lines: [], changes: [] }
 var overall_data
 var skip_step = 0 // 跳过的初始步骤
 var select_data = {}
+var view = { level1: {}, level2: {}, level3: {} }
 
 
 var vm = null
@@ -26,18 +27,33 @@ async function handel_overview(data, group_flag = 0, proportion_flag = false) {
     select_rect = []
     skip_step = 0
     overall_data = data
+    view = { level1: {}, level2: {}, level3: {} }
     let { graph, height_ratio, end_step } = generateGraph(data, group_flag)
     await generatePos(graph)
-    let overview_width = drawOverview(data.pipeline_data, graph, height_ratio, group_flag, proportion_flag)
+
+    let vis_svg = d3.select("#vis_svg") // overview_svg  tb_changes
+    vis_svg.selectChildren().remove()
+
+    let overview_svg = vis_svg.append("g").attr("id", "overview_svg")
+    drawOverview(data.pipeline_data, graph, height_ratio, group_flag, proportion_flag)
+
     select_data = generate_select_data(0, end_step, group_flag)
-    let changeview_width = await changeProportionView(group_flag, proportion_flag)
-    return { overview_width, changeview_width }
+
+    let change_svg = vis_svg.append("g").attr("id", "change_svg")
+    drawChanges(select_data, view, proportion_flag)
+
+    let colline_svg = vis_svg.append("g").attr("id", "colline_svg")
+    await drawColline(select_data, view)
+
+    add_event(group_flag, proportion_flag)
+        // console.log(view);
+    return view
+
 }
 
-async function changeProportionView(group_flag, proportion_flag) {
-    let view_width = await handel_change(select_data, proportion_flag)
+function changeProportionView(group_flag, proportion_flag) {
+    drawChanges(select_data, view, proportion_flag)
     add_event(group_flag, proportion_flag)
-    return view_width
 }
 
 function add_event(group_flag, proportion_flag) {
@@ -51,14 +67,6 @@ function add_event(group_flag, proportion_flag) {
             vm.codeGlyphHighlight()
         }
     })
-
-    d3.selectAll(".plot")
-        .on("mouseover", function() {
-            d3.select(this).classed("select", true)
-        })
-        .on("mouseout", function() {
-            d3.select(this).classed("select", false)
-        })
 
     // 为Pipeline表格添加事件
     d3.selectAll(".table")
@@ -90,8 +98,11 @@ function add_event(group_flag, proportion_flag) {
                     // let select_steps = [+select_rect[0].slice(3), +select_rect[1].slice(3)].sort()
 
                 select_data = generate_select_data(select_steps[0], select_steps[select_steps.length - 1], group_flag)
-                changeProportionView(group_flag, proportion_flag)
-                    // console.log(select_code);
+
+                drawChanges(select_data, view, proportion_flag)
+                drawColline(select_data, view)
+                add_event(group_flag, proportion_flag)
+
                 vm.codeLineHighlight(select_code.lines, select_code.changes)
                 vm.codeGlyphHighlight()
             }
@@ -310,9 +321,8 @@ function generateGraph(data, group_flag) {
 
 
 function drawOverview(pipeline_data, graph, height_ratio, group_flag, proportion_flag) {
-    let overview_svg = d3.select("#overview_svg") // overview_svg  tb_changes
+    let overview_svg = d3.select("#overview_svg")
     overview_svg.selectChildren().remove()
-    overview_svg = overview_svg.append("g")
 
     let line_flag = -1 // -1 表示上；1 表示下
     graph.children.forEach(tbl => {
@@ -427,7 +437,11 @@ function drawOverview(pipeline_data, graph, height_ratio, group_flag, proportion
         }
     })
 
-    return overview_svg.node().getBBox().width + 35
+    let overview_svg_box = overview_svg.node().getBBox()
+    view.level1 = {
+        width: overview_svg_box.width + 70,
+        height: overview_svg_box.height + 55,
+    }
 }
 
 /**
