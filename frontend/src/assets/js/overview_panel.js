@@ -1,5 +1,5 @@
 import { change_color, overview_config } from '@/assets/js/config'
-import { handel_change } from "@/assets/js/change_panel"
+import { handel_change, readcsv } from "@/assets/js/change_panel"
 import * as d3 from "d3"
 import * as d3box from "d3-boxplot"
 
@@ -77,7 +77,7 @@ function add_event(group_flag, proportion_flag) {
                 select_rect = select_rect.slice(-2)
             }
             if (select_rect.length === 2) {
-                let select_steps = [...select_rect[0].split("_"), ...select_rect[1].split("_")].map(Number).sort(function(a, b) { return a - b })
+                let select_steps = [...select_rect[0].split("_"), ...select_rect[1].split("_")].map(Number).sort((a, b) => a - b)
                     // let select_steps = [+select_rect[0].slice(3), +select_rect[1].slice(3)].sort()
 
                 select_data = generate_select_data(select_steps[0], select_steps[select_steps.length - 1], group_flag)
@@ -138,13 +138,24 @@ function add_event(group_flag, proportion_flag) {
         .on("mouseout", function() {
             d3.select(this).classed("select", false)
         })
-        .on("mouseup", function() {
+        .on("mouseup", async function() {
             let steps = d3.select(this).attr("step").split("_").map(Number)
             let code_glyph_lines = []
             steps.forEach(si => {
                 code_glyph_lines = code_glyph_lines.concat(overall_data.step2code[si])
                     // console.log(vm.language);
             })
+            steps = steps.sort((a, b) => a - b)
+            if (vm.combined) {
+                vm.showCol = overall_data.step2columnshow[steps[steps.length - 1]]
+                vm.tableData = await readcsv(overall_data.step2datac[steps[steps.length - 1]])
+            } else {
+                vm.showCol = overall_data.step2columnshow[steps[steps.length - 1]]
+                vm.tableData = await readcsv(overall_data.step2data[steps[steps.length - 1]])
+            }
+            vm.existCreate = false
+            vm.existDelete = false
+            vm.existTransform = false
             vm.codeGlyphHighlight(code_glyph_lines)
         })
 }

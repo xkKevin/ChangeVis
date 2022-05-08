@@ -14,6 +14,38 @@ const case3 = {
         8: [11],
         9: [12],
     },
+    step2data: {
+        0: 'data/data_panel_3/step0.csv',
+        1: 'data/data_panel_3/step1.csv',
+        2: 'data/data_panel_3/step2.csv',
+        3: 'data/data_panel_3/step3.csv',
+        4: 'data/data_panel_3/step4.csv',
+        5: 'data/data_panel_3/step5.csv',
+        6: 'data/data_panel_3/step6.csv',
+        7: 'data/data_panel_3/step7.csv',
+        8: 'data/data_panel_3/step8.csv',
+        9: 'data/data_panel_3/step9.csv',
+    },
+    step2datac: {
+        0: 'data/data_panel_3/step0.csv',
+        1: 'data/data_panel_3/step1.csv',
+        2: 'data/data_panel_3/step2.csv',
+        3: 'data/data_panel_3/step3.csv',
+        8: 'data/data_panel_3/step8c.csv',
+        9: 'data/data_panel_3/step9.csv',
+    },
+    step2columnshow: {
+        0: ['id', 'math', 'art'],
+        1: ['id_0', 'id_1'],
+        2: ['id', 'math', 'art'],
+        3: ['math', 'art', 'total'],
+        4: ['total', 'rate'],
+        5: ['total', 'rate'],
+        6: ['total', 'rate'],
+        7: ['total', 'rate'],
+        8: ['total', 'rate'],
+        9: ['total_8', 'total_9'],
+    },
     pipeline_data: [{
             type: 'columns',
             column_num: 3,
@@ -168,7 +200,7 @@ const case3 = {
                         input_case: [
                             ['01-Bob', '02-Lily', '02-Lily', '03-Ivy', '04-Alan', '05-John', '05-John', '06-Tom', '07-Iris', '07-Iris', '08-David', '09-Tony', '10-Eric', '11-Jim', '11-Jim', '12-Ken', '13-Judy', '14-Mandy', '15-Tina', '15-Tina', '16-Sara', '17-Diana', '18-Amy', '19-Kelly', '20-Leo', '21-Mark', '22-Nick', '23-William', '21-Mark', '24-Gary', '25-Peter', '26-Marlon', '27-Evan', '28-Hardy', '29-Betty', '30-Polly']
                         ],
-                        output_case: ['16', '30', '21', '21', '18', '24', '10', '26', '09', '17', '19', '13', '06', '02', '02', '27', '01', '03', '05', '05', '07', '07', '25', '29', '22', '15', '15', '28', '08', '12', '23', '04', '11', '11', '20', '14'],
+                        output_case: ['01', '02', '02', '03', '04', '05', '05', '06', '07', '07', '08', '09', '10', '11', '11', '12', '13', '14', '15', '15', '16', '17', '18', '19', '20', '21', '22', '23', '21', '24', '25', '26', '27', '28', '29', '30'],
                     }
                 }],
                 input_nan_posi: [],
