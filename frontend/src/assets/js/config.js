@@ -7,7 +7,7 @@ const change_color = {
     'sort': ['#d4fcff', '#1f78b4'], // [min, max]
     'line': "black",
     'col_bg': "#f5f4ff",
-    'glyph': "#ff7f00"
+    'glyph': "#fdbf6f"
 }
 
 const overview_config = {

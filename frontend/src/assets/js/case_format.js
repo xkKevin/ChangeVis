@@ -712,7 +712,7 @@ const case1 = {
         9: 'data/data_panel_3/step9.csv',
     },
     step2columnshow: {
-        0: ['Info', 'Department', 'Attendance', 'Performence'],
+        0: ['Info', 'Department', 'Attendance', 'Performance'],
         1: ['Attendance_0', 'Attendance_1'],
         2: ['Info', 'Staff'],
         3: ['Department_2', 'Department_3'],
@@ -720,7 +720,7 @@ const case1 = {
         5: ['Department_4', 'Department_5'],
         6: ['Department', 'Staff_5', 'Staff_6'],
         7: ['Attendance_6', 'Attendance_7'],
-        8: ['Attendance', 'Performence', 'Achievements'],
+        8: ['Attendance', 'Performance', 'Achievements'],
         9: ['Achievements', 'Perf_rate'],
         10: ['Achievements', 'Perf_rate'],
         11: ['Achievements', 'Perf_rate'],

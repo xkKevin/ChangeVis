@@ -97,10 +97,10 @@ async function drawTimeline(column_change_data, skip_step, margin_top, maxlen) {
                 let glyph_y = cdi === 0 ? text_y - 55 : text_y + 30
                 switch (columns[ci].type) {
                     case 'num':
-                        drawBox(change_svg, margin_left + 10, glyph_y, timeline_config.col_width - 20, 30, col_data[ci].map(Number))
+                        drawBox(change_svg, margin_left + 10, glyph_y, timeline_config.col_width - 20, 30, col_data[ci].map(Number), change_color.glyph)
                         break
                     case 'str':
-                        drawBar(change_svg, margin_left + 10, glyph_y, timeline_config.col_width - 20, 30, typeCount(col_data[ci]))
+                        drawBar(change_svg, margin_left + 10, glyph_y, timeline_config.col_width - 20, 30, typeCount(col_data[ci]), change_color.glyph)
                         break
                 }
             }
@@ -156,7 +156,7 @@ function drawBar(svg, x, y, width, height, data, color = '#666') {
             // .attr("stroke", color)
             .attr("x", xScale(i))
             .attr("y", height - yScale(data[i]))
-            .attr("opacity", 0.8)
+            .attr("opacity", 0.9)
             // .attr("y", (height - yScale(data[i]) / 2))
     }
     plot.attr("transform", `translate(${x}, ${y-5})`)
@@ -180,6 +180,7 @@ function drawBox(svg, x, y, width, height, data, color = '#666') {
         .scale(scale)
         .vertical(0)
         .boxwidth(height)
+        .opacity(0.9)
         .key(i => outliers.push(i))
 
 
@@ -187,11 +188,11 @@ function drawBox(svg, x, y, width, height, data, color = '#666') {
     plot.attr("transform", `translate(${x}, ${y})`)
         .selectAll('*').attr('color', color)
 
-
     let text = "Max: " + d3.max(data)
     text += "\nMean: " + (+d3.mean(data).toFixed(2))
     text += "\nMin: " + d3.min(data)
     text += "\nOutliers: " + outliers.sort(d3.ascending).join(",")
+
     plot.append("svg:title").text(text)
 }
 
