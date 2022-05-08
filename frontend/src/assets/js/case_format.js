@@ -2493,7 +2493,7 @@ const case2 = {
                     type: 'str'
                 },
                 'Launch_Date': {
-                    type: 'date'
+                    type: 'str'
                 },
                 'Sale_Price': {
                     type: 'num'
