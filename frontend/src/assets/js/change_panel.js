@@ -11,7 +11,7 @@ async function handel_change(data, proportion_flag) {
     const height_ratio = change_config.col_height / data.average_row
     const outer_col_height = height_ratio * data.max_row + change_config.icon_size[1] + 2 * change_config.col_border_interval_y + change_config.icon_margin_bottom
 
-    let margin_top = await drawTimeline(data.column_change_data, data.skip_step, timeline_config.margin_top, data.maxlen)
+    let margin_top = await drawColline(data.column_change_data, data.skip_step, timeline_config.margin_top, data.maxlen)
     let view_width = drawChanges(data.change_data, data.skip_step, height_ratio, outer_col_height, margin_top + change_config.margin_top, proportion_flag)
     return view_width
 }
@@ -24,8 +24,15 @@ function readcsv(path) {
     })
 }
 
-async function drawTimeline(column_change_data, skip_step, margin_top, maxlen) {
-    let change_svg = d3.select("#tb_changes").append("g")
+async function drawColline(data, view) {
+    let colline_svg = d3.select("#colline_svg")
+    colline_svg.selectChildren().remove()
+
+    let column_change_data = data.column_change_data
+    let skip_step = data.skip_step
+    let maxlen = data.maxlen
+    let margin_top = timeline_config.margin_top + view.level2.height
+
     let timeline = {
         x: timeline_config.margin_left - timeline_config.line_width / 2,
         y: null
@@ -35,7 +42,6 @@ async function drawTimeline(column_change_data, skip_step, margin_top, maxlen) {
     let csv_data = null
     let col_data = {}
     let offset_x = maxlen * timeline_config.icon_width // 向右偏移量
-    console.log(offset_x);
     timeline.x += offset_x
 
     for (let key in column_change_data) {
@@ -53,14 +59,14 @@ async function drawTimeline(column_change_data, skip_step, margin_top, maxlen) {
 
         let margin_left = timeline_config.margin_left + offset_x
 
-        change_svg.append("circle")
+        colline_svg.append("circle")
             .attr("r", timeline_config.radius)
             .attr("cx", margin_left).attr("cy", margin_top)
             .attr("stroke", 'black')
             .attr("fill", 'white')
 
         let text_y = margin_top + timeline_config.radius / 2
-        change_svg.append("text").text(key - skip_step)
+        colline_svg.append("text").text(key - skip_step)
             .attr("font-size", change_config.title_font_size)
             .attr("x", margin_left).attr("y", text_y)
             // .attr("transform", `translate(${timeline_config.radius/2}, 0)`)
@@ -69,7 +75,7 @@ async function drawTimeline(column_change_data, skip_step, margin_top, maxlen) {
 
         if (key > skip_step) {
             // 绘制 timeline
-            change_svg.append("rect")
+            colline_svg.append("rect")
                 .classed("timeline", true)
                 .attr("x", timeline.x).attr("y", timeline.y)
                 .attr("width", timeline_config.line_width).attr("height", timeline_config.knot_interval)
@@ -78,7 +84,7 @@ async function drawTimeline(column_change_data, skip_step, margin_top, maxlen) {
             // 绘制 icon
             let icon_x = margin_left - timeline_config.icon_width - timeline_config.start_gap
             column_change_data[key].transform_list.slice().reverse().forEach((type, ti) => {
-                drawIcon(change_svg, type, icon_x, margin_top - (timeline_config.knot_interval + change_config.icon_size[1]) / 2, timeline_config.icon_width)
+                drawIcon(colline_svg, type, icon_x, margin_top - (timeline_config.knot_interval + change_config.icon_size[1]) / 2, timeline_config.icon_width)
                 icon_x -= timeline_config.icon_width
             })
         }
@@ -90,17 +96,17 @@ async function drawTimeline(column_change_data, skip_step, margin_top, maxlen) {
         let columns = column_change_data[key].columns
 
         for (let ci in columns) {
-            drawText(change_svg, ci, change_config.title_font_size, margin_left, text_y, [timeline_config.col_width / 2, 0], max_len)
+            drawText(colline_svg, ci, change_config.title_font_size, margin_left, text_y, [timeline_config.col_width / 2, 0], max_len)
 
 
             if (cdi === 0 || cdi === Object.keys(column_change_data).length - 1) {
                 let glyph_y = cdi === 0 ? text_y - 55 : text_y + 30
                 switch (columns[ci].type) {
                     case 'num':
-                        drawBox(change_svg, margin_left + 10, glyph_y, timeline_config.col_width - 20, 30, col_data[ci].map(Number), change_color.glyph)
+                        drawBox(colline_svg, margin_left + 10, glyph_y, timeline_config.col_width - 20, 30, col_data[ci].map(Number), change_color.glyph)
                         break
                     case 'str':
-                        drawBar(change_svg, margin_left + 10, glyph_y, timeline_config.col_width - 20, 30, typeCount(col_data[ci]), change_color.glyph)
+                        drawBar(colline_svg, margin_left + 10, glyph_y, timeline_config.col_width - 20, 30, typeCount(col_data[ci]), change_color.glyph)
                         break
                 }
             }
@@ -113,7 +119,19 @@ async function drawTimeline(column_change_data, skip_step, margin_top, maxlen) {
     }
     d3.selectAll(".timeline").lower()
 
-    return margin_top + 50
+    d3.selectAll(".plot")
+        .on("mouseover", function() {
+            d3.select(this).classed("select", true)
+        })
+        .on("mouseout", function() {
+            d3.select(this).classed("select", false)
+        })
+
+    let colline_svg_box = colline_svg.node().getBBox()
+    view.level3 = {
+        width: timeline_config.margin_left + colline_svg_box.width,
+        height: margin_top + 50
+    }
 }
 
 function typeCount(data) {
@@ -229,8 +247,16 @@ function drawIcon(svg, transform_icon, x, y, icon_width) {
 }
 
 
-function drawChanges(change_data, skip_step, height_ratio, outer_col_height, margin_top = change_config.margin_top, proportion_flag = false) {
-    let change_svg = d3.select("#tb_changes").append("g") // overview_svg  tb_changes
+function drawChanges(data, view, proportion_flag = false) {
+    let change_svg = d3.select("#change_svg")
+    change_svg.selectChildren().remove()
+
+    const height_ratio = change_config.col_height / data.average_row
+    const outer_col_height = height_ratio * data.max_row + change_config.icon_size[1] + 2 * change_config.col_border_interval_y + change_config.icon_margin_bottom
+
+    let change_data = data.change_data
+    let skip_step = data.skip_step
+    let margin_top = change_config.margin_top + view.level1.height
 
     let margin_left = change_config.margin_left
     let start_flag = true
@@ -427,7 +453,12 @@ function drawChanges(change_data, skip_step, height_ratio, outer_col_height, mar
         //     .attr("transform", `translate(${outer_col_width/2}, 0)`)
         //     .attr("text-anchor", "middle")
     }
-    return change_svg.node().getBBox().width + change_config.margin_left * 2
+
+    let change_svg_box = change_svg.node().getBBox()
+    view.level2 = {
+        width: change_svg_box.width + change_config.margin_left * 2,
+        height: margin_top + change_svg_box.height
+    }
 }
 
 function drawText(svg, text, font_size, x, y, transform, max_len = change_config.text_max_len, anchor = "middle") {
@@ -466,4 +497,4 @@ function fillColorText(svg, x, y, height, color, text = undefined) {
 }
 
 
-export { handel_change, readcsv }
+export { handel_change, readcsv, drawChanges, drawColline }
