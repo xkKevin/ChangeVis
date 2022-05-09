@@ -165,6 +165,35 @@ async function drawColline(data, view) {
     }
 }
 
+function drawTriangle(svg, text, x, y, color, width = 6, height = 12) {
+    x += 2
+    y -= 5
+    let data = [
+        [x, y],
+        [x + width, y - height / 2],
+        [x + width, y + height / 2]
+    ]
+
+    let line = d3.line()
+        .x(d => d[0]).y(d => d[1])
+
+    let triangle_g = svg.append("g")
+
+    triangle_g.append("path")
+        .datum(data)
+        .attr('d', line)
+        // .attr("stroke", color) // steelblue
+        // .attr("stroke-width", 2)
+        .attr("fill", "black")
+
+    let text_x = x + width + 3
+    let tri_text = triangle_g.append("text").text(text)
+        .attr("font-size", change_config.step_font_size)
+        .attr("x", text_x).attr("y", y + 6)
+        .attr("text-anchor", "start")
+
+    return 5 + width + tri_text.node().getBBox().width
+}
 
 function generatePoints(start, end, iv_x = 6, iv_y = 3.5) {
     let posi_interval_x = (end[0] - start[0]) / iv_x
@@ -227,6 +256,11 @@ function drawBox(svg, x, y, width, height, data, color = '#666') {
     const plot = svg.append("g").classed("plot", "true")
     const plot_box = plot.append("g")
 
+    let countNan = 0
+    data.forEach(d => {
+        if (isNaN(d)) countNan++
+    })
+
     const stats = d3box.boxplotStats(data)
     const scale = d3.scaleLinear()
         .domain(d3.extent(data))
@@ -248,7 +282,6 @@ function drawBox(svg, x, y, width, height, data, color = '#666') {
         .selectAll('*').attr('color', color)
 
     let box = plot.node().getBBox()
-    console.log(box);
     plot.append("rect")
         .attr("height", box.height)
         .attr("width", box.width + 1)
@@ -261,7 +294,8 @@ function drawBox(svg, x, y, width, height, data, color = '#666') {
     let text = "Max: " + d3.max(data)
     text += "\nMean: " + (+d3.mean(data).toFixed(2))
     text += "\nMin: " + d3.min(data)
-    text += "\nOutliers: " + outliers.sort(d3.ascending).join(",")
+    if (outliers.length) text += "\nOutliers: " + outliers.sort(d3.ascending).join(",")
+    if (countNan) text += "\nNaN: " + countNan
 
     plot.append("svg:title").text(text)
 }
@@ -330,6 +364,8 @@ function drawChanges(data, view, proportion_flag = false) {
             outer_col_width += change_config.col_border_interval_x
         }
 
+        let tri_width = 0
+
         change_data[key].forEach((col, ci) => {
             if (ci) { // 只有非首位且不同组才要加间隔  && group != col.group
                 margin_left += change_config.col_inner_interval
@@ -389,6 +425,16 @@ function drawChanges(data, view, proportion_flag = false) {
                         let text = proportion_flag ? (area_proportion * 100).toFixed(0) + '%' : ''
                         fillColorText(change_step, margin_left, area_y, area_proportion * col_height, change_color[fill_ai], text)
                     }
+                    if (col.input_nan_posi) {
+                        col.input_nan_posi.forEach((cinan, ci) => {
+                            if (cinan && cinan.length === 2) {
+                                let area_y = col_y + cinan[0] * col_height
+                                let area_proportion = cinan[1] - cinan[0]
+                                let text = proportion_flag ? (area_proportion * 100).toFixed(0) + '%' : ''
+                                fillColorText(change_step, dependent_col_x + ci * change_config.col_width, area_y, area_proportion * col_height, change_color[fill_ai], text)
+                            }
+                        })
+                    }
                 } else if (col[fill_ai]) {
                     col[fill_ai].forEach(block => { // block 表示一个颜色块
                         let block_y = col_y + block.posi[0] * col_height
@@ -401,9 +447,10 @@ function drawChanges(data, view, proportion_flag = false) {
                             })
                         }
 
+                        let text_x = margin_left + change_config.col_width
+
                         // 添加右侧步骤文本
                         if (block.step != undefined) {
-                            let text_x = margin_left + change_config.col_width
                             change_step.append("text").text(block.step - skip_step)
                                 .attr("font-size", change_config.step_font_size)
                                 .attr("x", text_x).attr("y", text_y)
@@ -415,6 +462,12 @@ function drawChanges(data, view, proportion_flag = false) {
                             let old_step = change_step.attr("step")
                             change_step.attr("step", old_step + '_' + block.step)
                         }
+
+                        // 添加右侧 三角形
+                        if (block.triangle != undefined) {
+                            tri_width = drawTriangle(change_step, block.triangle, text_x, text_y, change_color[fill_ai])
+                        }
+
                     })
                 }
             })
@@ -474,7 +527,7 @@ function drawChanges(data, view, proportion_flag = false) {
             }
 
             group = col.group ? col.group : 0
-            let move_dist = change_config.col_width + step_text_flag * change_config.right_step_width
+            let move_dist = change_config.col_width + step_text_flag * change_config.right_step_width + tri_width
             margin_left += move_dist
             outer_col_width += move_dist
         });
