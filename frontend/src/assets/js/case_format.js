@@ -1590,418 +1590,529 @@ const case1 = {
     },
     column_change_data: {
         0: {
+            row_num: 31,
             table_path: 'data/case1/L3 (staff).csv',
             columns: {
                 'Info': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Department': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 }
             }
         },
         1: {
+            row_num: 28,
             type: 'unchange',
             transform: 'delete_rows_filter',
             table_path: 'data/case1/L4 (staff).csv',
             change: false,
             columns: {
                 'Info': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Department': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 }
             }
         },
         2: {
+            row_num: 28,
             type: 'create',
             transform: 'create_columns_extract',
             table_path: 'data/case1/L5 (staff).csv',
             change: true,
             columns: {
                 'Info': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Department': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Staff': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'create'
                 }
             }
         },
         3: {
+            row_num: 28,
             type: 'unchange',
             transform: 'transform_columns_replace',
             table_path: 'data/case1/L6 (staff).csv',
             change: false,
             columns: {
                 'Info': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Department': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 },
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Staff': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 }
             }
         },
         4: {
+            row_num: 28,
             type: 'unchange',
             transform: 'transform_columns_replace',
             table_path: 'data/case1/L7 (staff).csv',
             change: false,
             columns: {
                 'Info': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Department': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 },
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Staff': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 }
             }
         },
         5: {
+            row_num: 28,
             type: 'unchange',
             transform: 'transform_columns_replace',
             table_path: 'data/case1/L8 (staff).csv',
             change: false,
             columns: {
                 'Info': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Department': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 },
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Staff': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 }
             }
         },
         6: {
+            row_num: 28,
             type: 'unchange',
             transform: 'transform_columns_merge',
             table_path: 'data/case1/L9 (staff).csv',
             change: false,
             columns: {
                 'Info': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Department': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 },
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Staff': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 }
             }
         },
         7: {
+            row_num: 23,
             type: 'unchange',
             transform: 'delete_rows_filter',
             table_path: 'data/case1/L10 (staff).csv',
             change: false,
             columns: {
                 'Info': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Department': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Staff': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 }
             }
         },
         8: {
+            row_num: 23,
             type: 'create',
             transform: 'create_columns_mutate',
             table_path: 'data/case1/L11 (staff).csv',
             change: true,
             columns: {
                 'Info': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Department': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Staff': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Achievements': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'create'
                 }
             }
         },
         9: {
+            row_num: 23,
             type: 'create',
             transform: 'create_columns_mutate',
             table_path: 'data/case1/L12 (staff).csv',
             change: true,
             columns: {
                 'Info': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Department': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Staff': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Achievements': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Perf_rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'create'
                 }
             }
         },
         10: {
+            row_num: 23,
             type: 'unchange',
             transform: 'transform_columns_mutate',
             table_path: 'data/case1/L13 (staff).csv',
             change: false,
             columns: {
                 'Info': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Department': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Staff': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Achievements': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Perf_rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 }
             }
         },
         11: {
+            row_num: 23,
             type: 'unchange',
             transform: 'transform_columns_mutate',
             table_path: 'data/case1/L14 (staff).csv',
             change: false,
             columns: {
                 'Info': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Department': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Staff': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Achievements': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Perf_rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 }
             }
         },
         12: {
+            row_num: 23,
             type: 'unchange',
             transform: 'transform_columns_mutate',
             table_path: 'data/case1/L15 (staff).csv',
             change: false,
             columns: {
                 'Info': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Department': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Staff': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Achievements': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Perf_rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 }
             }
         },
         13: {
+            row_num: 23,
             type: 'unchange',
             transform: 'transform_columns_mutate',
             table_path: 'data/case1/L16 (staff).csv',
             change: false,
             columns: {
                 'Info': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Department': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Staff': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Achievements': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Perf_rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 }
             }
         },
         14: {
+            row_num: 23,
             type: 'delete',
             transform: 'delete_columns_select_remove',
             table_path: 'data/case1/L17 (staff).csv',
             change: true,
             columns: {
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Staff': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Achievements': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Perf_rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 }
             }
         },
         15: {
+            row_num: 23,
             type: 'transform',
             transform: 'transform_columns_rearrange',
             table_path: 'data/case1/L18 (staff).csv',
             change: true,
             columns: {
                 'Staff': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Perf_rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Achievements': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 }
 
             }
         },
         16: {
+            row_num: 23,
             type: 'unchange',
             transform: 'transform_tables_sort_desc',
             table_path: 'data/case1/L19 (staff).csv',
             change: false,
             columns: {
                 'Staff': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Perf_rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Achievements': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'transform'
                 },
                 'Attendance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Performance': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 }
             }
         }
@@ -2026,6 +2137,53 @@ const case2 = {
         10: [15],
         11: [16],
         12: [17],
+    },
+    step2data: {
+        0: 'data/data_panel_1/step0.csv',
+        1: 'data/data_panel_1/step1.csv',
+        2: 'data/data_panel_1/step2.csv',
+        3: 'data/data_panel_1/step3.csv',
+        4: 'data/data_panel_2/step4.csv',
+        5: 'data/data_panel_1/step5.csv',
+        6: 'data/data_panel_1/step6.csv',
+        7: 'data/data_panel_1/step7.csv',
+        8: 'data/data_panel_1/step8.csv',
+        9: 'data/data_panel_1/step9.csv',
+        10: 'data/data_panel_1/step10.csv',
+        11: 'data/data_panel_1/step11.csv',
+        12: 'data/data_panel_1/step12.csv',
+        13: 'data/data_panel_1/step13.csv',
+        14: 'data/data_panel_1/step14.csv',
+        16: 'data/data_panel_1/step16.csv',
+    },
+    step2datac: {
+        0: 'data/data_panel_1/step0.csv',
+        4: 'data/data_panel_2/step4.csv',
+        5: 'data/data_panel_1/step5c.csv',
+        6: 'data/data_panel_1/step6.csv',
+        7: 'data/data_panel_1/step7c.csv',
+        8: 'data/data_panel_1/step8.csv',
+        13: 'data/data_panel_1/step13c.csv',
+        14: 'data/data_panel_1/step14.csv',
+        16: 'data/data_panel_1/step16.csv',
+    },
+    step2columnshow: {
+        0: ['Info', 'Department', 'Attendance', 'Performance'],
+        1: ['Attendance'],
+        2: ['Info', 'Staff'],
+        3: ['Department_2', 'Department_3'],
+        4: ['Launch_Date', 'Launch_Year'],
+        5: ['Department_4', 'Department_5'],
+        6: ['Department', 'Staff_5', 'Staff_6'],
+        7: ['Attendance'],
+        8: ['Attendance', 'Performance', 'Achievements'],
+        9: ['Achievements', 'Perf_rate'],
+        10: ['Achievements', 'Perf_rate'],
+        11: ['Achievements', 'Perf_rate'],
+        12: ['Achievements', 'Perf_rate'],
+        13: ['Achievements', 'Perf_rate'],
+        14: ['Info', 'Department'],
+        16: ['Achievements_15', 'Achievements_16'],
     },
     pipeline_data: [{
             type: 'columns',
@@ -2566,340 +2724,432 @@ const case2 = {
     },
     column_change_data: {
         0: {
+            row_num: 36,
             table_path: 'data/case2/L5 (car).csv',
             columns: {
                 'Manufacturer': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Model': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Date': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Sale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Resale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 }
             }
         },
         1: {
+            row_num: 36,
             type: 'unchange',
             transform: 'transform_columns_replace_na',
             table_path: 'data/case2/L6 (car).csv',
             change: false,
             columns: {
                 'Manufacturer': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Model': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 },
                 'Launch_Date': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Sale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Resale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 }
             }
         },
         2: {
+            row_num: 31,
             type: 'unchange',
             transform: 'delete_rows_drop_na',
             table_path: 'data/case2/L7 (car).csv',
             change: false,
             columns: {
                 'Manufacturer': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Model': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 },
                 'Launch_Date': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Sale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Resale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 }
             }
         },
         3: {
+            row_num: 31,
             type: 'delete',
             transform: 'combine_columns_merge',
             table_path: 'data/case2/L8 (car).csv',
             change: true,
             columns: {
                 'Model': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 },
                 'Launch_Date': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Sale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Resale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 }
             }
         },
         4: {
+            row_num: 31,
             type: 'create',
             transform: 'create_columns_extract',
             table_path: 'data/case2/L9 (car).csv',
             change: true,
             columns: {
                 'Model': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Date': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Year': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'create'
                 },
                 'Sale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Resale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 }
             }
         },
         5: {
+            row_num: 31,
             type: 'create',
             transform: 'create_columns_mutate',
             table_path: 'data/case2/L10 (car).csv',
             change: true,
             columns: {
                 'Model': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Date': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Year': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Sale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Resale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Value_Retention': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'create'
                 }
             }
         },
         6: {
+            row_num: 31,
             type: 'create',
             transform: 'create_columns_mutate',
             table_path: 'data/case2/L11 (car).csv',
             change: true,
             columns: {
                 'Model': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Date': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Year': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Sale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Resale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Value_Retention': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'create'
                 }
             }
         },
         7: {
+            row_num: 31,
             type: 'unchange',
             transform: 'transform_columns_mutate',
             table_path: 'data/case2/L12 (car).csv',
             change: false,
             columns: {
                 'Model': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Date': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Year': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Sale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Resale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Value_Retention': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 }
             }
         },
         8: {
+            row_num: 31,
             type: 'unchange',
             transform: 'transform_columns_mutate',
             table_path: 'data/case2/L13 (car).csv',
             change: false,
             columns: {
                 'Model': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Date': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Year': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Sale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Resale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Value_Retention': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 }
             }
         },
         9: {
+            row_num: 31,
             type: 'unchange',
             transform: 'transform_columns_mutate',
             table_path: 'data/case2/L14 (car).csv',
             change: false,
             columns: {
                 'Model': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Date': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Year': {
-                    type: 'num'
+                    tdata_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Sale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Resale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Value_Retention': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 }
             }
         },
         10: {
+            row_num: 31,
             type: 'unchange',
             transform: 'transform_tables_sort_asc',
             table_path: 'data/case2/L15 (car).csv',
             change: false,
             columns: {
                 'Model': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Date': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Year': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Sale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Resale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Value_Retention': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'transform'
                 },
                 'Rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 }
             }
         },
         11: {
+            row_num: 31,
             type: 'transform',
             transform: 'transform_columns_rearrange',
             table_path: 'data/case2/L16 (car).csv',
             change: true,
             columns: {
                 'Model': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Value_Retention': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Launch_Date': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Year': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Sale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Resale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 }
             }
         },
         12: {
+            row_num: 10,
             type: 'unchange',
             transform: 'delete_rows_slice_keep',
             table_path: 'data/case2/L17 (car).csv',
             change: false,
             columns: {
                 'Model': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Value_Retention': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Launch_Date': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'Launch_Year': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Sale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'Resale_Price': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 }
             }
         }
