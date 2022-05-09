@@ -453,212 +453,293 @@ const case3 = {
     },
     column_change_data: {
         0: {
+            row_num: 30,
             table_path: 'data/case3/L3 (studentScore).csv',
             columns: {
                 'id': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'math': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'art': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
             }
         },
         1: {
             type: 'unchange',
+            row_num: 30,
             transform: 'transform_columns_extract',
             table_path: 'data/case3/L4 (studentScore).csv',
             change: false,
             columns: {
                 'id': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 },
                 'math': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'art': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
             }
         },
         2: {
             type: 'unchange',
+            row_num: 30,
             transform: 'delete_rows_deduplicate',
             table_path: 'data/case3/L5 (studentScore).csv',
             change: false,
             columns: {
                 'id': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'math': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'art': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
             }
         },
         3: {
             type: 'create',
+            row_num: 38,
             transform: 'create_columns_mutate',
             table_path: 'data/case3/L6 (studentScore).csv',
             change: true,
             columns: {
                 'id': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'math': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'art': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'total': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'create'
                 },
             }
         },
         4: {
             type: 'create',
+            row_num: 38,
             transform: 'create_columns_mutate',
             table_path: 'data/case3/L7 (studentScore).csv',
             change: true,
             columns: {
                 'id': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'math': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'art': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'total': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'create'
                 }
             }
         },
         5: {
             type: 'unchange',
+            row_num: 30,
             transform: 'transform_columns_mutate',
             table_path: 'data/case3/L8 (studentScore).csv',
             change: false,
             columns: {
                 'id': {
-                    type: 'str',
-                    data: []
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'math': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'art': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'total': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 }
             }
         },
         6: {
             type: 'unchange',
+            row_num: 30,
             transform: 'transform_columns_mutate',
             table_path: 'data/case3/L9 (studentScore).csv',
             change: false,
             columns: {
                 'id': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'math': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'art': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'total': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 }
             }
         },
         7: {
             type: 'unchange',
+            row_num: 36,
             transform: 'transform_columns_mutate',
             table_path: 'data/case3/L10 (studentScore).csv',
             change: false,
             columns: {
                 'id': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'math': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'art': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'total': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'transform'
                 }
             }
         },
+        // 8: {
+        //     type: 'unchange',
+        //     row_num: 32,
+        //     transform: 'transform_columns_mutate',
+        //     table_path: 'data/case3/L11 (studentScore).csv',
+        //     change: false,
+        //     columns: {
+        //         'id': {
+        //             data_type: 'str',
+        //             change_type: 'unchange'
+        //         },
+        //         'math': {
+        //             data_type: 'num',
+        //             change_type: 'unchange'
+        //         },
+        //         'art': {
+        //             data_type: 'num',
+        //             change_type: 'unchange'
+        //         },
+        //         'total': {
+        //             data_type: 'num',
+        //             change_type: 'unchange'
+        //         },
+        //         'rate': {
+        //             data_type: 'str',
+        //             change_type: 'transform'
+        //         }
+        //     }
+        // },
         8: {
-            type: 'unchange',
-            transform: 'transform_columns_mutate',
-            table_path: 'data/case3/L11 (studentScore).csv',
-            change: false,
-            columns: {
-                'id': {
-                    type: 'str'
-                },
-                'math': {
-                    type: 'num'
-                },
-                'art': {
-                    type: 'num'
-                },
-                'total': {
-                    type: 'num'
-                },
-                'rate': {
-                    type: 'str'
-                }
-            }
-        },
-        9: {
-            type: 'unchange',
+            type: 'transform',
+            row_num: 30,
             transform: 'transform_tables_sort_desc',
             table_path: 'data/case3/L12 (studentScore).csv',
             change: false,
             columns: {
                 'id': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 },
                 'math': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'art': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'unchange'
                 },
                 'total': {
-                    type: 'num'
+                    data_type: 'num',
+                    change_type: 'transform'
                 },
                 'rate': {
-                    type: 'str'
+                    data_type: 'str',
+                    change_type: 'unchange'
                 }
             }
-        }
+        },
+        9: {
+            type: 'transform',
+            row_num: 36,
+            transform: 'transform_columns_rearrange',
+            table_path: 'data/case3/L10 (studentScore).csv',
+            change: false,
+            columns: {
+                'id': {
+                    data_type: 'str',
+                    change_type: 'unchange'
+                },
+                'art': {
+                    data_type: 'num',
+                    change_type: 'unchange'
+                },
+                'math': {
+                    data_type: 'num',
+                    change_type: 'unchange'
+                },
+                'total': {
+                    data_type: 'num',
+                    change_type: 'unchange'
+                },
+                'rate': {
+                    data_type: 'str',
+                    change_type: 'unchange'
+                }
+            }
+        },
     }
 }
 

@@ -108,49 +108,6 @@ function add_event(group_flag, proportion_flag) {
             }
         })
 
-    // d3.selectAll(".table").on("mouseleave", function() {
-    //     d3.select(this).classed("select", false)
-    // })
-
-    // d3.selectAll(".table").on("mousehover", function() {
-    //     // d3.select(this).attr("stroke", "red")
-    //     // d3.select(this).attr("transform", "scale(1.1)")
-    //     let tbl_this = d3.select(this)
-    //     let x = +tbl_this.attr("x")
-    //     let y = +tbl_this.attr("y")
-    //     let width = +tbl_this.attr("width")
-    //     let height = +tbl_this.attr("height")
-    //     let center = {
-    //         x: x + width / 2,
-    //         y: y + height / 2
-    //     }
-    //     let tbl_shadow = {
-    //         x: center.x - width * 0.6,
-    //         y: center.y - height * 0.6,
-    //         width: width * 1.2,
-    //         height: height * 1.2
-    //     }
-    //     overview_svg.append('rect')
-    //         .attr("id", "tbl_this")
-    //         .attr("x", tbl_shadow.x).attr("y", tbl_shadow.y)
-    //         .attr("width", tbl_shadow.width).attr("height", tbl_shadow.height)
-    //         .attr("fill", "#666666").attr("opacity", 0.3)
-
-    //     // .attr("stroke", "red").attr("stroke-width", 2)
-    // });
-
-    // d3.selectAll(".table").on("mouseleave", function() {
-    //     // d3.select(this).attr("stroke", "none")
-    //     // d3.select(this).attr("transform", "scale(0.9)")
-    //     d3.select("#tbl_this").remove()
-    // });
-
-    // if (p_data.group != undefined) {
-    //     // rect_tbl.attr("class", "og" + p_data.group)
-    //     rect_tbl.classed("og" + p_data.group, true)
-    // }
-
-    // 为ChangeView中的 change_step 添加事件
     d3.selectAll(".change_step")
         .on("mouseover", function() {
             d3.select(this).classed("select", true)
@@ -203,6 +160,11 @@ function generate_select_data(start, end, group_flag) {
         }
     })
 
+    let row_num = overall_data.column_change_data[start].row_num
+    let col_states = {}
+    for (let ci in overall_data.column_change_data[start].columns) {
+        col_states[ci] = 'unchange'
+    }
     for (let key in overall_data.column_change_data) {
         key = +key
         if (key >= start && key <= end) {
@@ -212,19 +174,43 @@ function generate_select_data(start, end, group_flag) {
 
                 timeline_point_data.table_path = overall_data.column_change_data[key].table_path
                     // timeline_point_data.columns_list = tran_cols
-                timeline_point_data.columns = overall_data.column_change_data[key].columns
+                timeline_point_data.columns = JSON.parse(JSON.stringify(overall_data.column_change_data[key].columns)) // 拷贝对象
                 timeline_point_data.type = overall_data.column_change_data[key].type
                 transform_list.push(overall_data.column_change_data[key].transform)
                 timeline_point_data.transform_list = transform_list
                 if (transform_list.length > transform_list_maxlen) {
                     transform_list_maxlen = transform_list.length
                 }
+                if (overall_data.column_change_data[key].row_num > row_num) {
+                    timeline_point_data.row_type = 'create'
+                } else if (overall_data.column_change_data[key].row_num === row_num) {
+                    timeline_point_data.row_type = 'unchange'
+                } else {
+                    timeline_point_data.row_type = 'delete'
+                }
+                for (let ci in timeline_point_data.columns) {
+                    if (timeline_point_data.columns[ci].change_type === 'unchange') {
+                        timeline_point_data.columns[ci].change_type = col_states[ci]
+                    }
+                }
+                col_states = {}
+                for (let ci in timeline_point_data.columns) {
+                    col_states[ci] = 'unchange'
+                }
+
+                row_num = overall_data.column_change_data[key].row_num
                 tmp_data.column_change_data[key] = timeline_point_data
 
                 transform_list = []
                 timeline_point_data = {}
             } else {
                 transform_list.push(overall_data.column_change_data[key].transform)
+                for (let ci in overall_data.column_change_data[key].columns) {
+                    let change_type = overall_data.column_change_data[key].columns[ci].change_type
+                    if (change_type != 'unchange') {
+                        col_states[ci] = change_type
+                    }
+                }
             }
         }
     }

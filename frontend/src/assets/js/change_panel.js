@@ -79,7 +79,7 @@ async function drawColline(data, view) {
                 .classed("timeline", true)
                 .attr("x", timeline.x).attr("y", timeline.y)
                 .attr("width", timeline_config.line_width).attr("height", timeline_config.knot_interval)
-                .attr("fill", change_color[column_change_data[key].type])
+                .attr("fill", change_color[column_change_data[key].row_type])
 
             // 绘制 icon
             let icon_x = margin_left - timeline_config.icon_width - timeline_config.start_gap
@@ -91,17 +91,23 @@ async function drawColline(data, view) {
         timeline.y = margin_top
 
         // 绘制列名
-        margin_left += timeline_config.radius
+        margin_left += timeline_config.radius + timeline_config.start_gap
         let max_len = text_size_ratio * timeline_config.col_width
         let columns = column_change_data[key].columns
 
         for (let ci in columns) {
+            // 绘制背景颜色
+            colline_svg.append("rect")
+                .attr("x", margin_left).attr("y", margin_top - timeline_config.radius)
+                .attr("width", timeline_config.col_width).attr("height", 2 * timeline_config.radius)
+                .attr("fill", change_color[columns[ci].change_type])
+
             drawText(colline_svg, ci, change_config.title_font_size, margin_left, text_y, [timeline_config.col_width / 2, 0], max_len)
 
 
             if (cdi === 0 || cdi === Object.keys(column_change_data).length - 1) {
                 let glyph_y = cdi === 0 ? text_y - 55 : text_y + 30
-                switch (columns[ci].type) {
+                switch (columns[ci].data_type) {
                     case 'num':
                         drawBox(colline_svg, margin_left + 10, glyph_y, timeline_config.col_width - 20, 30, col_data[ci].map(Number), change_color.glyph)
                         break
