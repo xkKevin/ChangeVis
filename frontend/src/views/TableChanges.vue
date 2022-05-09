@@ -167,8 +167,8 @@
             </el-switch>
           </div>
       </el-row>
-      <el-row id="vis_panel" style="height: calc(100% - 50px);">
-        <div id="vis_panel_div" style="display: inline-block; overflow: auto;">
+      <el-row id="vis_panel" class="mytable-scrollbar" style="height: calc(100% - 50px);">
+        <div id="vis_panel_div"  style="display: inline-block; overflow: auto;">
           <svg id="vis_svg" :width="visview_width" :height="visview_height"></svg>
         </div>
       </el-row>
