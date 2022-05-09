@@ -5,40 +5,40 @@
         '--create-color': color.create,
       }">
     <el-header height="50px" style="background: black">
-            <el-row style="background: black; padding-top: 8px; flex: 1; padding-left: 1vh;">
-                <el-col :span="4" style="background: black">
-                <span style="font-family: Arial; font-size: 20px; color: white">Case:</span>
-                <el-dropdown @command="selectCase" style="margin-left: 20px">
-                    <span
-                        class="el-dropdown-link"
-                        style="
-                            width: 138px;
-                            display: inline-block;
-                            text-align: center;
-                            padding: 4px 0;
-                        "
-                    >
-                        {{ one_case }}
-                    </span>
-                    <i
-                        class="el-icon-arrow-down el-icon--right"
-                        style="position: relative; left: -3px"
-                    ></i>
-                    <el-dropdown-menu slot="dropdown" style="width: 138px; text-align: center;">
-                        <el-dropdown-item
-                            v-for="key in Object.keys(cases)"
-                            :key="key"
-                            :value="key"
-                            :command="key"
-                        >
-                            {{ key }}
-                        </el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
-        </el-col>
-        <el-col :span="16" style="background: black; margin-top: 10px; text-align: center;line-height: 20px;">
+      <el-row style="background: black; padding-top: 8px; flex: 1;">
+        <div style="background: black; float: left;">
+          <span style="font-family: Arial; font-size: 20px; color: white">Case:</span>
+          <el-dropdown @command="selectCase" style="margin-left: 20px">
+              <span
+                  class="el-dropdown-link"
+                  style="
+                      width: 138px;
+                      display: inline-block;
+                      text-align: center;
+                      padding: 4px 0;
+                  "
+              >
+                  {{ one_case }}
+              </span>
+              <i
+                  class="el-icon-arrow-down el-icon--right"
+                  style="position: relative; left: -3px"
+              ></i>
+              <el-dropdown-menu slot="dropdown" style="width: 138px; text-align: center;">
+                  <el-dropdown-item
+                      v-for="key in Object.keys(cases)"
+                      :key="key"
+                      :value="key"
+                      :command="key"
+                  >
+                      {{ key }}
+                  </el-dropdown-item>
+              </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+        <div style="background: black; margin-top: 10px; text-align: center;line-height: 20px; width: 100%;">
             <span style="font-family: Arial; font-size: 30px; color: white; font-weight: bold">ChangeVis</span>
-        </el-col>
+        </div>
       </el-row>
     </el-header>
     <el-row type="flex" justify="center" style="height: calc(100vh - 70px); margin: 0">
