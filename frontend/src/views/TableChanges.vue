@@ -269,7 +269,7 @@ export default {
                 return 'col-blue'
               }
             }},
-    selectCase(one_case = 'case3') {
+    selectCase(one_case = 'case2') {
             this.one_case = one_case;
             this.getScriptData(this.cases[this.one_case]);
             this.combined = false;

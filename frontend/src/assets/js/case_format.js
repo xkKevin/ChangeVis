@@ -712,16 +712,12 @@ const case3 = {
             }
         },
         9: {
-            type: 'transform',
-            row_num: 36,
-            transform: 'transform_columns_rearrange',
-            table_path: 'data/case3/L10 (studentScore).csv',
+            type: 'unchange',
+            row_num: 30,
+            transform: 'transform_tables_sort_desc',
+            table_path: 'data/case3/L12 (studentScore).csv',
             change: false,
             columns: {
-                'art': {
-                    data_type: 'num',
-                    change_type: 'unchange'
-                },
                 'id': {
                     data_type: 'str',
                     change_type: 'unchange'
@@ -730,12 +726,16 @@ const case3 = {
                     data_type: 'num',
                     change_type: 'unchange'
                 },
-                'rate': {
-                    data_type: 'str',
+                'art': {
+                    data_type: 'num',
                     change_type: 'unchange'
                 },
                 'total': {
                     data_type: 'num',
+                    change_type: 'transform'
+                },
+                'rate': {
+                    data_type: 'str',
                     change_type: 'unchange'
                 }
             }
@@ -2063,6 +2063,7 @@ const case1 = {
             transform: 'transform_columns_rearrange',
             table_path: 'data/case1/L18 (staff).csv',
             change: true,
+            line_cols: ["Staff", "Perf_rate"],
             columns: {
                 'Staff': {
                     data_type: 'str',
@@ -3085,6 +3086,7 @@ const case2 = {
             transform: 'transform_columns_rearrange',
             table_path: 'data/case2/L16 (car).csv',
             change: true,
+            line_cols: ["Value_Retention", "Rate"],
             columns: {
                 'Model': {
                     data_type: 'str',

@@ -173,6 +173,7 @@ function generate_select_data(start, end, group_flag) {
                 columns = columns.concat(tran_cols.filter(c => !columns.includes(c))) // 取并集
 
                 timeline_point_data.table_path = overall_data.column_change_data[key].table_path
+                timeline_point_data.line_cols = overall_data.column_change_data[key].line_cols
                     // timeline_point_data.columns_list = tran_cols
                 timeline_point_data.columns = JSON.parse(JSON.stringify(overall_data.column_change_data[key].columns)) // 拷贝对象
                 timeline_point_data.type = overall_data.column_change_data[key].type

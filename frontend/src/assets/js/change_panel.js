@@ -124,12 +124,12 @@ async function drawColline(data, view) {
         }
 
         if (column_change_data[key].transform_list[column_change_data[key].transform_list.length - 1] === 'transform_columns_rearrange') {
-            Object.keys(columns).forEach(ci => {
+            column_change_data[key].line_cols.forEach((ci, ti) => {
                 if (col_posi[ci] != current_col_posi[ci]) {
                     // console.log(col_posi[ci], current_col_posi[ci]);
                     let start_p = [col_posi[ci], margin_top - timeline_config.knot_interval + timeline_config.radius]
                     let end_p = [current_col_posi[ci], margin_top - timeline_config.radius]
-                    let points = generatePoints(start_p, end_p)
+                    let points = generatePoints(start_p, end_p, 6, 3)
 
                     let line = d3.line()
                         .curve(d3.curveCardinal.tension(0))
@@ -166,7 +166,7 @@ async function drawColline(data, view) {
 }
 
 
-function generatePoints(start, end, iv_x = 6, iv_y = 4) {
+function generatePoints(start, end, iv_x = 6, iv_y = 3.5) {
     let posi_interval_x = (end[0] - start[0]) / iv_x
     let posi_interval_y = (end[1] - start[1]) / iv_y
     let p1 = [start[0] + posi_interval_x, start[1] + posi_interval_y]
