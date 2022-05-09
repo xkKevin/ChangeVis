@@ -44,6 +44,8 @@ async function drawColline(data, view) {
     let offset_x = maxlen * timeline_config.icon_width // 向右偏移量
     timeline.x += offset_x
 
+    let col_posi = {} // 列名中心点的x坐标
+
     for (let key in column_change_data) {
 
         if (cdi === 0 || cdi === Object.keys(column_change_data).length - 1) {
@@ -94,7 +96,8 @@ async function drawColline(data, view) {
         margin_left += timeline_config.radius + timeline_config.start_gap
         let max_len = text_size_ratio * timeline_config.col_width
         let columns = column_change_data[key].columns
-
+        let half_col_width = timeline_config.col_width / 2
+        let current_col_posi = {}
         for (let ci in columns) {
             // 绘制背景颜色
             colline_svg.append("rect")
@@ -102,11 +105,11 @@ async function drawColline(data, view) {
                 .attr("width", timeline_config.col_width).attr("height", 2 * timeline_config.radius)
                 .attr("fill", change_color[columns[ci].change_type])
 
-            drawText(colline_svg, ci, change_config.title_font_size, margin_left, text_y, [timeline_config.col_width / 2, 0], max_len)
+            drawText(colline_svg, ci, change_config.title_font_size, margin_left, text_y, [half_col_width, 0], max_len)
 
-
+            // 绘制glyph
             if (cdi === 0 || cdi === Object.keys(column_change_data).length - 1) {
-                let glyph_y = cdi === 0 ? text_y - 55 : text_y + 30
+                let glyph_y = cdi === 0 ? text_y - 60 : text_y + 25
                 switch (columns[ci].data_type) {
                     case 'num':
                         drawBox(colline_svg, margin_left + 10, glyph_y, timeline_config.col_width - 20, 30, col_data[ci].map(Number), change_color.glyph)
@@ -116,9 +119,31 @@ async function drawColline(data, view) {
                         break
                 }
             }
-
+            current_col_posi[ci] = margin_left + half_col_width
             margin_left += timeline_config.col_width + timeline_config.col_interval
         }
+
+        if (column_change_data[key].transform_list[column_change_data[key].transform_list.length - 1] === 'transform_columns_rearrange') {
+            Object.keys(columns).forEach(ci => {
+                if (col_posi[ci] != current_col_posi[ci]) {
+                    // console.log(col_posi[ci], current_col_posi[ci]);
+                    let start_p = [col_posi[ci], margin_top - timeline_config.knot_interval + timeline_config.radius]
+                    let end_p = [current_col_posi[ci], margin_top - timeline_config.radius]
+                    let points = generatePoints(start_p, end_p)
+
+                    let line = d3.line()
+                        .curve(d3.curveCardinal.tension(0))
+                        .x(d => d[0]).y(d => d[1])
+
+                    colline_svg.append("path")
+                        .attr('d', (d) => line(points))
+                        .attr("stroke", change_color.transform) // steelblue
+                        .attr("stroke-width", 2)
+                        .attr("fill", "none")
+                }
+            })
+        }
+        col_posi = current_col_posi
 
         margin_top += timeline_config.knot_interval
         cdi++
@@ -138,6 +163,15 @@ async function drawColline(data, view) {
         width: timeline_config.margin_left + colline_svg_box.width,
         height: margin_top + 50
     }
+}
+
+
+function generatePoints(start, end, iv_x = 6, iv_y = 4) {
+    let posi_interval_x = (end[0] - start[0]) / iv_x
+    let posi_interval_y = (end[1] - start[1]) / iv_y
+    let p1 = [start[0] + posi_interval_x, start[1] + posi_interval_y]
+    let p2 = [end[0] - posi_interval_x, end[1] - posi_interval_y]
+    return [start, p1, p2, end]
 }
 
 function typeCount(data) {
@@ -191,6 +225,7 @@ function drawBox(svg, x, y, width, height, data, color = '#666') {
 
     // https://github.com/akngs/d3-boxplot
     const plot = svg.append("g").classed("plot", "true")
+    const plot_box = plot.append("g")
 
     const stats = d3box.boxplotStats(data)
     const scale = d3.scaleLinear()
@@ -208,9 +243,20 @@ function drawBox(svg, x, y, width, height, data, color = '#666') {
         .key(i => outliers.push(i))
 
 
-    plot.datum(stats).call(boxplot)
-    plot.attr("transform", `translate(${x}, ${y})`)
+    plot_box.datum(stats).call(boxplot)
+    plot_box.attr("transform", `translate(${x}, ${y})`)
         .selectAll('*').attr('color', color)
+
+    let box = plot.node().getBBox()
+    console.log(box);
+    plot.append("rect")
+        .attr("height", box.height)
+        .attr("width", box.width + 1)
+        .attr("stroke", change_color.unchange)
+        .attr("stroke-width", 3)
+        .attr("fill", "none")
+        .attr("x", x - 2)
+        .attr("y", y - 5)
 
     let text = "Max: " + d3.max(data)
     text += "\nMean: " + (+d3.mean(data).toFixed(2))

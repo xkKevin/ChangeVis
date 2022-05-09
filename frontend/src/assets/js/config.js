@@ -44,7 +44,7 @@ const timeline_config = {
     'margin_left': 30,
     'col_width': 180,
     'col_interval': 0,
-    'knot_interval': 65,
+    'knot_interval': 70,
     'radius': 16,
     'line_width': 10, // 时间轴的宽度
     'start_gap': 10, // 列名/icon 与 时间轴的间隔
