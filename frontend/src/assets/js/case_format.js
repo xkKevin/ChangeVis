@@ -704,22 +704,25 @@ const case1 = {
         16: 'data/data_panel_1/step16.csv',
     },
     step2datac: {
-        0: 'data/data_panel_3/step0.csv',
-        1: 'data/data_panel_3/step1.csv',
-        2: 'data/data_panel_3/step2.csv',
-        3: 'data/data_panel_3/step3.csv',
-        8: 'data/data_panel_3/step8c.csv',
-        9: 'data/data_panel_3/step9.csv',
+        0: 'data/data_panel_1/step0.csv',
+        2: 'data/data_panel_1/step2.csv',
+        5: 'data/data_panel_1/step5c.csv',
+        6: 'data/data_panel_1/step6.csv',
+        7: 'data/data_panel_1/step7c.csv',
+        8: 'data/data_panel_1/step8.csv',
+        13: 'data/data_panel_1/step13c.csv',
+        14: 'data/data_panel_1/step14.csv',
+        16: 'data/data_panel_1/step16.csv',
     },
     step2columnshow: {
         0: ['Info', 'Department', 'Attendance', 'Performance'],
-        1: ['Attendance_0', 'Attendance_1'],
+        1: ['Attendance'],
         2: ['Info', 'Staff'],
         3: ['Department_2', 'Department_3'],
         4: ['Department_3', 'Department_4'],
         5: ['Department_4', 'Department_5'],
         6: ['Department', 'Staff_5', 'Staff_6'],
-        7: ['Attendance_6', 'Attendance_7'],
+        7: ['Attendance'],
         8: ['Attendance', 'Performance', 'Achievements'],
         9: ['Achievements', 'Perf_rate'],
         10: ['Achievements', 'Perf_rate'],
@@ -1930,22 +1933,22 @@ const case2 = {
     source_column: 6,
     source_row: 36,
     step2code: {
-        1: [5],
-        2: [6],
-        3: [7],
-        4: [8],
-        5: [9],
-        6: [10],
-        7: [11],
-        8: [12],
-        9: [13],
-        10: [14],
-        11: [15],
-        12: [16],
+        1: [6],
+        2: [7],
+        3: [8],
+        4: [9],
+        5: [10],
+        6: [11],
+        7: [12],
+        8: [13],
+        9: [14],
+        10: [15],
+        11: [16],
+        12: [17],
     },
     pipeline_data: [{
             type: 'columns',
-            column_num: 6,
+            column_num: 5,
             row_num: 36,
             change_type: 'transform',
             input_posi: [1],
@@ -1957,7 +1960,7 @@ const case2 = {
         },
         {
             type: 'rows',
-            column_num: 6,
+            column_num: 5,
             row_num: 31,
             change_type: 'delete',
             input_posi: [31, 32, 33, 34, 35],
@@ -1969,7 +1972,7 @@ const case2 = {
         },
         {
             type: 'columns',
-            column_num: 6,
+            column_num: 5,
             row_num: 31,
             change_type: 'delete',
             input_posi: [0, 1],
@@ -1981,7 +1984,7 @@ const case2 = {
         },
         {
             type: 'columns',
-            column_num: 6,
+            column_num: 5,
             row_num: 31,
             change_type: 'create',
             input_posi: [1],
@@ -1993,83 +1996,83 @@ const case2 = {
         },
         {
             type: 'columns',
-            column_num: 7,
+            column_num: 6,
             row_num: 31,
             change_type: 'create',
-            input_posi: [4, 5],
+            input_posi: [3, 4],
             output_delete_posi: [],
-            output_create_posi: [6],
+            output_create_posi: [5],
             output_transform_posi: [],
             step: [5, 5],
             pre: 4
         },
         {
             type: 'columns',
-            column_num: 8,
+            column_num: 7,
             row_num: 31,
             change_type: 'create',
-            input_posi: [6],
+            input_posi: [5],
             output_delete_posi: [],
-            output_create_posi: [7],
+            output_create_posi: [6],
             output_transform_posi: [],
             step: [6, 9],
             pre: 5
         },
         {
             type: 'columns',
-            column_num: 8,
-            row_num: 31,
-            change_type: 'transform',
-            input_posi: [7],
-            output_delete_posi: [],
-            output_create_posi: [],
-            output_transform_posi: [7],
-            step: [7],
-            pre: 6
-        },
-        {
-            type: 'columns',
-            column_num: 8,
-            row_num: 31,
-            change_type: 'transform',
-            input_posi: [7],
-            output_delete_posi: [],
-            output_create_posi: [],
-            output_transform_posi: [7],
-            step: [8],
-            pre: 7
-        },
-        {
-            type: 'columns',
-            column_num: 8,
-            row_num: 31,
-            change_type: 'transform',
-            input_posi: [7],
-            output_delete_posi: [],
-            output_create_posi: [],
-            output_transform_posi: [7],
-            step: [9],
-            pre: 8
-        },
-        {
-            type: 'columns',
-            column_num: 8,
+            column_num: 7,
             row_num: 31,
             change_type: 'transform',
             input_posi: [6],
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [6],
+            step: [7],
+            pre: 6
+        },
+        {
+            type: 'columns',
+            column_num: 7,
+            row_num: 31,
+            change_type: 'transform',
+            input_posi: [6],
+            output_delete_posi: [],
+            output_create_posi: [],
+            output_transform_posi: [6],
+            step: [8],
+            pre: 7
+        },
+        {
+            type: 'columns',
+            column_num: 7,
+            row_num: 31,
+            change_type: 'transform',
+            input_posi: [6],
+            output_delete_posi: [],
+            output_create_posi: [],
+            output_transform_posi: [6],
+            step: [9],
+            pre: 8
+        },
+        {
+            type: 'columns',
+            column_num: 7,
+            row_num: 31,
+            change_type: 'transform',
+            input_posi: [5],
+            output_delete_posi: [],
+            output_create_posi: [],
+            output_transform_posi: [5],
             sort_type: 'asc',
             step: [10, 10],
             pre: 9
         },
         {
             type: 'columns',
-            column_num: 8,
+            column_num: 7,
             row_num: 31,
             change_type: 'transform',
-            input_posi: [6, 7],
+            input_posi: [5, 6],
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [1, 2],
@@ -2078,7 +2081,7 @@ const case2 = {
         },
         {
             type: 'rows',
-            column_num: 8,
+            column_num: 7,
             row_num: 31,
             change_type: 'delete',
             input_posi: [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
@@ -2248,9 +2251,6 @@ const case2 = {
             }],
         },
         Sale_Price: {
-            origin: []
-        },
-        Resale_Num: {
             origin: []
         },
         Resale_Price: {
@@ -2485,7 +2485,7 @@ const case2 = {
     },
     column_change_data: {
         0: {
-            table_path: 'data/case2/L4 (car).csv',
+            table_path: 'data/case2/L5 (car).csv',
             columns: {
                 'Manufacturer': {
                     type: 'str'
@@ -2497,9 +2497,6 @@ const case2 = {
                     type: 'str'
                 },
                 'Sale_Price': {
-                    type: 'num'
-                },
-                'Resale_Num': {
                     type: 'num'
                 },
                 'Resale_Price': {
@@ -2510,32 +2507,6 @@ const case2 = {
         1: {
             type: 'unchange',
             transform: 'transform_columns_replace_na',
-            table_path: 'data/case2/L5 (car).csv',
-            change: false,
-            columns: {
-                'Manufacturer': {
-                    type: 'str'
-                },
-                'Model': {
-                    type: 'str'
-                },
-                'Launch_Date': {
-                    type: 'str'
-                },
-                'Sale_Price': {
-                    type: 'num'
-                },
-                'Resale_Num': {
-                    type: 'num'
-                },
-                'Resale_Price': {
-                    type: 'num'
-                }
-            }
-        },
-        2: {
-            type: 'unchange',
-            transform: 'delete_rows_drop_na',
             table_path: 'data/case2/L6 (car).csv',
             change: false,
             columns: {
@@ -2551,7 +2522,27 @@ const case2 = {
                 'Sale_Price': {
                     type: 'num'
                 },
-                'Resale_Num': {
+                'Resale_Price': {
+                    type: 'num'
+                }
+            }
+        },
+        2: {
+            type: 'unchange',
+            transform: 'delete_rows_drop_na',
+            table_path: 'data/case2/L7 (car).csv',
+            change: false,
+            columns: {
+                'Manufacturer': {
+                    type: 'str'
+                },
+                'Model': {
+                    type: 'str'
+                },
+                'Launch_Date': {
+                    type: 'str'
+                },
+                'Sale_Price': {
                     type: 'num'
                 },
                 'Resale_Price': {
@@ -2562,7 +2553,7 @@ const case2 = {
         3: {
             type: 'delete',
             transform: 'combine_columns_merge',
-            table_path: 'data/case2/L7 (car).csv',
+            table_path: 'data/case2/L8 (car).csv',
             change: true,
             columns: {
                 'Model': {
@@ -2574,9 +2565,6 @@ const case2 = {
                 'Sale_Price': {
                     type: 'num'
                 },
-                'Resale_Num': {
-                    type: 'num'
-                },
                 'Resale_Price': {
                     type: 'num'
                 }
@@ -2585,7 +2573,7 @@ const case2 = {
         4: {
             type: 'create',
             transform: 'create_columns_extract',
-            table_path: 'data/case2/L8 (car).csv',
+            table_path: 'data/case2/L9 (car).csv',
             change: true,
             columns: {
                 'Model': {
@@ -2598,9 +2586,6 @@ const case2 = {
                     type: 'num'
                 },
                 'Sale_Price': {
-                    type: 'num'
-                },
-                'Resale_Num': {
                     type: 'num'
                 },
                 'Resale_Price': {
@@ -2624,9 +2609,6 @@ const case2 = {
                     type: 'num'
                 },
                 'Sale_Price': {
-                    type: 'num'
-                },
-                'Resale_Num': {
                     type: 'num'
                 },
                 'Resale_Price': {
@@ -2653,9 +2635,6 @@ const case2 = {
                     type: 'num'
                 },
                 'Sale_Price': {
-                    type: 'num'
-                },
-                'Resale_Num': {
                     type: 'num'
                 },
                 'Resale_Price': {
@@ -2687,9 +2666,6 @@ const case2 = {
                 'Sale_Price': {
                     type: 'num'
                 },
-                'Resale_Num': {
-                    type: 'num'
-                },
                 'Resale_Price': {
                     type: 'num'
                 },
@@ -2717,9 +2693,6 @@ const case2 = {
                     type: 'num'
                 },
                 'Sale_Price': {
-                    type: 'num'
-                },
-                'Resale_Num': {
                     type: 'num'
                 },
                 'Resale_Price': {
@@ -2751,9 +2724,6 @@ const case2 = {
                 'Sale_Price': {
                     type: 'num'
                 },
-                'Resale_Num': {
-                    type: 'num'
-                },
                 'Resale_Price': {
                     type: 'num'
                 },
@@ -2781,9 +2751,6 @@ const case2 = {
                     type: 'num'
                 },
                 'Sale_Price': {
-                    type: 'num'
-                },
-                'Resale_Num': {
                     type: 'num'
                 },
                 'Resale_Price': {
@@ -2821,9 +2788,6 @@ const case2 = {
                 'Sale_Price': {
                     type: 'num'
                 },
-                'Resale_Num': {
-                    type: 'num'
-                },
                 'Resale_Price': {
                     type: 'num'
                 }
@@ -2851,9 +2815,6 @@ const case2 = {
                     type: 'num'
                 },
                 'Sale_Price': {
-                    type: 'num'
-                },
-                'Resale_Num': {
                     type: 'num'
                 },
                 'Resale_Price': {
