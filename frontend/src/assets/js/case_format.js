@@ -718,24 +718,24 @@ const case3 = {
             table_path: 'data/case3/L10 (studentScore).csv',
             change: false,
             columns: {
-                'id': {
-                    data_type: 'str',
-                    change_type: 'unchange'
-                },
                 'art': {
                     data_type: 'num',
+                    change_type: 'unchange'
+                },
+                'id': {
+                    data_type: 'str',
                     change_type: 'unchange'
                 },
                 'math': {
                     data_type: 'num',
                     change_type: 'unchange'
                 },
-                'total': {
-                    data_type: 'num',
-                    change_type: 'unchange'
-                },
                 'rate': {
                     data_type: 'str',
+                    change_type: 'unchange'
+                },
+                'total': {
+                    data_type: 'num',
                     change_type: 'unchange'
                 }
             }
