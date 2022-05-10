@@ -2140,22 +2140,18 @@ const case2 = {
         12: [17],
     },
     step2data: {
-        0: 'data/data_panel_1/step0.csv',
-        1: 'data/data_panel_1/step1.csv',
-        2: 'data/data_panel_1/step2.csv',
-        3: 'data/data_panel_1/step3.csv',
+        0: 'data/data_panel_2/step0.csv',
+        1: 'data/data_panel_2/step1.csv',
+        2: 'data/data_panel_2/step2.csv',
+        3: 'data/data_panel_2/step3.csv',
         4: 'data/data_panel_2/step4.csv',
-        5: 'data/data_panel_1/step5.csv',
-        6: 'data/data_panel_1/step6.csv',
-        7: 'data/data_panel_1/step7.csv',
-        8: 'data/data_panel_1/step8.csv',
-        9: 'data/data_panel_1/step9.csv',
-        10: 'data/data_panel_1/step10.csv',
-        11: 'data/data_panel_1/step11.csv',
-        12: 'data/data_panel_1/step12.csv',
-        13: 'data/data_panel_1/step13.csv',
-        14: 'data/data_panel_1/step14.csv',
-        16: 'data/data_panel_1/step16.csv',
+        5: 'data/data_panel_2/step5.csv',
+        6: 'data/data_panel_2/step6.csv',
+        7: 'data/data_panel_2/step7.csv',
+        8: 'data/data_panel_2/step8.csv',
+        9: 'data/data_panel_2/step9.csv',
+        10: 'data/data_panel_2/step10.csv',
+        12: 'data/data_panel_2/step12.csv',
     },
     step2datac: {
         0: 'data/data_panel_1/step0.csv',
@@ -2506,9 +2502,7 @@ const case2 = {
                     input_col: ['Resale_Price', 'Sale_Price'],
                     transform_icon: 'create_columns_mutate',
                     unchange: [],
-                    create: [],
-                    delete: [],
-                    transform: [{
+                    create: [{
                         posi: [0, 1],
                         case: {
                             input_case: [
@@ -2518,6 +2512,8 @@ const case2 = {
                             output_case: [0.753, 0.764, 0.69, 0.521, 0.607, 0.529, 0.81, 0.798, 0.674, 0.803, 0.794, 0.725, 0.676, 0.639, 0.386, 0.745, 0.676, 0.745, 0.824, 0.706, 0.65, 0.599, 0.39, 0.808, 0.694, 0.728, 0.779, 0.744, 0.646, 0.774, 0.757]
                         }
                     }],
+                    delete: [],
+                    transform: [],
                     input_nan_posi: [],
                     output_nan_posi: [],
                     step: 5

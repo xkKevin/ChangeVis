@@ -488,4 +488,4 @@ function drawRows(svg, line_svg, output_posi_data, color, tbl, p_data, height_ra
     }
 }
 
-export { handel_overview, sendVue, changeProportionView, vm }
+export { handel_overview, sendVue, changeProportionView }

@@ -44,7 +44,7 @@
     <el-row type="flex" justify="center" style="height: calc(100vh - 70px); margin: 0">
     <el-col
         style="
-          width: 28vw;
+          width: 25vw;
           padding: 0 0 0 0;
           height: 100%;
           display: flex;
@@ -115,12 +115,12 @@
           >
           <div id="tag3"></div>
           <div>
-            <el-button v-if="existCreate&allFlag" style="background-color: #b2df8a; font-size: 18px" @click="clickCreate" icon="el-icon-search" >Create</el-button>
-            <el-button v-if="existDelete&allFlag" style="background-color: #fb9a99; font-size: 18px" @click="clickDelete" icon="el-icon-search">Delete</el-button>
-            <el-button v-if="existTransform&allFlag" style="background-color: #a6cee3; font-size: 18px" @click="clickTransform" icon="el-icon-search">Transform</el-button>
-            <el-button v-if="existCreate&tempFlag" style="background-color: #b2df8a; font-size: 18px" @click="clickCreate" icon="el-icon-circle-check">Create</el-button>
-            <el-button v-if="existDelete&tempFlag" style="background-color: #fb9a99; font-size: 18px" @click="clickDelete" icon="el-icon-circle-check">Delete</el-button>
-            <el-button v-if="existTransform&tempFlag" style="background-color: #a6cee3; font-size: 18px" @click="clickTransform" icon="el-icon-circle-check">Transform</el-button>
+            <el-button v-if="existCreate&(allFlag|tempTransformFlag|tempDeleteFlag)" style="background-color: #b2df8a; font-size: 18px; width:140px; color: black; font-family: Arial" @click="clickCreate" icon="el-icon-search" >Create</el-button>
+            <el-button v-if="existCreate&tempCreateFlag" style="background-color: #b2df8a; font-size: 18px; width:140px; color: black;" @click="clickCreate" icon="el-icon-circle-check">Create</el-button>
+            <el-button v-if="existDelete&(allFlag|tempCreateFlag|tempTransformFlag)" style="background-color: #fb9a99; font-size: 18px; width:140px; color: black;" @click="clickDelete" icon="el-icon-search">Delete</el-button>
+            <el-button v-if="existDelete&tempDeleteFlag" style="background-color: #fb9a99; font-size: 18px; width:140px; color: black;" @click="clickDelete" icon="el-icon-circle-check">Delete</el-button>
+            <el-button v-if="existTransform&tempTransformFlag" style="background-color: #a6cee3; font-size: 18px; width:140px; color: black;" @click="clickTransform" icon="el-icon-circle-check">Transform</el-button>
+            <el-button v-if="existTransform&(allFlag|tempCreateFlag|tempDeleteFlag)" style="background-color: #a6cee3; font-size: 18px; width:140px; color: black;" @click="clickTransform" icon="el-icon-search">Transform</el-button>
           </div>
         </el-row>
         <el-row style="height: calc(100% - 50px);">
@@ -194,7 +194,6 @@
 <script>
 // import axios from "axios";
 import * as d3 from "d3";
-import * as d3box from "d3-boxplot"
 import * as monaco from "monaco-editor"; // https://www.cnblogs.com/xuhaoliang/p/13803230.html
 
 import {handel_overview, sendVue, changeProportionView} from "@/assets/js/overview_panel"
@@ -244,7 +243,10 @@ export default {
       existTransform: false,
       existDelete: false,
       allFlag: true,
-      tempFlag: false
+      tempFlag: false,
+      tempCreateFlag: false,
+      tempDeleteFlag: false,
+      tempTransformFlag: false
     };
   },
   components: {
@@ -286,10 +288,15 @@ export default {
               }
             }},
     clickTransform () {
-      if(this.allFlag === false){
+      if(this.tempFlag === true & this.tempCreateFlag === false & this.tempDeleteFlag === false){
         this.tempFlag = false
         this.allFlag = true
+        this.tempCreateFlag= false,
+        this.tempDeleteFlag= false,
+        this.tempTransformFlag= false
       } else {
+        this.tempCreateFlag = false
+        this.tempDeleteFlag = false
         this.tempFlag = true
         this.allFlag = false
         let addFlag = false
@@ -307,13 +314,19 @@ export default {
             this.tempTableData.push(this.tableData[i])
           }
         }
+        this.tempTransformFlag = true
       }
     },
     clickCreate () {
-      if(this.allFlag === false){
+      if(this.tempFlag === true & this.tempDeleteFlag === false & this.tempTransformFlag === false){
         this.tempFlag = false
         this.allFlag = true
+        this.tempCreateFlag= false,
+        this.tempDeleteFlag= false,
+        this.tempTransformFlag= false
       } else {
+        this.tempTransformFlag = false
+        this.tempDeleteFlag = false
         this.tempFlag = true
         this.allFlag = false
         let addFlag = false
@@ -331,13 +344,19 @@ export default {
             this.tempTableData.push(this.tableData[i])
           }
         }
+        this.tempCreateFlag = true
       }
     },
     clickDelete () {
-      if(this.allFlag === false){
+      if(this.tempFlag === true & this.tempCreateFlag === false & this.tempTransformFlag === false){
         this.tempFlag = false
         this.allFlag = true
+        this.tempCreateFlag= false,
+        this.tempDeleteFlag= false,
+        this.tempTransformFlag= false
       } else {
+        this.tempCreateFlag = false
+        this.tempTrasnsformFlag = false
         this.tempFlag = true
         this.allFlag = false
         let addFlag = false
@@ -355,6 +374,7 @@ export default {
             this.tempTableData.push(this.tableData[i])
           }
         }
+        this.tempDeleteFlag = true
       }
     },
     selectCase(one_case = 'case3') {
@@ -365,11 +385,8 @@ export default {
             this.existCreate = false;
             this.existDelete = false;
             this.existTransform = false;
-            console.log('aaa', this.casesNum[this.one_case]);
-            show_data_panel(this.casesNum[this.one_case]);
-            // console.log(this.one_case);
-            console.log(this.tableData);
             let that = this
+            show_data_panel(this.casesNum[this.one_case], that);
             handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion).then(data => {
               let allview = {}
               allview.width = Math.max(data.level1.width, data.level2.width, data.level3.width)
@@ -599,7 +616,6 @@ export default {
     this.drawTag("tag2", "Visualization Panel");
     this.drawTag("tag3", "Data Panel");
     window.d3 = d3;
-    window.d3box = d3box;
     window.vue = this;
     sendVue(this)
     const that = this
