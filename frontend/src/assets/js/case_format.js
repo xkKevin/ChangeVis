@@ -1178,7 +1178,7 @@ const case1 = {
                     type: 'change',
                     input_row_num: 28,
                     output_row_num: 28,
-                    input_col: ['total'],
+                    input_col: ['Department'],
                     transform_icon: 'transform_columns_replace',
                     unchange: [],
                     create: [],

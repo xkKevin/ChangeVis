@@ -545,13 +545,15 @@ function drawChanges(data, view, proportion_flag, vis_panel_width) {
             outer_col_width += change_config.col_border_interval_x
         }
 
-        // 绘制列的外边框
-        change_svg.append("rect")
-            .attr("id", 'col_' + key)
-            .attr("x", outer_col_start_x).attr("y", outer_col_start_y)
-            .attr("width", outer_col_width).attr("height", outer_col_height)
-            .attr("fill", change_color.col_bg)
-            .lower()
+        if (outer_col_height) { // 注意: 如果每个key都为空（如单独选中了rearrange），此时outer_col_height 为空，就不用绘制矩形了
+            // 绘制列的外边框
+            change_svg.append("rect")
+                .attr("id", 'col_' + key)
+                .attr("x", outer_col_start_x).attr("y", outer_col_start_y)
+                .attr("width", outer_col_width).attr("height", outer_col_height)
+                .attr("fill", change_color.col_bg)
+                .lower()
+        }
 
         // 绘制外侧列名
         drawText(change_svg, key, change_config.title_font_size,
