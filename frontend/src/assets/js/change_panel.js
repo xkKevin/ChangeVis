@@ -24,7 +24,7 @@ function readcsv(path) {
     })
 }
 
-async function drawColline(data, view) {
+async function drawColline(data, view, vis_panel_width) {
     let colline_svg = d3.select("#colline_svg")
     colline_svg.selectChildren().remove()
 
@@ -161,7 +161,12 @@ async function drawColline(data, view) {
     let colline_svg_box = colline_svg.node().getBBox()
     view.level3 = {
         width: timeline_config.margin_left + colline_svg_box.width,
-        height: margin_top + 50
+        height: margin_top + 5
+    }
+
+    if (colline_svg_box.width < vis_panel_width) {
+        let x_interval = (vis_panel_width - colline_svg_box.width) / 2 - colline_svg_box.x
+        colline_svg.attr("transform", `translate(${x_interval}, 0)`)
     }
 }
 
@@ -333,7 +338,7 @@ function drawIcon(svg, transform_icon, x, y, icon_width) {
 }
 
 
-function drawChanges(data, view, proportion_flag = false) {
+function drawChanges(data, view, proportion_flag, vis_panel_width) {
     let change_svg = d3.select("#change_svg")
     change_svg.selectChildren().remove()
 
@@ -372,8 +377,8 @@ function drawChanges(data, view, proportion_flag = false) {
                 outer_col_width += change_config.col_inner_interval
             }
 
-            let change_step = change_svg.append("g").classed("change_step", true).attr("step", col.step)
-
+            let change_step = change_svg.append("g").classed("change_step", true)
+                .attr("step", col.step).attr("click_flag", '0')
 
             let col_height = height_ratio * col.output_row_num
 
@@ -563,6 +568,11 @@ function drawChanges(data, view, proportion_flag = false) {
     view.level2 = {
         width: change_svg_box.width + change_config.margin_left * 2,
         height: margin_top + change_svg_box.height + change_config.margin_bottom
+    }
+
+    if (change_svg_box.width < vis_panel_width) {
+        let x_interval = (vis_panel_width - change_svg_box.width) / 2 - change_svg_box.x
+        change_svg.attr("transform", `translate(${x_interval}, 0)`)
     }
 }
 

@@ -708,7 +708,8 @@ rect.table:hover{
 
 g.select,
 rect.select {
-  outline: #888888 solid 3px;
+  outline: #888888 solid;
+  outline-width: 3px;
 }
 
 .transform {
