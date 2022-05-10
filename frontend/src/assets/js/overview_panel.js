@@ -123,6 +123,8 @@ function add_event(group_flag, proportion_flag) {
                     // console.log(vm.language);
             })
             steps = steps.sort((a, b) => a - b)
+            vm.allFlag = true
+            vm.tempFlag = false
             if (vm.combined) {
                 vm.showCol = overall_data.step2columnshow[steps[steps.length - 1]]
                 vm.tableData = await readcsv(overall_data.step2datac[steps[steps.length - 1]])
@@ -486,4 +488,4 @@ function drawRows(svg, line_svg, output_posi_data, color, tbl, p_data, height_ra
     }
 }
 
-export { handel_overview, sendVue, changeProportionView }
+export { handel_overview, sendVue, changeProportionView, vm }

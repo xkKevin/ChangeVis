@@ -115,27 +115,40 @@
           >
           <div id="tag3"></div>
           <div>
-            <el-button v-if="existCreate" style="background-color: #b2df8a" circle></el-button>
-            <el-button v-if="existDelete" style="background-color: #fb9a99" circle></el-button>
-            <el-button v-if="existTransform" style="background-color: #a6cee3" circle></el-button>
+            <el-button v-if="existCreate&allFlag" style="background-color: #b2df8a; font-size: 18px" @click="clickCreate" icon="el-icon-search" >Create</el-button>
+            <el-button v-if="existDelete&allFlag" style="background-color: #fb9a99; font-size: 18px" @click="clickDelete" icon="el-icon-search">Delete</el-button>
+            <el-button v-if="existTransform&allFlag" style="background-color: #a6cee3; font-size: 18px" @click="clickTransform" icon="el-icon-search">Transform</el-button>
+            <el-button v-if="existCreate&tempFlag" style="background-color: #b2df8a; font-size: 18px" @click="clickCreate" icon="el-icon-circle-check">Create</el-button>
+            <el-button v-if="existDelete&tempFlag" style="background-color: #fb9a99; font-size: 18px" @click="clickDelete" icon="el-icon-circle-check">Delete</el-button>
+            <el-button v-if="existTransform&tempFlag" style="background-color: #a6cee3; font-size: 18px" @click="clickTransform" icon="el-icon-circle-check">Transform</el-button>
           </div>
         </el-row>
         <el-row style="height: calc(100% - 50px);">
-          <div id="data_panel" style="height: 100%">
+          <div v-if="allFlag" id="data_panel" style="height: 100%">
             <vxe-table
-          border
-          class="mytable-scrollbar"
-          :height= "dataview_height"
-          empty-text="No Data"
-          :cell-class-name="cellClassName"
-          :data="tableData"
-          >
-            <vxe-column v-for="col in showCol" :key="col" :field="col" :title="col"></vxe-column>
-          <!-- <vxe-column field="sex" title="Sex"></vxe-column>
-          <vxe-column field="age" title="Age"></vxe-column>
-          <vxe-column field="attr1" title="Attr1"></vxe-column>
-          <vxe-column field="address" title="Address" show-overflow></vxe-column> -->
-        </vxe-table>
+              border
+              Table="60px"
+              class="mytable-scrollbar"
+              :height= "dataview_height"
+              empty-text="No Data"
+              :cell-class-name="cellClassName"
+              :data="tableData"
+              >       
+              <vxe-column v-for="col in showCol" :key="col" :field="col" :title="col"></vxe-column>
+            </vxe-table>
+          </div>
+          <div v-if="tempFlag" id="data_panel" style="height: 100%">
+            <vxe-table
+              border
+              Table="60px"
+              class="mytable-scrollbar"
+              :height= "dataview_height"
+              empty-text="No Data"
+              :cell-class-name="cellClassName"
+              :data="tempTableData"
+              >       
+              <vxe-column v-for="col in showCol" :key="col" :field="col" :title="col"></vxe-column>
+            </vxe-table>
           </div>
         </el-row>
       </el-row>
@@ -185,6 +198,7 @@ import * as d3box from "d3-boxplot"
 import * as monaco from "monaco-editor"; // https://www.cnblogs.com/xuhaoliang/p/13803230.html
 
 import {handel_overview, sendVue, changeProportionView} from "@/assets/js/overview_panel"
+import {show_data_panel} from "@/assets/js/data_panel"
 import {change_color} from "@/assets/js/config"
 import { case1, case2, case3 } from '@/assets/js/case_format'
 
@@ -222,12 +236,15 @@ export default {
       visview_width: 1000, 
       visview_height: 800,
       tableData: [],
+      tempTableData: [],
       selectRow: null,
       selectColumn: null,
       showCol: [],
       existCreate: false,
       existTransform: false,
       existDelete: false,
+      allFlag: true,
+      tempFlag: false
     };
   },
   components: {
@@ -251,7 +268,6 @@ export default {
   },
   methods: {
     cellClassName ({ row, rowIndex, column, columnIndex }) {
-      // console.log(column.property.slice(2,));
             if (column.property.slice(0,10) !== 'ChangeVis_') {
               let tempColName = 'ChangeVis_' + column.property
               if (row[tempColName] == -1) {
@@ -269,12 +285,90 @@ export default {
                 return 'col-blue'
               }
             }},
-    selectCase(one_case = 'case2') {
+    clickTransform () {
+      if(this.allFlag === false){
+        this.tempFlag = false
+        this.allFlag = true
+      } else {
+        this.tempFlag = true
+        this.allFlag = false
+        let addFlag = false
+        this.tempTableData = []
+        for (var i=0;i<this.tableData.length;i++){
+          addFlag = false
+          for (var key in this.tableData[i]){
+            if (key.slice(0,10) === 'ChangeVis_'){
+              if(this.tableData[i][key] == 3){
+                addFlag = true
+              }
+            }
+          }
+          if(addFlag){
+            this.tempTableData.push(this.tableData[i])
+          }
+        }
+      }
+    },
+    clickCreate () {
+      if(this.allFlag === false){
+        this.tempFlag = false
+        this.allFlag = true
+      } else {
+        this.tempFlag = true
+        this.allFlag = false
+        let addFlag = false
+        this.tempTableData = []
+        for (var i=0;i<this.tableData.length;i++){
+          addFlag = false
+          for (var key in this.tableData[i]){
+            if (key.slice(0,10) === 'ChangeVis_'){
+              if(this.tableData[i][key] == 1){
+                addFlag = true
+              }
+            }
+          }
+          if(addFlag){
+            this.tempTableData.push(this.tableData[i])
+          }
+        }
+      }
+    },
+    clickDelete () {
+      if(this.allFlag === false){
+        this.tempFlag = false
+        this.allFlag = true
+      } else {
+        this.tempFlag = true
+        this.allFlag = false
+        let addFlag = false
+        this.tempTableData = []
+        for (var i=0;i<this.tableData.length;i++){
+          addFlag = false
+          for (var key in this.tableData[i]){
+            if (key.slice(0,10) === 'ChangeVis_'){
+              if(this.tableData[i][key] == 2){
+                addFlag = true
+              }
+            }
+          }
+          if(addFlag){
+            this.tempTableData.push(this.tableData[i])
+          }
+        }
+      }
+    },
+    selectCase(one_case = 'case3') {
             this.one_case = one_case;
             this.getScriptData(this.cases[this.one_case]);
             this.combined = false;
             this.proportion = false;
+            this.existCreate = false;
+            this.existDelete = false;
+            this.existTransform = false;
+            console.log('aaa', this.casesNum[this.one_case]);
+            show_data_panel(this.casesNum[this.one_case]);
             // console.log(this.one_case);
+            console.log(this.tableData);
             let that = this
             handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion).then(data => {
               let allview = {}
@@ -621,6 +715,12 @@ rect.select {
 
 .myContentClass {
   background: lightblue;
+}
+
+.mytable-scrollbar {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 17px
+  
 }
 
 .mytable-scrollbar .vxe-body--column.col-white {
