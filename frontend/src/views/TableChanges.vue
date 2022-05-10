@@ -431,7 +431,7 @@ export default {
         language: this.language, // 语言支持自行查阅demo
         automaticLayout: true, // 自动布局
         autoIndent: true, //自动布局
-        fontSize: 16, //字体大小
+        fontSize: 18, //字体大小
         readOnly: false, // 只读
         theme: "vs", // 官方自带三种主题vs, hc-black, or vs-dark,
         glyphMargin: true,
