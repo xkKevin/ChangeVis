@@ -34,18 +34,20 @@ async function handel_overview(data, group_flag = 0, proportion_flag = false) {
     let vis_svg = d3.select("#vis_svg") // overview_svg  tb_changes
     vis_svg.selectChildren().remove()
 
+    let vis_panel_width = document.getElementById("vis_panel_div").offsetWidth
+
     let overview_svg = vis_svg.append("g").attr("id", "overview_svg")
-    drawOverview(data.pipeline_data, graph, height_ratio, group_flag, proportion_flag)
+    drawOverview(data.pipeline_data, graph, height_ratio, group_flag, proportion_flag, vis_panel_width)
 
     select_data = generate_select_data(0, end_step, group_flag)
 
     let change_svg = vis_svg.append("g").attr("id", "change_svg")
-    drawChanges(select_data, view, proportion_flag)
+    drawChanges(select_data, view, proportion_flag, vis_panel_width)
 
     let colline_svg = vis_svg.append("g").attr("id", "colline_svg")
-    await drawColline(select_data, view)
+    await drawColline(select_data, view, vis_panel_width)
 
-    view.max_width = Math.max(view.level1.width, view.level2.width, view.level3.width, d3.select("#vis_panel_div").style("width").slice(0, -2))
+    view.max_width = Math.max(view.level1.width, view.level2.width, view.level3.width, vis_panel_width)
 
     addLine(vis_svg, 0, view.level1.height, view.max_width)
     addLine(vis_svg, 0, view.level2.height, view.max_width)
@@ -94,7 +96,7 @@ function add_event(group_flag, proportion_flag) {
     d3.select("body").on("keydown", (event) => {
         // console.log(event)
         if (event.keyCode === 27) { // escape
-            d3.selectAll(".table").attr("click_flag", '0').classed("select", false)
+            d3.selectAll(".table, .change_step").attr("click_flag", '0').classed("select", false)
             select_rect = []
             vm.codeLineHighlight()
             vm.codeGlyphHighlight()
@@ -143,13 +145,23 @@ function add_event(group_flag, proportion_flag) {
 
     d3.selectAll(".change_step")
         .on("mouseover", function() {
-            d3.select(this).classed("select", true)
+            // d3.select(this).classed("select", true)
+            d3.selectAll(`.change_step[step='${d3.select(this).attr("step")}']`).classed("select", true)
         })
         .on("mouseout", function() {
-            d3.select(this).classed("select", false)
+            let tbl_this = d3.select(this)
+            if (tbl_this.attr("click_flag") === '0') {
+                // tbl_this.classed("select", false)
+                d3.selectAll(`.change_step[step='${tbl_this.attr("step")}']`).classed("select", false)
+            }
         })
         .on("mouseup", async function() {
-            let steps = d3.select(this).attr("step").split("_").map(Number)
+            d3.selectAll(".change_step").attr("click_flag", '0').classed("select", false)
+
+            let tbl_this = d3.select(this)
+            d3.selectAll(`.change_step[step='${tbl_this.attr("step")}']`).attr("click_flag", '1').classed("select", true)
+            let steps = tbl_this.attr("step").split("_").map(Number)
+
             let code_glyph_lines = []
             steps.forEach(si => {
                 code_glyph_lines = code_glyph_lines.concat(overall_data.step2code[si])
@@ -342,7 +354,7 @@ function generateGraph(data, group_flag) {
 }
 
 
-function drawOverview(pipeline_data, graph, height_ratio, group_flag, proportion_flag) {
+function drawOverview(pipeline_data, graph, height_ratio, group_flag, proportion_flag, vis_panel_width) {
     let overview_svg = d3.select("#overview_svg")
     overview_svg.selectChildren().remove()
 
@@ -463,6 +475,11 @@ function drawOverview(pipeline_data, graph, height_ratio, group_flag, proportion
     view.level1 = {
         width: overview_svg_box.width + overview_config.margin_left + 35,
         height: overview_svg_box.height + overview_config.margin_top + overview_config.margin_bottom,
+    }
+
+    if (overview_svg_box.width < vis_panel_width) {
+        let x_interval = (vis_panel_width - overview_svg_box.width) / 2 - overview_svg_box.x
+        overview_svg.attr("transform", `translate(${x_interval}, 0)`)
     }
 }
 
