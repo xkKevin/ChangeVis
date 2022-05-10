@@ -45,10 +45,43 @@ async function handel_overview(data, group_flag = 0, proportion_flag = false) {
     let colline_svg = vis_svg.append("g").attr("id", "colline_svg")
     await drawColline(select_data, view)
 
+    view.max_width = Math.max(view.level1.width, view.level2.width, view.level3.width, d3.select("#vis_panel_div").style("width").slice(0, -2))
+
+    addLine(vis_svg, 0, view.level1.height, view.max_width)
+    addLine(vis_svg, 0, view.level2.height, view.max_width)
+
     add_event(group_flag, proportion_flag)
         // console.log(view);
     return view
 
+}
+
+function addViewTitle(svg, x, y, text) {
+    let title = svg.append("g")
+    title.append("path")
+        .attr("d", "M0,0 L0,40 L200,40 L230,0 L0,0")
+        .attr("fill", "#62ADB2");
+
+    title.append("text")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("dy", 26)
+        .attr("dx", 18)
+        .attr("text-anchor", "start")
+        .attr("fill", "white")
+        .attr("font-size", `19px`)
+        .attr("font-weight", "bold")
+        .attr("font-family", "Arial")
+        .text(text);
+
+    title.attr("transform", `translate(${x}, ${y})`)
+}
+
+function addLine(svg, x, y, width, height = 5, color = '#e3e6f0') {
+    svg.append("rect")
+        .attr("x", x).attr("y", y)
+        .attr("width", width).attr("height", height)
+        .attr("fill", color)
 }
 
 function changeProportionView(group_flag, proportion_flag) {
@@ -265,7 +298,7 @@ function generateGraph(data, group_flag) {
     let graph = {
         id: "root",
         layoutOptions: {
-            "elk.padding": '[top = 50.0, left = 30.0, bottom = 0.0, right = 35.0]',
+            "elk.padding": `[top = ${overview_config.margin_top}, right = 35.0, bottom = 0.0, left = ${overview_config.margin_left}]`,
             'elk.algorithm': 'layered',
             "spacing.nodeNodeBetweenLayers": overview_config.node_interval,
         },
@@ -428,8 +461,8 @@ function drawOverview(pipeline_data, graph, height_ratio, group_flag, proportion
 
     let overview_svg_box = overview_svg.node().getBBox()
     view.level1 = {
-        width: overview_svg_box.width + 70,
-        height: overview_svg_box.height + 55,
+        width: overview_svg_box.width + overview_config.margin_left + 35,
+        height: overview_svg_box.height + overview_config.margin_top + overview_config.margin_bottom,
     }
 }
 

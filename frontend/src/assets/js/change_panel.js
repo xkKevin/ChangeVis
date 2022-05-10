@@ -562,7 +562,7 @@ function drawChanges(data, view, proportion_flag = false) {
     let change_svg_box = change_svg.node().getBBox()
     view.level2 = {
         width: change_svg_box.width + change_config.margin_left * 2,
-        height: margin_top + change_svg_box.height
+        height: margin_top + change_svg_box.height + change_config.margin_bottom
     }
 }
 

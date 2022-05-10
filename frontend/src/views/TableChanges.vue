@@ -44,7 +44,7 @@
     <el-row type="flex" justify="center" style="height: calc(100vh - 70px); margin: 0">
     <el-col
         style="
-          width: 25vw;
+          width: 23vw;
           padding: 0 0 0 0;
           height: 100%;
           display: flex;
@@ -389,7 +389,7 @@ export default {
             show_data_panel(this.casesNum[this.one_case], that);
             handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion).then(data => {
               let allview = {}
-              allview.width = Math.max(data.level1.width, data.level2.width, data.level3.width)
+              allview.width = data.max_width
               allview.height = data.level3.height
               that.allview = allview
             });
@@ -473,7 +473,7 @@ export default {
       let that = this
       handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion).then(data => {
         let allview = {}
-        allview.width = Math.max(data.level1.width, data.level2.width, data.level3.width)
+        allview.width = data.max_width
         allview.height = data.level3.height
         that.allview = allview
       });
@@ -485,7 +485,7 @@ export default {
       let that = this
       handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion).then(data => {
         let allview = {}
-        allview.width = Math.max(data.level1.width, data.level2.width, data.level3.width)
+        allview.width = data.max_width
         allview.height = data.level3.height
         that.allview = allview
       });
