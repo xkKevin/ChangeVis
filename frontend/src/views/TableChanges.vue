@@ -115,7 +115,7 @@
           >
           <div id="tag3"></div>
           <div>
-            <el-button v-if="existCreate&(allFlag|tempTransformFlag|tempDeleteFlag)" style="background-color: #b2df8a; font-size: 18px; width:140px; color: black; font-family: Arial" @click="clickCreate" icon="el-icon-search" >Create</el-button>
+            <el-button v-if="existCreate&(allFlag|tempTransformFlag|tempDeleteFlag)" style="background-color: #b2df8a; font-size: 18px; width:140px; color: black;" @click="clickCreate" icon="el-icon-search" >Create</el-button>
             <el-button v-if="existCreate&tempCreateFlag" style="background-color: #b2df8a; font-size: 18px; width:140px; color: black;" @click="clickCreate" icon="el-icon-circle-check">Create</el-button>
             <el-button v-if="existDelete&(allFlag|tempCreateFlag|tempTransformFlag)" style="background-color: #fb9a99; font-size: 18px; width:140px; color: black;" @click="clickDelete" icon="el-icon-search">Delete</el-button>
             <el-button v-if="existDelete&tempDeleteFlag" style="background-color: #fb9a99; font-size: 18px; width:140px; color: black;" @click="clickDelete" icon="el-icon-circle-check">Delete</el-button>

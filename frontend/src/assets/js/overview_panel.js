@@ -126,7 +126,7 @@ function add_event(group_flag, proportion_flag) {
             vm.allFlag = true
             vm.tempFlag = false
             if (vm.combined) {
-                vm.showCol = overall_data.step2columnshow[steps[steps.length - 1]]
+                vm.showCol = overall_data.step2columnshowc[steps[steps.length - 1]]
                 vm.tableData = await readcsv(overall_data.step2datac[steps[steps.length - 1]])
             } else {
                 vm.showCol = overall_data.step2columnshow[steps[steps.length - 1]]
