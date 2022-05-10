@@ -11,6 +11,9 @@ const change_color = {
 }
 
 const overview_config = {
+    'margin_top': 55,
+    'margin_left': 30,
+    'margin_bottom': 10,
     'col_width': 16,
     'col_height': 65,
     'node_interval': 60, // 节点之间的间隔
@@ -19,8 +22,9 @@ const overview_config = {
 }
 
 const change_config = {
-    'margin_top': 50, // 大框距离顶端间隙
-    'margin_left': 25, // 大框距离左端间隙
+    'margin_top': 70, // 大框距离顶端间隙
+    'margin_bottom': 12, // 大框距离低端间隙
+    'margin_left': 28, // 大框距离左端间隙
     'col_width': 65,
     'col_height': 180,
     'col_inner_interval': 25, // 框内列间距
@@ -40,8 +44,8 @@ const change_config = {
 }
 
 const timeline_config = {
-    'margin_top': 80,
-    'margin_left': 30,
+    'margin_top': 105,
+    'margin_left': 32,
     'col_width': 180,
     'col_interval': 0,
     'knot_interval': 70,
