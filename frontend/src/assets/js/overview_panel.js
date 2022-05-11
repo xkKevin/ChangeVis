@@ -11,6 +11,8 @@ var skip_step = 0 // 跳过的初始步骤
 var select_data = {}
 var view = { level1: {}, level2: {}, level3: {} }
 var vis_panel_width = 0
+var start_step = 0
+var end_step = undefined
 
 
 var vm = null
@@ -29,7 +31,7 @@ async function handel_overview(data, group_flag = 0, proportion_flag = false) {
     skip_step = 0
     overall_data = data
     view = { level1: {}, level2: {}, level3: {} }
-    let { graph, height_ratio, end_step } = generateGraph(data, group_flag)
+    let { graph, height_ratio, end } = generateGraph(data, group_flag)
     await generatePos(graph)
 
     let vis_svg = d3.select("#vis_svg") // overview_svg  tb_changes
@@ -38,9 +40,9 @@ async function handel_overview(data, group_flag = 0, proportion_flag = false) {
     vis_panel_width = document.getElementById("vis_panel_div").offsetWidth
 
     let overview_svg = vis_svg.append("g").attr("id", "overview_svg")
-    drawOverview(data.pipeline_data, graph, height_ratio, group_flag, proportion_flag, vis_panel_width)
+    drawOverview(data.pipeline_data, graph, height_ratio, group_flag, proportion_flag)
 
-    select_data = generate_select_data(0, end_step, group_flag)
+    select_data = generate_select_data(0, end, group_flag)
 
     let change_svg = vis_svg.append("g").attr("id", "change_svg")
     drawChanges(select_data, view, proportion_flag, vis_panel_width)
@@ -88,8 +90,36 @@ function addLine(svg, x, y, width, height = 5, color = '#e3e6f0') {
 }
 
 function changeProportionView(group_flag, proportion_flag) {
-    drawChanges(select_data, view, proportion_flag)
+    drawChanges(select_data, view, proportion_flag, vis_panel_width)
     add_event(group_flag, proportion_flag)
+}
+
+async function combinedEvent(group_flag, proportion_flag) {
+    if (end_step === undefined) {
+        await handel_overview(overall_data, group_flag, proportion_flag)
+        return view
+    }
+
+    view = { level1: {}, level2: {}, level3: {} }
+    let data = overall_data
+    let { graph, height_ratio, end } = generateGraph(data, group_flag)
+    await generatePos(graph)
+
+    drawOverview(data.pipeline_data, graph, height_ratio, group_flag, proportion_flag)
+
+    add_event(group_flag, proportion_flag)
+
+    select_rect = []
+    let start_i = document.getElementById("tbl" + start_step)
+    while (start_i === null) {
+        start_i = document.getElementById("tbl" + --start_step)
+    }
+    d3.select(start_i).dispatch("mouseup")
+    let end_i = document.getElementById("tbl" + end_step)
+    while (end_i === null) {
+        end_i = document.getElementById("tbl" + ++end_step)
+    }
+    d3.select(end_i).dispatch("mouseup")
 }
 
 function add_event(group_flag, proportion_flag) {
@@ -133,16 +163,23 @@ function add_event(group_flag, proportion_flag) {
                 let select_steps = [...select_rect[0].split("_"), ...select_rect[1].split("_")].map(Number).sort((a, b) => a - b)
                     // let select_steps = [+select_rect[0].slice(3), +select_rect[1].slice(3)].sort()
 
-                select_data = generate_select_data(select_steps[0], select_steps[select_steps.length - 1], group_flag)
+                start_step = select_steps[0]
+                end_step = select_steps[select_steps.length - 1]
+                select_data = generate_select_data(start_step, end_step, group_flag)
 
                 drawChanges(select_data, view, proportion_flag, vis_panel_width)
-                drawColline(select_data, view, vis_panel_width)
+                drawColline(select_data, view, vis_panel_width).then(() => {
+                    d3.selectAll(".vis_line").remove()
+                    let vis_svg = d3.select("#vis_svg")
+                    view.max_width = Math.max(view.level1.width, view.level2.width, view.level3.width, vis_panel_width)
+                    addLine(vis_svg, 0, view.level1.height, view.max_width)
+                    addLine(vis_svg, 0, view.level2.height, view.max_width)
+                    let allview = {}
+                    allview.width = view.max_width
+                    allview.height = view.level3.height
+                    vm.allview = allview
+                })
                 add_event(group_flag, proportion_flag)
-
-                d3.selectAll(".vis_line").remove()
-                let vis_svg = d3.select("#vis_svg")
-                addLine(vis_svg, 0, view.level1.height, view.max_width)
-                addLine(vis_svg, 0, view.level2.height, view.max_width)
 
                 vm.codeLineHighlight(select_code.lines, select_code.changes)
                 vm.codeGlyphHighlight()
@@ -334,12 +371,12 @@ function generateGraph(data, group_flag) {
     })
 
     let edge_id = 1
-    let end_step = 1
+    let end = 1
 
     data.pipeline_data.forEach((element, index) => {
         if (group_flag && element.step.length === 1) return
         let node = {}
-        if (element.step[group_flag] > end_step) end_step = element.step[group_flag]
+        if (element.step[group_flag] > end) end = element.step[group_flag]
         node.id = "tbl" + element.step[group_flag]
         node.width = element.column_num * overview_config.col_width
         node.height = overview_config.col_height
@@ -356,12 +393,12 @@ function generateGraph(data, group_flag) {
 
     });
 
-    return { graph, height_ratio, end_step }
+    return { graph, height_ratio, end }
 }
 
 
-function drawOverview(pipeline_data, graph, height_ratio, group_flag, proportion_flag, vis_panel_width) {
-    let overview_svg = d3.select("#overview_svg")
+function drawOverview(pipeline_data, graph, height_ratio, group_flag, proportion_flag) {
+    let overview_svg = d3.select("#overview_svg").attr("transform", null)
     overview_svg.selectChildren().remove()
 
     let line_flag = -1 // -1 表示上；1 表示下
@@ -544,4 +581,4 @@ function drawRows(svg, line_svg, output_posi_data, color, tbl, p_data, height_ra
     }
 }
 
-export { handel_overview, sendVue, changeProportionView }
+export { handel_overview, sendVue, changeProportionView, combinedEvent }

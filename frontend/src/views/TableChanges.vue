@@ -196,7 +196,7 @@
 import * as d3 from "d3";
 import * as monaco from "monaco-editor"; // https://www.cnblogs.com/xuhaoliang/p/13803230.html
 
-import {handel_overview, sendVue, changeProportionView} from "@/assets/js/overview_panel"
+import {handel_overview, sendVue, changeProportionView, combinedEvent} from "@/assets/js/overview_panel"
 import {show_data_panel} from "@/assets/js/data_panel"
 import {change_color} from "@/assets/js/config"
 import { case1, case2, case3 } from '@/assets/js/case_format'
@@ -482,15 +482,7 @@ export default {
     },
     combinedChange(combined){
       this.combined = combined
-      this.codeLineHighlight()
-      this.codeGlyphHighlight()
-      let that = this
-      handel_overview(this.casesNum[this.one_case], + this.combined, this.proportion).then(data => {
-        let allview = {}
-        allview.width = data.max_width
-        allview.height = data.level3.height
-        that.allview = allview
-      });
+      combinedEvent(+ this.combined, this.proportion);
     },
     proportionChange(proportion){
       this.proportion = proportion

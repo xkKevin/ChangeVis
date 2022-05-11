@@ -25,7 +25,7 @@ function readcsv(path) {
 }
 
 async function drawColline(data, view, vis_panel_width) {
-    let colline_svg = d3.select("#colline_svg")
+    let colline_svg = d3.select("#colline_svg").attr("transform", null)
     colline_svg.selectChildren().remove()
 
     let column_change_data = data.column_change_data
@@ -339,7 +339,7 @@ function drawIcon(svg, transform_icon, x, y, icon_width) {
 
 
 function drawChanges(data, view, proportion_flag, vis_panel_width) {
-    let change_svg = d3.select("#change_svg")
+    let change_svg = d3.select("#change_svg").attr("transform", null)
     change_svg.selectChildren().remove()
 
     const height_ratio = change_config.col_height / data.average_row
