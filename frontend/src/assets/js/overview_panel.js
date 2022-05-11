@@ -81,7 +81,7 @@ function addViewTitle(svg, x, y, text) {
 }
 
 function addLine(svg, x, y, width, height = 5, color = '#e3e6f0') {
-    svg.append("rect")
+    svg.append("rect").classed("vis_line", true)
         .attr("x", x).attr("y", y)
         .attr("width", width).attr("height", height)
         .attr("fill", color)
@@ -138,6 +138,11 @@ function add_event(group_flag, proportion_flag) {
                 drawChanges(select_data, view, proportion_flag, vis_panel_width)
                 drawColline(select_data, view, vis_panel_width)
                 add_event(group_flag, proportion_flag)
+
+                d3.selectAll(".vis_line").remove()
+                let vis_svg = d3.select("#vis_svg")
+                addLine(vis_svg, 0, view.level1.height, view.max_width)
+                addLine(vis_svg, 0, view.level2.height, view.max_width)
 
                 vm.codeLineHighlight(select_code.lines, select_code.changes)
                 vm.codeGlyphHighlight()
