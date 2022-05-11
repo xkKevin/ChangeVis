@@ -10,6 +10,7 @@ var overall_data
 var skip_step = 0 // 跳过的初始步骤
 var select_data = {}
 var view = { level1: {}, level2: {}, level3: {} }
+var vis_panel_width = 0
 
 
 var vm = null
@@ -34,7 +35,7 @@ async function handel_overview(data, group_flag = 0, proportion_flag = false) {
     let vis_svg = d3.select("#vis_svg") // overview_svg  tb_changes
     vis_svg.selectChildren().remove()
 
-    let vis_panel_width = document.getElementById("vis_panel_div").offsetWidth
+    vis_panel_width = document.getElementById("vis_panel_div").offsetWidth
 
     let overview_svg = vis_svg.append("g").attr("id", "overview_svg")
     drawOverview(data.pipeline_data, graph, height_ratio, group_flag, proportion_flag, vis_panel_width)
@@ -134,8 +135,8 @@ function add_event(group_flag, proportion_flag) {
 
                 select_data = generate_select_data(select_steps[0], select_steps[select_steps.length - 1], group_flag)
 
-                drawChanges(select_data, view, proportion_flag)
-                drawColline(select_data, view)
+                drawChanges(select_data, view, proportion_flag, vis_panel_width)
+                drawColline(select_data, view, vis_panel_width)
                 add_event(group_flag, proportion_flag)
 
                 vm.codeLineHighlight(select_code.lines, select_code.changes)

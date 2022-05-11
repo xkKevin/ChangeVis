@@ -321,7 +321,7 @@ const case3 = {
                     input_col: ['total'],
                     transform_icon: 'transform_columns_mutate',
                     unchange: [{
-                        posi: [0.167, 0.3],
+                        posi: [0, 0.3],
                         case: {
                             input_case: [122, 130, 133, 126],
                             output_case: ['D', 'D', 'D', 'D'],
@@ -349,7 +349,7 @@ const case3 = {
                     input_col: ['total'],
                     transform_icon: 'transform_columns_mutate',
                     unchange: [{
-                        posi: [0.3, 0.667],
+                        posi: [0, 0.667],
                         case: {
                             input_case: [154, 157, 149, 155, 156, 155, 148, 144, 154, 146, 143],
                             output_case: ['C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C'],
@@ -377,7 +377,7 @@ const case3 = {
                     input_col: ['total'],
                     transform_icon: 'transform_columns_mutate',
                     unchange: [{
-                        posi: [0.667, 0.833],
+                        posi: [0, 0.833],
                         case: {
                             input_case: [166, 169, 176, 162, 170],
                             output_case: ['B', 'B', 'B', 'B', 'B'],
@@ -666,40 +666,11 @@ const case3 = {
                 }
             }
         },
-        // 8: {
-        //     type: 'unchange',
-        //     row_num: 32,
-        //     transform: 'transform_columns_mutate',
-        //     table_path: 'data/case3/L11 (studentScore).csv',
-        //     change: false,
-        //     columns: {
-        //         'id': {
-        //             data_type: 'str',
-        //             change_type: 'unchange'
-        //         },
-        //         'math': {
-        //             data_type: 'num',
-        //             change_type: 'unchange'
-        //         },
-        //         'art': {
-        //             data_type: 'num',
-        //             change_type: 'unchange'
-        //         },
-        //         'total': {
-        //             data_type: 'num',
-        //             change_type: 'unchange'
-        //         },
-        //         'rate': {
-        //             data_type: 'str',
-        //             change_type: 'transform'
-        //         }
-        //     }
-        // },
         8: {
-            type: 'transform',
+            type: 'unchange',
             row_num: 30,
-            transform: 'transform_tables_sort_desc',
-            table_path: 'data/case3/L12 (studentScore).csv',
+            transform: 'transform_columns_mutate',
+            table_path: 'data/case3/L11 (studentScore).csv',
             change: false,
             columns: {
                 'id': {
@@ -716,14 +687,43 @@ const case3 = {
                 },
                 'total': {
                     data_type: 'num',
-                    change_type: 'transform'
+                    change_type: 'unchange'
                 },
                 'rate': {
                     data_type: 'str',
-                    change_type: 'unchange'
+                    change_type: 'transform'
                 }
             }
         },
+        // 8: {
+        //     type: 'transform',
+        //     row_num: 30,
+        //     transform: 'transform_tables_sort_desc',
+        //     table_path: 'data/case3/L12 (studentScore).csv',
+        //     change: false,
+        //     columns: {
+        //         'id': {
+        //             data_type: 'str',
+        //             change_type: 'unchange'
+        //         },
+        //         'math': {
+        //             data_type: 'num',
+        //             change_type: 'unchange'
+        //         },
+        //         'art': {
+        //             data_type: 'num',
+        //             change_type: 'unchange'
+        //         },
+        //         'total': {
+        //             data_type: 'num',
+        //             change_type: 'transform'
+        //         },
+        //         'rate': {
+        //             data_type: 'str',
+        //             change_type: 'unchange'
+        //         }
+        //     }
+        // },
         9: {
             type: 'unchange',
             row_num: 30,
@@ -1178,7 +1178,7 @@ const case1 = {
                     type: 'change',
                     input_row_num: 28,
                     output_row_num: 28,
-                    input_col: ['total'],
+                    input_col: ['Department'],
                     transform_icon: 'transform_columns_replace',
                     unchange: [],
                     create: [],
@@ -1298,7 +1298,7 @@ const case1 = {
                 input_col: [],
                 transform_icon: 'transform_columns_replace',
                 unchange: [{
-                    posi: [0, 0.721],
+                    posi: [0, 0.738],
                     case: {
                         input_case: [],
                         output_case: [27],
@@ -1306,7 +1306,7 @@ const case1 = {
                 }, ],
                 create: [],
                 delete: [{
-                        posi: [0.721, 0.821],
+                        posi: [0.738, 0.838],
                         case: {
                             input_case: [],
                             output_case: [32, 35, 31],
@@ -1314,7 +1314,7 @@ const case1 = {
                         step: 1
                     },
                     {
-                        posi: [0.821, 1],
+                        posi: [0.838, 1],
                         case: {
                             input_case: [],
                             output_case: [14, 15, 13, 19, 14],
@@ -1388,9 +1388,7 @@ const case1 = {
                     input_col: ['Performance', 'Attendance'],
                     transform_icon: 'create_columns_mutate',
                     unchange: [],
-                    create: [],
-                    delete: [],
-                    transform: [{
+                    create: [{
                         posi: [0, 1],
                         case: {
                             input_case: [
@@ -1400,6 +1398,8 @@ const case1 = {
                             output_case: [88.89, 92.0, 62.5, 92.31, 86.36, 95.65, 87.5, 100.0, 95.45, 104.17, 122.73, 127.27, 109.09, 100.0, 109.09, 95.65, 78.26, 68.97, 88.46, 77.78, 81.82, 84.0, 78.57],
                         }
                     }],
+                    delete: [],
+                    transform: [],
                     input_nan_posi: [],
                     output_nan_posi: [],
                     step: 8

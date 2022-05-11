@@ -103,7 +103,7 @@ async function drawColline(data, view, vis_panel_width) {
             colline_svg.append("rect")
                 .attr("x", margin_left).attr("y", margin_top - timeline_config.radius)
                 .attr("width", timeline_config.col_width).attr("height", 2 * timeline_config.radius)
-                .attr("fill", change_color[columns[ci].change_type])
+                .attr("fill", cdi === 0 ? change_color.unchange : change_color[columns[ci].change_type])
 
             drawText(colline_svg, ci, change_config.title_font_size, margin_left, text_y, [half_col_width, 0], max_len)
 
