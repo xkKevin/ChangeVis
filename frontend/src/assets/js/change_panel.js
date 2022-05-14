@@ -564,6 +564,14 @@ function drawChanges(data, view, proportion_flag, vis_panel_width) {
         //     .attr("x", outer_col_start_x).attr("y", outer_col_start_y - 10)
         //     .attr("transform", `translate(${outer_col_width/2}, 0)`)
         //     .attr("text-anchor", "middle")
+
+        if (key === 'index') {
+            change_svg.append("line")
+                .attr("x1", margin_left).attr("y1", outer_col_start_y - 32).attr("x2", margin_left).attr("y2", outer_col_start_y + outer_col_height + 8)
+                .attr("stroke", 'black').attr("stroke-width", 2)
+                .attr("stroke-dasharray", "8 16")
+            margin_left += change_config.col_outer_interval
+        }
     }
 
     let change_svg_box = change_svg.node().getBBox()
