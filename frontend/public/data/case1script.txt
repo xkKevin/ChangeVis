@@ -7,10 +7,11 @@ def abbreviated(df, column, source, target):
 
 def generateRate(df, rateInterval, rate, inputCol, outputCol):
     intervalNum = len(rateInterval)
+    df[outputCol] = list(df[inputCol])
     df.loc[df[inputCol] < rateInterval[0], outputCol] = rate[0]
     for i in range(1, intervalNum):
-        df.loc[(df[inputCol] >= rateInterval[i-1]) & (df[inputCol] < rateInterval[i]), outputCol] = rate[i]
-    df.loc[df[inputCol] >= rateInterval[intervalNum - 1], outputCol] = rate[intervalNum]
+        df.loc[(df[inputCol] > rateInterval[i-1]) & (df[inputCol] < rateInterval[i]), outputCol] = rate[i]
+    df.loc[df[inputCol] > rateInterval[intervalNum - 1], outputCol] = rate[intervalNum]
     return df
 
 staff = pd.read_csv("staff.csv")

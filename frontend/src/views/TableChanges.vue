@@ -44,7 +44,7 @@
     <el-row type="flex" justify="center" style="height: calc(100vh - 70px); margin: 0">
     <el-col
         style="
-          width: 25vw;
+          width: 22vw;
           padding: 0 0 0 0;
           height: 100%;
           display: flex;
@@ -452,7 +452,6 @@ export default {
         readOnly: false, // 只读
         theme: "vs", // 官方自带三种主题vs, hc-black, or vs-dark,
         glyphMargin: true,
-        wordWrap: "on",
         readOnly: true,
         lineNumbersMinChars: 1,
       });

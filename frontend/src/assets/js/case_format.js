@@ -757,27 +757,28 @@ const case3 = {
 }
 
 const case1 = {
-    average_row: 25.1875,
+    average_row: 25.06,
     max_row: 31,
     source_column: 4,
     source_row: 31,
     step2code: {
-        1: [17],
-        2: [18],
-        3: [5, 19],
-        4: [5, 19],
-        5: [5, 19],
-        6: [20],
-        7: [21],
-        8: [22],
-        9: [10, 23],
-        10: [12, 23],
-        11: [12, 23],
-        12: [12, 23],
-        13: [13, 23],
-        14: [24],
+        1: [18],
+        2: [19],
+        3: [5, 20],
+        4: [5, 20],
+        5: [5, 20],
+        6: [21],
+        7: [22],
+        8: [23],
+        9: [10, 24],
+        10: [13, 24],
+        11: [13, 24],
+        12: [13, 24],
+        13: [13, 24],
+        14: [14, 24],
         15: [25],
         16: [26],
+        17: [27]
     },
     step2data: {
         0: 'data/data_panel_1/step0.csv',
@@ -796,6 +797,7 @@ const case1 = {
         13: 'data/data_panel_1/step13.csv',
         14: 'data/data_panel_1/step14.csv',
         16: 'data/data_panel_1/step16.csv',
+        17: 'data/data_panel_1/step17.csv'
     },
     step2datac: {
         0: 'data/data_panel_1/step0.csv',
@@ -804,9 +806,10 @@ const case1 = {
         6: 'data/data_panel_1/step6.csv',
         7: 'data/data_panel_1/step7c.csv',
         8: 'data/data_panel_1/step8.csv',
-        13: 'data/data_panel_1/step13c.csv',
-        14: 'data/data_panel_1/step14.csv',
-        16: 'data/data_panel_1/step16.csv',
+        9: 'data/data_panel_1/step9.csv',
+        14: 'data/data_panel_1/step14c.csv',
+        15: 'data/data_panel_1/step15.csv',
+        17: 'data/data_panel_1/step17.csv',
     },
     step2columnshow: {
         0: ['Info', 'Department', 'Attendance', 'Performance'],
@@ -823,8 +826,9 @@ const case1 = {
         11: ['Achievements', 'Perf_rate'],
         12: ['Achievements', 'Perf_rate'],
         13: ['Achievements', 'Perf_rate'],
-        14: ['Info', 'Department'],
-        16: ['Achievements_15', 'Achievements_16'],
+        14: ['Achievements', 'Perf_rate'],
+        15: ['Info', 'Department'],
+        17: ['Achievements_15', 'Achievements_16'],
     },
     step2columnshowc: {
         0: ['Info', 'Department', 'Attendance', 'Performance'],
@@ -839,8 +843,9 @@ const case1 = {
         11: ['Achievements', 'Perf_rate'],
         12: ['Achievements', 'Perf_rate'],
         13: ['Achievements', 'Perf_rate'],
-        14: ['Info', 'Department'],
-        16: ['Achievements_15', 'Achievements_16'],
+        14: ['Achievements', 'Perf_rate'],
+        15: ['Info', 'Department'],
+        17: ['Achievements_15', 'Achievements_16'],
     },
     pipeline_data: [{
             type: 'rows',
@@ -947,7 +952,7 @@ const case1 = {
             output_delete_posi: [],
             output_create_posi: [6],
             output_transform_posi: [],
-            step: [9, 13],
+            step: [9, 9],
             pre: 8
         },
         {
@@ -959,7 +964,7 @@ const case1 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [6],
-            step: [10],
+            step: [10, 14],
             pre: 9
         },
         {
@@ -1002,13 +1007,25 @@ const case1 = {
             type: 'columns',
             column_num: 7,
             row_num: 23,
+            change_type: 'transform',
+            input_posi: [5],
+            output_delete_posi: [],
+            output_create_posi: [],
+            output_transform_posi: [6],
+            step: [14],
+            pre: 13
+        },
+        {
+            type: 'columns',
+            column_num: 7,
+            row_num: 23,
             change_type: 'delete',
             input_posi: [0, 1],
             output_delete_posi: [0, 1],
             output_create_posi: [],
             output_transform_posi: [],
-            step: [14, 14],
-            pre: 13
+            step: [15, 15],
+            pre: 14
         },
         {
             type: 'columns',
@@ -1019,8 +1036,8 @@ const case1 = {
             output_delete_posi: [],
             output_create_posi: [],
             output_transform_posi: [0, 1, 2],
-            step: [15, 15],
-            pre: 14
+            step: [16, 16],
+            pre: 15
         },
         {
             type: 'columns',
@@ -1032,8 +1049,8 @@ const case1 = {
             output_create_posi: [],
             output_transform_posi: [2],
             sort_type: 'desc',
-            step: [16, 16],
-            pre: 15
+            step: [17, 17],
+            pre: 16
         }
     ],
     change_data: {
@@ -1059,7 +1076,7 @@ const case1 = {
                 transform: [],
                 input_nan_posi: [],
                 output_nan_posi: [],
-                step: 14
+                step: 15
             }]
         },
         Department: {
@@ -1171,7 +1188,7 @@ const case1 = {
                     transform: [],
                     input_nan_posi: [],
                     output_nan_posi: [],
-                    step: 14
+                    step: 15
                 },
             ],
             combine: [{
@@ -1236,7 +1253,7 @@ const case1 = {
                     transform: [],
                     input_nan_posi: [],
                     output_nan_posi: [],
-                    step: 14
+                    step: 15
                 },
             ]
         },
@@ -1250,7 +1267,7 @@ const case1 = {
                         posi: [0, 0.9],
                         case: {
                             input_case: [],
-                            output_case: [27, 25, 24, 26, 22, 23, 14, 24, 23, 22, 15, 13, 24, 22, 22, 22, 19, 26, 22, 23, 23, 29, 26, 14, 27, 22, 25, 28],
+                            output_case: [27, 25, 24, 30, 22, 23, 14, 24, 23, 22, 15, 13, 24, 22, 22, 22, 19, 26, 22, 23, 23, 29, 26, 14, 27, 22, 25, 28],
                         }
                     }],
                     create: [],
@@ -1275,7 +1292,7 @@ const case1 = {
                         posi: [0, 0.821],
                         case: {
                             input_case: [],
-                            output_case: [27, 25, 24, 26, 22, 23, 24, 23, 22, 24, 22, 22, 22, 26, 22, 23, 23, 29, 26, 27, 22, 25, 28],
+                            output_case: [27, 25, 24, 30, 22, 23, 24, 23, 22, 24, 22, 22, 22, 26, 22, 23, 23, 29, 26, 27, 22, 25, 28],
                         }
                     }],
                     create: [],
@@ -1385,17 +1402,17 @@ const case1 = {
                     type: 'change',
                     input_row_num: 23,
                     output_row_num: 23,
-                    input_col: ['Performance', 'Attendance'],
+                    input_col: ['Attendance', 'Performance'],
                     transform_icon: 'create_columns_mutate',
                     unchange: [],
                     create: [{
                         posi: [0, 1],
                         case: {
                             input_case: [
-                                [24, 23, 15, 24, 19, 22, 21, 23, 21, 25, 27, 28, 24, 26, 24, 22, 18, 20, 23, 21, 18, 21, 22],
-                                [27, 25, 24, 26, 22, 23, 24, 23, 22, 24, 22, 22, 22, 26, 22, 23, 23, 29, 26, 27, 22, 25, 28]
+                                [27, 25, 24, 30, 22, 23, 24, 23, 22, 24, 22, 22, 22, 26, 22, 23, 23, 29, 26, 27, 22, 25, 28],
+                                [24, 23, 15, 24, 19, 22, 21, 23, 21, 25, 27, 28, 24, 26, 24, 22, 18, 20, 23, 21, 18, 21, 22]
                             ],
-                            output_case: [88.89, 92.0, 62.5, 92.31, 86.36, 95.65, 87.5, 100.0, 95.45, 104.17, 122.73, 127.27, 109.09, 100.0, 109.09, 95.65, 78.26, 68.97, 88.46, 77.78, 81.82, 84.0, 78.57],
+                            output_case: [88.89, 92.0, 62.5, 80.0, 86.36, 95.65, 87.5, 100.0, 95.45, 104.17, 122.73, 127.27, 109.09, 100.0, 109.09, 95.65, 78.26, 68.97, 88.46, 77.78, 81.82, 84.0, 78.57],
                         }
                     }],
                     delete: [],
@@ -1409,10 +1426,10 @@ const case1 = {
                     output_row_num: 23,
                     max_num: 127.27,
                     min_num: 62.5,
-                    input_case: [88.89, 92.0, 62.5, 92.31, 86.36, 95.65, 87.5, 100.0, 95.45, 104.17, 122.73, 127.27, 109.09, 100.0, 109.09, 95.65, 78.26, 68.97, 88.46, 77.78, 81.82, 84.0, 78.57],
-                    output_case: [127.27, 122.73, 109.09, 109.09, 104.17, 100.0, 100.0, 95.65, 95.65, 95.45, 92.31, 92.0, 88.89, 88.46, 87.5, 86.36, 84.0, 81.82, 78.57, 78.26, 77.78, 68.97, 62.5],
+                    input_case: [88.89, 92.0, 62.5, 80.0, 86.36, 95.65, 87.5, 100.0, 95.45, 104.17, 122.73, 127.27, 109.09, 100.0, 109.09, 95.65, 78.26, 68.97, 88.46, 77.78, 81.82, 84.0, 78.57],
+                    output_case: [127.27, 122.73, 109.09, 109.09, 104.17, 100.0, 100.0, 95.65, 95.65, 95.45, 92.0, 88.89, 88.46, 87.5, 86.36, 84.0, 81.82, 80.0, 78.57, 78.26, 77.78, 68.97, 62.5],
                     transform_icon: 'transform_tables_sort_desc',
-                    step: 16
+                    step: 17
                 }
             ]
         },
@@ -1422,21 +1439,21 @@ const case1 = {
                     input_row_num: 23,
                     output_row_num: 23,
                     input_col: ['Achievements'],
-                    transform_icon: 'create_columns_mutate',
+                    transform_icon: 'create_columns_create',
                     unchange: [],
                     create: [{
-                        posi: [0, 0.087],
+                        posi: [0, 1],
                         case: {
                             input_case: [
-                                [62.5, 68.97]
+                                [88.89, 92.0, 62.5, 80.0, 86.36, 95.65, 87.5, 100.0, 95.45, 104.17, 122.73, 127.27, 109.09, 100.0, 109.09, 95.65, 78.26, 68.97, 88.46, 77.78, 81.82, 84.0, 78.57]
                             ],
-                            output_case: ['F', 'F'],
+                            output_case: [88.89, 92.0, 62.5, 80.0, 86.36, 95.65, 87.5, 100.0, 95.45, 104.17, 122.73, 127.27, 109.09, 100.0, 109.09, 95.65, 78.26, 68.97, 88.46, 77.78, 81.82, 84.0, 78.57],
                         }
                     }],
                     delete: [],
                     transform: [],
                     input_nan_posi: [],
-                    output_nan_posi: [0.087, 1],
+                    output_nan_posi: [],
                     step: 9
                 },
                 {
@@ -1446,25 +1463,25 @@ const case1 = {
                     input_col: ['Achievements'],
                     transform_icon: 'transform_columns_mutate',
                     unchange: [{
-                        posi: [0, 0.087],
+                        posi: [0.087, 1],
                         case: {
-                            input_case: [62.5, 68.97],
-                            output_case: ['F', 'F'],
+                            input_case: [88.89, 92.0, 80.0, 86.36, 95.65, 87.5, 100.0, 95.45, 104.17, 122.73, 127.27, 109.09, 100.0, 109.09, 95.65, 78.26, 88.46, 77.78, 81.82, 84.0, 78.57],
+                            output_case: ['88.89', '92.0', '80.0', '86.36', '95.65', '87.5', '100.0', '95.45', '104.17', '122.73', '127.27', '109.09', '100.0', '109.09', '95.65', '78.26', '88.46', '77.78', '81.82', '84.0', '78.57'],
                         }
                     }],
                     create: [],
                     delete: [],
                     transform: [{
-                        posi: [0.087, 0.217],
+                        posi: [0, 0.087],
                         case: {
                             input_case: [
-                                [78.26, 77.78, 78.57]
+                                [62.5, 68.97]
                             ],
-                            output_case: ['D', 'D', 'D'],
+                            output_case: ['F', 'F'],
                         }
                     }],
                     input_nan_posi: [],
-                    output_nan_posi: [0.217, 1],
+                    output_nan_posi: [],
                     step: 10
                 },
                 {
@@ -1474,25 +1491,25 @@ const case1 = {
                     input_col: ['Achievements'],
                     transform_icon: 'transform_columns_mutate',
                     unchange: [{
-                        posi: [0, 0.217],
+                        posi: [0.13, 1],
                         case: {
-                            input_case: [78.26, 77.78, 78.57],
-                            output_case: ['D', 'D', 'D'],
+                            input_case: [88.89, 92.0, 62.5, 80.0, 86.36, 95.65, 87.5, 100.0, 95.45, 104.17, 122.73, 127.27, 109.09, 100.0, 109.09, 95.65, 68.97, 88.46, 81.82, 84.0],
+                            output_case: ['88.89', '92.0', 'F', '80.0', '86.36', '95.65', '87.5', '100.0', '95.45', '104.17', '122.73', '127.27', '109.09', '100.0', '109.09', '95.65', 'F', '88.46', '81.82', '84.0'],
                         }
                     }],
                     create: [],
                     delete: [],
                     transform: [{
-                        posi: [0.217, 0.696],
+                        posi: [0, 0.13],
                         case: {
                             input_case: [
-                                [88.89, 92.0, 92.31, 86.36, 95.65, 87.5, 95.45, 95.65, 88.46, 81.82, 84.0]
+                                [78.26, 77.78, 78.57]
                             ],
-                            output_case: ['C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C'],
+                            output_case: ['D', 'D', 'D'],
                         }
                     }],
                     input_nan_posi: [],
-                    output_nan_posi: [0.696, 1],
+                    output_nan_posi: [],
                     step: 11
                 },
                 {
@@ -1502,26 +1519,54 @@ const case1 = {
                     input_col: ['Achievements'],
                     transform_icon: 'transform_columns_mutate',
                     unchange: [{
-                        posi: [0, 0.696],
+                        posi: [0.435, 1],
                         case: {
-                            input_case: [88.89, 92.0, 92.31, 86.36, 95.65, 87.5, 95.45, 95.65, 88.46, 81.82, 84.0],
-                            output_case: ['C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C'],
+                            input_case: [62.5, 80.0, 100.0, 104.17, 122.73, 127.27, 109.09, 100.0, 109.09, 78.26, 68.97, 77.78, 78.57],
+                            output_case: ['F', '80.0', '100.0', '104.17', '122.73', '127.27', '109.09', '100.0', '109.09', 'D', 'F', 'D', 'D'],
                         }
                     }],
                     create: [],
                     delete: [],
                     transform: [{
-                        posi: [0.696, 0.913],
+                        posi: [0, 0.435],
                         case: {
                             input_case: [
-                                [100.0, 104.17, 109.09, 100.0, 109.09]
+                                [88.89, 92.0, 86.36, 95.65, 87.5, 95.45, 95.65, 88.46, 81.82, 84.0]
                             ],
-                            output_case: ['B', 'B', 'B', 'B', 'B'],
+                            output_case: ['C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C'],
                         }
                     }],
                     input_nan_posi: [],
-                    output_nan_posi: [0.913, 1],
+                    output_nan_posi: [],
                     step: 12
+                },
+                {
+                    type: 'change',
+                    input_row_num: 23,
+                    output_row_num: 23,
+                    input_col: ['Achievements'],
+                    transform_icon: 'transform_columns_mutate',
+                    unchange: [{
+                        posi: [0.13, 1],
+                        case: {
+                            input_case: [88.89, 92.0, 62.5, 80.0, 86.36, 95.65, 87.5, 100.0, 95.45, 122.73, 127.27, 100.0, 95.65, 78.26, 68.97, 88.46, 77.78, 81.82, 84.0, 78.57],
+                            output_case: ['C', 'C', 'F', '80.0', 'C', 'C', 'C', '100.0', 'C', '122.73', '127.27', '100.0', 'C', 'D', 'F', 'C', 'D', 'C', 'C', 'D'],
+                        }
+                    }],
+                    create: [],
+                    delete: [],
+                    transform: [{
+                        posi: [0, 0.13],
+                        case: {
+                            input_case: [
+                                [104.17, 109.09, 109.09]
+                            ],
+                            output_case: ['B', 'B', 'B'],
+                        }
+                    }],
+                    input_nan_posi: [],
+                    output_nan_posi: [],
+                    step: 13
                 },
                 {
                     type: 'change',
@@ -1532,14 +1577,14 @@ const case1 = {
                     unchange: [{
                         posi: [0, 0.913],
                         case: {
-                            input_case: [100.0, 104.17, 109.09, 100.0, 109.09],
-                            output_case: ['B', 'B', 'B', 'B', 'B'],
+                            input_case: [88.89, 92.0, 62.5, 80.0, 86.36, 95.65, 87.5, 100.0, 95.45, 104.17, 109.09, 100.0, 109.09, 95.65, 78.26, 68.97, 88.46, 77.78, 81.82, 84.0, 78.57],
+                            output_case: ['C', 'C', 'F', '80.0', 'C', 'C', 'C', '100.0', 'C', 'B', 'B', '100.0', 'B', 'C', 'D', 'F', 'C', 'D', 'C', 'C', 'D'],
                         }
                     }],
                     create: [],
                     delete: [],
                     transform: [{
-                        posi: [0.913, 1],
+                        posi: [0, 0.087],
                         case: {
                             input_case: [
                                 [122.73, 127.27]
@@ -1549,72 +1594,103 @@ const case1 = {
                     }],
                     input_nan_posi: [],
                     output_nan_posi: [],
-                    step: 13
+                    step: 14
                 }
             ],
             combine: [{
-                type: 'change',
-                input_row_num: 23,
-                output_row_num: 23,
-                input_col: ['Achievements'],
-                transform_icon: 'create_columns_mutate',
-                unchange: [],
-                create: [{
-                    posi: [0, 0.087],
-                    case: {
-                        input_case: [
-                            [62.5, 68.97]
-                        ],
-                        output_case: ['F', 'F'],
-                    },
+                    type: 'change',
+                    input_row_num: 23,
+                    output_row_num: 23,
+                    input_col: ['Achievements'],
+                    transform_icon: 'transform_columns_create',
+                    unchange: [],
+                    create: [{
+                        posi: [0, 1],
+                        case: {
+                            input_case: [
+                                [88.89, 92.0, 62.5, 80.0, 86.36, 95.65, 87.5, 100.0, 95.45, 104.17, 122.73, 127.27, 109.09, 100.0, 109.09, 95.65, 78.26, 68.97, 88.46, 77.78, 81.82, 84.0, 78.57]
+                            ],
+                            output_case: [88.89, 92.0, 62.5, 80.0, 86.36, 95.65, 87.5, 100.0, 95.45, 104.17, 122.73, 127.27, 109.09, 100.0, 109.09, 95.65, 78.26, 68.97, 88.46, 77.78, 81.82, 84.0, 78.57],
+                        }
+                    }],
+                    delete: [],
+                    transform: [],
+                    input_nan_posi: [],
+                    output_nan_posi: [],
                     step: 9
-                }],
-                delete: [],
-                transform: [{
-                        posi: [0.087, 0.217],
+                },
+                {
+                    type: 'change',
+                    input_row_num: 23,
+                    output_row_num: 23,
+                    input_col: ['Achievements'],
+                    transform_icon: 'create_columns_mutate',
+                    unchange: [{
+                        posi: [0.869, 1],
                         case: {
                             input_case: [
-                                [78.26, 77.78, 78.57]
+                                [80, 100, 100]
                             ],
-                            output_case: ['D', 'D', 'D'],
+                            output_case: [80, 100, 100],
+                        }
+                    }],
+                    create: [],
+                    delete: [],
+                    transform: [{
+                            posi: [0, 0.087],
+                            case: {
+                                input_case: [
+                                    [62.5, 68.97]
+                                ],
+                                output_case: ['F', 'F'],
+                            },
+                            step: 10
+                        }, {
+                            posi: [0.087, 0.217],
+                            case: {
+                                input_case: [
+                                    [78.26, 77.78, 78.57]
+                                ],
+                                output_case: ['D', 'D', 'D'],
+                            },
+                            step: 11
                         },
-                        step: 10
-                    },
-                    {
-                        posi: [0.217, 0.696],
-                        case: {
-                            input_case: [
-                                [88.89, 92.0, 92.31, 86.36, 95.65, 87.5, 95.45, 95.65, 88.46, 81.82, 84.0]
-                            ],
-                            output_case: ['C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C'],
+                        {
+                            posi: [0.217, 0.652],
+                            case: {
+                                input_case: [
+                                    [88.89, 92.0, 86.36, 95.65, 87.5, 95.45, 95.65, 88.46, 81.82, 84.0]
+                                ],
+                                output_case: ['C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C', 'C'],
+                            },
+                            step: 12
                         },
-                        step: 11
-                    },
-                    {
-                        posi: [0.696, 0.913],
-                        case: {
-                            input_case: [
-                                [100.0, 104.17, 109.09, 100.0, 109.09]
-                            ],
-                            output_case: ['B', 'B', 'B', 'B', 'B'],
+                        {
+                            posi: [0.652, 0.782],
+                            case: {
+                                input_case: [
+                                    [104.17, 109.09, 109.09]
+                                ],
+                                output_case: ['B', 'B', 'B'],
+                            },
+                            step: 13
                         },
-                        step: 12
-                    },
-                    {
-                        posi: [0.913, 1],
-                        case: {
-                            input_case: [
-                                [122.73, 127.27]
-                            ],
-                            output_case: ['A', 'A'],
+                        {
+                            posi: [0.782, 0.869],
+                            case: {
+                                input_case: [
+                                    [122.73, 127.27]
+                                ],
+                                output_case: ['A', 'A'],
+                            },
+                            step: 14
                         },
-                        step: 13
-                    },
-                ],
-                input_nan_posi: [],
-                output_nan_posi: [],
-                step: 9
-            }]
+                    ],
+                    input_nan_posi: [],
+                    output_nan_posi: [],
+                    step: 10
+                }
+            ]
         }
     },
     column_change_data: {
@@ -1875,7 +1951,7 @@ const case1 = {
         9: {
             row_num: 23,
             type: 'create',
-            transform: 'create_columns_mutate',
+            transform: 'create_columns_create',
             table_path: 'data/case1/L12 (staff).csv',
             change: true,
             columns: {
@@ -1904,7 +1980,7 @@ const case1 = {
                     change_type: 'unchange'
                 },
                 'Perf_rate': {
-                    data_type: 'str',
+                    data_type: 'num',
                     change_type: 'create'
                 }
             }
@@ -2059,9 +2135,46 @@ const case1 = {
         },
         14: {
             row_num: 23,
+            type: 'unchange',
+            transform: 'transform_columns_mutate',
+            table_path: 'data/case1/L17 (staff).csv',
+            change: false,
+            columns: {
+                'Info': {
+                    data_type: 'str',
+                    change_type: 'unchange'
+                },
+                'Department': {
+                    data_type: 'str',
+                    change_type: 'unchange'
+                },
+                'Attendance': {
+                    data_type: 'num',
+                    change_type: 'unchange'
+                },
+                'Performance': {
+                    data_type: 'num',
+                    change_type: 'unchange'
+                },
+                'Staff': {
+                    data_type: 'str',
+                    change_type: 'unchange'
+                },
+                'Achievements': {
+                    data_type: 'num',
+                    change_type: 'unchange'
+                },
+                'Perf_rate': {
+                    data_type: 'str',
+                    change_type: 'transform'
+                }
+            }
+        },
+        15: {
+            row_num: 23,
             type: 'delete',
             transform: 'delete_columns_select_remove',
-            table_path: 'data/case1/L17 (staff).csv',
+            table_path: 'data/case1/L18 (staff).csv',
             change: true,
             columns: {
                 'Attendance': {
@@ -2086,13 +2199,13 @@ const case1 = {
                 }
             }
         },
-        15: {
+        16: {
             row_num: 23,
             type: 'transform',
             transform: 'transform_columns_rearrange',
-            table_path: 'data/case1/L18 (staff).csv',
+            table_path: 'data/case1/L19 (staff).csv',
             change: true,
-            line_cols: ["Staff", "Perf_rate"],
+            line_cols: ["Staff", "Perf_rate", "Achievements"],
             columns: {
                 'Staff': {
                     data_type: 'str',
@@ -2117,11 +2230,11 @@ const case1 = {
 
             }
         },
-        16: {
+        17: {
             row_num: 23,
             type: 'unchange',
             transform: 'transform_tables_sort_desc',
-            table_path: 'data/case1/L19 (staff).csv',
+            table_path: 'data/case1/L20 (staff).csv',
             change: false,
             columns: {
                 'Staff': {
