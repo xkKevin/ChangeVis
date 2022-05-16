@@ -1093,7 +1093,7 @@ const case1 = {
                     input_row_num: 28,
                     output_row_num: 28,
                     input_col: ['Department'],
-                    transform_icon: 'replace_columns',
+                    transform_icon: 'replace_A_with_B_in_columns',
                     unchange: [{
                         posi: [0.464, 1],
                         case: {
@@ -1123,7 +1123,7 @@ const case1 = {
                     input_row_num: 28,
                     output_row_num: 28,
                     input_col: ['Department'],
-                    transform_icon: 'replace_columns',
+                    transform_icon: 'replace_A_with_B_in_columns',
                     unchange: [{
                         posi: [0.25, 1],
                         case: {
@@ -1153,7 +1153,7 @@ const case1 = {
                     input_row_num: 28,
                     output_row_num: 28,
                     input_col: ['Department'],
-                    transform_icon: 'replace_columns',
+                    transform_icon: 'replace_A_with_B_in_columns',
                     unchange: [{
                         posi: [0.286, 1],
                         case: {
@@ -1204,7 +1204,7 @@ const case1 = {
                     input_row_num: 28,
                     output_row_num: 28,
                     input_col: ['Department'],
-                    transform_icon: 'replace_columns',
+                    transform_icon: 'replace_A_with_B_in_columns',
                     unchange: [],
                     create: [],
                     delete: [],
@@ -1321,7 +1321,7 @@ const case1 = {
                 type: 'change',
                 output_row_num: 31,
                 input_col: [],
-                transform_icon: 'replace_columns',
+                transform_icon: 'replace_A_with_B_in_columns',
                 unchange: [{
                     posi: [0, 0.738],
                     case: {
@@ -1791,7 +1791,7 @@ const case1 = {
         3: {
             row_num: 28,
             type: 'unchange',
-            transform: 'replace_columns',
+            transform: 'replace_A_with_B_in_columns',
             table_path: 'data/case1/L6 (staff).csv',
             change: false,
             columns: {
@@ -1820,7 +1820,7 @@ const case1 = {
         4: {
             row_num: 28,
             type: 'unchange',
-            transform: 'replace_columns',
+            transform: 'replace_A_with_B_in_columns',
             table_path: 'data/case1/L7 (staff).csv',
             change: false,
             columns: {
@@ -1849,7 +1849,7 @@ const case1 = {
         5: {
             row_num: 28,
             type: 'unchange',
-            transform: 'replace_columns',
+            transform: 'replace_A_with_B_in_columns',
             table_path: 'data/case1/L8 (staff).csv',
             change: false,
             columns: {
@@ -2557,7 +2557,7 @@ const case2 = {
                     input_row_num: 36,
                     output_row_num: 36,
                     input_col: ['Model'],
-                    transform_icon: 'replace_columns_na',
+                    transform_icon: 'replace_NA_with_X_in_columns',
                     unchange: [{
                         posi: [0.139, 1],
                         case: {
@@ -2922,7 +2922,7 @@ const case2 = {
         1: {
             row_num: 36,
             type: 'unchange',
-            transform: 'replace_columns_na',
+            transform: 'replace_NA_with_X_in_columns',
             table_path: 'data/case2/L6 (car).csv',
             change: false,
             columns: {
