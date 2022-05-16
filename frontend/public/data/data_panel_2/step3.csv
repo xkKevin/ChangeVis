@@ -1,4 +1,4 @@
-Manufacturer,Model_2,Model_3,ChangeVis_Manufacturer,ChangeVis_Model_2,ChangeVis_Model_3
+Manufacturer,Model_old,Model_new,ChangeVis_Manufacturer,ChangeVis_Model_old,ChangeVis_Model_new
 Audi,A4,Audi_A4,2,0,3
 Audi,A6,Audi_A6,2,0,3
 Audi,A8,Audi_A8,2,0,3
