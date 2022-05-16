@@ -175,7 +175,7 @@ const case3 = {
                 type: 'change',
                 output_row_num: 36,
                 input_col: [],
-                transform_icon: 'delete_rows_deduplicate',
+                transform_icon: 'delete_duplicate_rows',
                 unchange: [{
                     posi: [0, 0.8333],
                     case: {
@@ -203,7 +203,7 @@ const case3 = {
                 input_row_num: 36,
                 output_row_num: 36,
                 input_col: ['id'],
-                transform_icon: 'transform_columns_extract',
+                transform_icon: 'extract_columns',
                 unchange: [],
                 create: [],
                 delete: [],
@@ -229,7 +229,7 @@ const case3 = {
                     input_row_num: 30,
                     output_row_num: 30,
                     input_col: ['math', 'art'],
-                    transform_icon: 'create_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [],
                     create: [{
                         posi: [0, 1],
@@ -258,7 +258,7 @@ const case3 = {
                     min_num: 83,
                     input_case: [166, 169, 154, 157, 149, 84, 155, 156, 122, 130, 232, 176, 155, 181, 162, 83, 148, 133, 144, 189, 107, 184, 170, 126, 185, 102, 154, 146, 143, 119],
                     output_case: [232, 189, 185, 184, 181, 176, 170, 169, 166, 162, 157, 156, 155, 155, 154, 154, 149, 148, 146, 144, 143, 133, 130, 126, 122, 119, 107, 102, 84, 83],
-                    transform_icon: 'transform_tables_sort_desc',
+                    transform_icon: 'sort_table_desc',
                     step: 9
                 }
             ]
@@ -269,7 +269,7 @@ const case3 = {
                     input_row_num: 30,
                     output_row_num: 30,
                     input_col: ['total'],
-                    transform_icon: 'create_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [],
                     create: [{
                         posi: [0, 0.167],
@@ -291,7 +291,7 @@ const case3 = {
                     input_row_num: 30,
                     output_row_num: 30,
                     input_col: ['total'],
-                    transform_icon: 'transform_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [{
                         posi: [0, 0.167],
                         case: {
@@ -321,7 +321,7 @@ const case3 = {
                     input_row_num: 30,
                     output_row_num: 30,
                     input_col: ['total'],
-                    transform_icon: 'transform_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [{
                         posi: [0, 0.3],
                         case: {
@@ -351,7 +351,7 @@ const case3 = {
                     input_row_num: 30,
                     output_row_num: 30,
                     input_col: ['total'],
-                    transform_icon: 'transform_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [{
                         posi: [0, 0.667],
                         case: {
@@ -381,7 +381,7 @@ const case3 = {
                     input_row_num: 30,
                     output_row_num: 30,
                     input_col: ['total'],
-                    transform_icon: 'transform_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [{
                         posi: [0, 0.833],
                         case: {
@@ -412,7 +412,7 @@ const case3 = {
                 input_row_num: 30,
                 output_row_num: 30,
                 input_col: ['total'],
-                transform_icon: 'create_columns_mutate',
+                transform_icon: 'mutate_columns',
                 unchange: [],
                 create: [{
                     posi: [0, 0.167],
@@ -494,7 +494,7 @@ const case3 = {
         1: {
             type: 'unchange',
             row_num: 36,
-            transform: 'transform_columns_extract',
+            transform: 'extract_columns',
             table_path: 'data/case3/L4 (studentScore).csv',
             change: false,
             columns: {
@@ -515,7 +515,7 @@ const case3 = {
         2: {
             type: 'unchange',
             row_num: 30,
-            transform: 'delete_rows_deduplicate',
+            transform: 'delete_duplicate_rows',
             table_path: 'data/case3/L5 (studentScore).csv',
             change: false,
             columns: {
@@ -536,7 +536,7 @@ const case3 = {
         3: {
             type: 'create',
             row_num: 30,
-            transform: 'create_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case3/L6 (studentScore).csv',
             change: true,
             columns: {
@@ -561,7 +561,7 @@ const case3 = {
         4: {
             type: 'create',
             row_num: 30,
-            transform: 'create_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case3/L7 (studentScore).csv',
             change: true,
             columns: {
@@ -590,7 +590,7 @@ const case3 = {
         5: {
             type: 'unchange',
             row_num: 30,
-            transform: 'transform_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case3/L8 (studentScore).csv',
             change: false,
             columns: {
@@ -619,7 +619,7 @@ const case3 = {
         6: {
             type: 'unchange',
             row_num: 30,
-            transform: 'transform_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case3/L9 (studentScore).csv',
             change: false,
             columns: {
@@ -648,7 +648,7 @@ const case3 = {
         7: {
             type: 'unchange',
             row_num: 30,
-            transform: 'transform_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case3/L10 (studentScore).csv',
             change: false,
             columns: {
@@ -677,7 +677,7 @@ const case3 = {
         8: {
             type: 'unchange',
             row_num: 30,
-            transform: 'transform_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case3/L11 (studentScore).csv',
             change: false,
             columns: {
@@ -706,7 +706,7 @@ const case3 = {
         // 8: {
         //     type: 'transform',
         //     row_num: 30,
-        //     transform: 'transform_tables_sort_desc',
+        //     transform: 'sort_table_desc',
         //     table_path: 'data/case3/L12 (studentScore).csv',
         //     change: false,
         //     columns: {
@@ -735,7 +735,7 @@ const case3 = {
         9: {
             type: 'unchange',
             row_num: 30,
-            transform: 'transform_tables_sort_desc',
+            transform: 'sort_table_desc',
             table_path: 'data/case3/L12 (studentScore).csv',
             change: false,
             columns: {
@@ -1071,7 +1071,7 @@ const case1 = {
                 input_row_num: 23,
                 output_row_num: 23,
                 input_col: [],
-                transform_icon: 'delete_columns_select_remove',
+                transform_icon: 'select_remove_columns',
                 unchange: [],
                 create: [],
                 delete: [{
@@ -1093,7 +1093,7 @@ const case1 = {
                     input_row_num: 28,
                     output_row_num: 28,
                     input_col: ['Department'],
-                    transform_icon: 'transform_columns_replace',
+                    transform_icon: 'replace_columns',
                     unchange: [{
                         posi: [0.464, 1],
                         case: {
@@ -1123,7 +1123,7 @@ const case1 = {
                     input_row_num: 28,
                     output_row_num: 28,
                     input_col: ['Department'],
-                    transform_icon: 'transform_columns_replace',
+                    transform_icon: 'replace_columns',
                     unchange: [{
                         posi: [0.25, 1],
                         case: {
@@ -1153,7 +1153,7 @@ const case1 = {
                     input_row_num: 28,
                     output_row_num: 28,
                     input_col: ['Department'],
-                    transform_icon: 'transform_columns_replace',
+                    transform_icon: 'replace_columns',
                     unchange: [{
                         posi: [0.286, 1],
                         case: {
@@ -1183,7 +1183,7 @@ const case1 = {
                     input_row_num: 23,
                     output_row_num: 23,
                     input_col: [],
-                    transform_icon: 'delete_columns_select_remove',
+                    transform_icon: 'select_remove_columns',
                     unchange: [],
                     create: [],
                     delete: [{
@@ -1204,7 +1204,7 @@ const case1 = {
                     input_row_num: 28,
                     output_row_num: 28,
                     input_col: ['Department'],
-                    transform_icon: 'transform_columns_replace',
+                    transform_icon: 'replace_columns',
                     unchange: [],
                     create: [],
                     delete: [],
@@ -1248,7 +1248,7 @@ const case1 = {
                     input_row_num: 23,
                     output_row_num: 23,
                     input_col: [],
-                    transform_icon: 'delete_columns_select_remove',
+                    transform_icon: 'select_remove_columns',
                     unchange: [],
                     create: [],
                     delete: [{
@@ -1270,7 +1270,7 @@ const case1 = {
                     type: 'change',
                     output_row_num: 31,
                     input_col: [],
-                    transform_icon: 'delete_rows_filter',
+                    transform_icon: 'filter_rows',
                     unchange: [{
                         posi: [0, 0.9],
                         case: {
@@ -1295,7 +1295,7 @@ const case1 = {
                     type: 'change',
                     output_row_num: 28,
                     input_col: [],
-                    transform_icon: 'delete_rows_filter',
+                    transform_icon: 'filter_rows',
                     unchange: [{
                         posi: [0, 0.821],
                         case: {
@@ -1321,7 +1321,7 @@ const case1 = {
                 type: 'change',
                 output_row_num: 31,
                 input_col: [],
-                transform_icon: 'transform_columns_replace',
+                transform_icon: 'replace_columns',
                 unchange: [{
                     posi: [0, 0.738],
                     case: {
@@ -1363,7 +1363,7 @@ const case1 = {
                     input_row_num: 31,
                     output_row_num: 31,
                     input_col: ['Info'],
-                    transform_icon: 'create_columns_extract',
+                    transform_icon: 'extract_columns',
                     unchange: [],
                     create: [{
                         posi: [0, 1],
@@ -1385,7 +1385,7 @@ const case1 = {
                     input_row_num: 31,
                     output_row_num: 31,
                     input_col: ['Department', 'Staff'],
-                    transform_icon: 'transform_columns_merge',
+                    transform_icon: 'merge_columns',
                     unchange: [],
                     create: [],
                     delete: [],
@@ -1411,7 +1411,7 @@ const case1 = {
                     input_row_num: 23,
                     output_row_num: 23,
                     input_col: ['Attendance', 'Performance'],
-                    transform_icon: 'create_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [],
                     create: [{
                         posi: [0, 1],
@@ -1436,7 +1436,7 @@ const case1 = {
                     min_num: 62.5,
                     input_case: [88.89, 92.0, 62.5, 80.0, 86.36, 95.65, 87.5, 100.0, 95.45, 104.17, 122.73, 127.27, 109.09, 100.0, 109.09, 95.65, 78.26, 68.97, 88.46, 77.78, 81.82, 84.0, 78.57],
                     output_case: [127.27, 122.73, 109.09, 109.09, 104.17, 100.0, 100.0, 95.65, 95.65, 95.45, 92.0, 88.89, 88.46, 87.5, 86.36, 84.0, 81.82, 80.0, 78.57, 78.26, 77.78, 68.97, 62.5],
-                    transform_icon: 'transform_tables_sort_desc',
+                    transform_icon: 'sort_table_desc',
                     step: 17
                 }
             ]
@@ -1447,7 +1447,7 @@ const case1 = {
                     input_row_num: 23,
                     output_row_num: 23,
                     input_col: ['Achievements'],
-                    transform_icon: 'create_columns_create',
+                    transform_icon: 'create_columns',
                     unchange: [],
                     create: [{
                         posi: [0, 1],
@@ -1469,7 +1469,7 @@ const case1 = {
                     input_row_num: 23,
                     output_row_num: 23,
                     input_col: ['Achievements'],
-                    transform_icon: 'transform_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [{
                         posi: [0.087, 1],
                         case: {
@@ -1499,7 +1499,7 @@ const case1 = {
                     input_row_num: 23,
                     output_row_num: 23,
                     input_col: ['Achievements'],
-                    transform_icon: 'transform_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [{
                         posi: [0.13, 1],
                         case: {
@@ -1529,7 +1529,7 @@ const case1 = {
                     input_row_num: 23,
                     output_row_num: 23,
                     input_col: ['Achievements'],
-                    transform_icon: 'transform_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [{
                         posi: [0.435, 1],
                         case: {
@@ -1559,7 +1559,7 @@ const case1 = {
                     input_row_num: 23,
                     output_row_num: 23,
                     input_col: ['Achievements'],
-                    transform_icon: 'transform_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [{
                         posi: [0.13, 1],
                         case: {
@@ -1589,7 +1589,7 @@ const case1 = {
                     input_row_num: 23,
                     output_row_num: 23,
                     input_col: ['Achievements'],
-                    transform_icon: 'transform_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [{
                         posi: [0, 0.913],
                         case: {
@@ -1620,7 +1620,7 @@ const case1 = {
                     input_row_num: 23,
                     output_row_num: 23,
                     input_col: ['Achievements'],
-                    transform_icon: 'create_columns_create',
+                    transform_icon: 'create_columns',
                     unchange: [],
                     create: [{
                         posi: [0, 1],
@@ -1642,7 +1642,7 @@ const case1 = {
                     input_row_num: 23,
                     output_row_num: 23,
                     input_col: ['Achievements'],
-                    transform_icon: 'create_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [{
                         posi: [0.869, 1],
                         case: {
@@ -1737,7 +1737,7 @@ const case1 = {
         1: {
             row_num: 28,
             type: 'unchange',
-            transform: 'delete_rows_filter',
+            transform: 'filter_rows',
             table_path: 'data/case1/L4 (staff).csv',
             change: false,
             columns: {
@@ -1762,7 +1762,7 @@ const case1 = {
         2: {
             row_num: 28,
             type: 'create',
-            transform: 'create_columns_extract',
+            transform: 'extract_columns',
             table_path: 'data/case1/L5 (staff).csv',
             change: true,
             columns: {
@@ -1791,7 +1791,7 @@ const case1 = {
         3: {
             row_num: 28,
             type: 'unchange',
-            transform: 'transform_columns_replace',
+            transform: 'replace_columns',
             table_path: 'data/case1/L6 (staff).csv',
             change: false,
             columns: {
@@ -1820,7 +1820,7 @@ const case1 = {
         4: {
             row_num: 28,
             type: 'unchange',
-            transform: 'transform_columns_replace',
+            transform: 'replace_columns',
             table_path: 'data/case1/L7 (staff).csv',
             change: false,
             columns: {
@@ -1849,7 +1849,7 @@ const case1 = {
         5: {
             row_num: 28,
             type: 'unchange',
-            transform: 'transform_columns_replace',
+            transform: 'replace_columns',
             table_path: 'data/case1/L8 (staff).csv',
             change: false,
             columns: {
@@ -1878,7 +1878,7 @@ const case1 = {
         6: {
             row_num: 28,
             type: 'unchange',
-            transform: 'transform_columns_merge',
+            transform: 'merge_columns',
             table_path: 'data/case1/L9 (staff).csv',
             change: false,
             columns: {
@@ -1907,7 +1907,7 @@ const case1 = {
         7: {
             row_num: 23,
             type: 'unchange',
-            transform: 'delete_rows_filter',
+            transform: 'filter_rows',
             table_path: 'data/case1/L10 (staff).csv',
             change: false,
             columns: {
@@ -1936,7 +1936,7 @@ const case1 = {
         8: {
             row_num: 23,
             type: 'create',
-            transform: 'create_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case1/L11 (staff).csv',
             change: true,
             columns: {
@@ -1969,7 +1969,7 @@ const case1 = {
         9: {
             row_num: 23,
             type: 'create',
-            transform: 'create_columns_create',
+            transform: 'create_columns',
             table_path: 'data/case1/L12 (staff).csv',
             change: true,
             columns: {
@@ -2006,7 +2006,7 @@ const case1 = {
         10: {
             row_num: 23,
             type: 'unchange',
-            transform: 'transform_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case1/L13 (staff).csv',
             change: false,
             columns: {
@@ -2043,7 +2043,7 @@ const case1 = {
         11: {
             row_num: 23,
             type: 'unchange',
-            transform: 'transform_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case1/L14 (staff).csv',
             change: false,
             columns: {
@@ -2080,7 +2080,7 @@ const case1 = {
         12: {
             row_num: 23,
             type: 'unchange',
-            transform: 'transform_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case1/L15 (staff).csv',
             change: false,
             columns: {
@@ -2117,7 +2117,7 @@ const case1 = {
         13: {
             row_num: 23,
             type: 'unchange',
-            transform: 'transform_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case1/L16 (staff).csv',
             change: false,
             columns: {
@@ -2154,7 +2154,7 @@ const case1 = {
         14: {
             row_num: 23,
             type: 'unchange',
-            transform: 'transform_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case1/L17 (staff).csv',
             change: false,
             columns: {
@@ -2191,7 +2191,7 @@ const case1 = {
         15: {
             row_num: 23,
             type: 'delete',
-            transform: 'delete_columns_select_remove',
+            transform: 'select_remove_columns',
             table_path: 'data/case1/L18 (staff).csv',
             change: true,
             columns: {
@@ -2220,7 +2220,7 @@ const case1 = {
         16: {
             row_num: 23,
             type: 'transform',
-            transform: 'transform_columns_rearrange',
+            transform: 'rearrange_columns',
             table_path: 'data/case1/L19 (staff).csv',
             change: true,
             line_cols: ["Staff", "Perf_rate", "Achievements"],
@@ -2251,7 +2251,7 @@ const case1 = {
         17: {
             row_num: 23,
             type: 'unchange',
-            transform: 'transform_tables_sort_desc',
+            transform: 'sort_table_desc',
             table_path: 'data/case1/L20 (staff).csv',
             change: false,
             columns: {
@@ -2506,7 +2506,7 @@ const case2 = {
                 input_row_num: 31,
                 output_row_num: 31,
                 input_col: [],
-                transform_icon: 'delete_rows_slice_keep',
+                transform_icon: 'slice_keep_rows',
                 unchange: [{
                     posi: [0, 0.323],
                     triangle: '1:10',
@@ -2535,7 +2535,7 @@ const case2 = {
                 input_row_num: 31,
                 output_row_num: 31,
                 input_col: [],
-                transform_icon: 'combine_columns_merge',
+                transform_icon: 'merge_columns',
                 unchange: [],
                 create: [],
                 delete: [{
@@ -2557,7 +2557,7 @@ const case2 = {
                     input_row_num: 36,
                     output_row_num: 36,
                     input_col: ['Model'],
-                    transform_icon: 'transform_columns_replace_na',
+                    transform_icon: 'replace_columns_na',
                     unchange: [{
                         posi: [0.139, 1],
                         case: {
@@ -2587,7 +2587,7 @@ const case2 = {
                     input_row_num: 31,
                     output_row_num: 31,
                     input_col: ['Manufacturer', 'Model'],
-                    transform_icon: 'combine_columns_merge',
+                    transform_icon: 'merge_columns',
                     unchange: [],
                     create: [],
                     delete: [],
@@ -2641,7 +2641,7 @@ const case2 = {
                 input_row_num: 31,
                 output_row_num: 31,
                 input_col: ['Launch_Date'],
-                transform_icon: 'create_columns_extract',
+                transform_icon: 'extract_columns',
                 unchange: [],
                 create: [{
                     posi: [0, 1],
@@ -2671,7 +2671,7 @@ const case2 = {
                     input_row_num: 31,
                     output_row_num: 31,
                     input_col: ['Resale_Price', 'Sale_Price'],
-                    transform_icon: 'create_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [],
                     create: [{
                         posi: [0, 1],
@@ -2696,7 +2696,7 @@ const case2 = {
                     min_num: 0.386,
                     input_case: [0.863, 0.764, 0.69, 0.521, 0.607, 0.529, 0.81, 0.798, 0.674, 0.803, 0.794, 0.725, 0.676, 0.639, 0.386, 0.745, 0.676, 0.745, 0.824, 0.706, 0.65, 0.599, 0.39, 0.808, 0.694, 0.728, 0.779, 0.744, 0.646, 0.774, 0.757],
                     output_case: [0.386, 0.39, 0.521, 0.529, 0.599, 0.607, 0.639, 0.646, 0.65, 0.674, 0.676, 0.676, 0.69, 0.694, 0.706, 0.725, 0.728, 0.744, 0.745, 0.745, 0.757, 0.764, 0.774, 0.779, 0.794, 0.798, 0.803, 0.808, 0.81, 0.824, 0.863],
-                    transform_icon: 'transform_tables_sort_asc',
+                    transform_icon: 'sort_table_asc',
                     step: 10
                 }
             ]
@@ -2707,7 +2707,7 @@ const case2 = {
                     input_row_num: 31,
                     output_row_num: 31,
                     input_col: ['Value_Retention'],
-                    transform_icon: 'create_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [],
                     create: [{
                         posi: [0, 1],
@@ -2729,7 +2729,7 @@ const case2 = {
                     input_row_num: 31,
                     output_row_num: 31,
                     input_col: ['Rate'],
-                    transform_icon: 'transform_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [{
                         posi: [0.387, 1],
                         case: {
@@ -2759,7 +2759,7 @@ const case2 = {
                     input_row_num: 31,
                     output_row_num: 31,
                     input_col: ['Rate'],
-                    transform_icon: 'transform_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [{
                         posi: [0.322, 1],
                         case: {
@@ -2789,7 +2789,7 @@ const case2 = {
                     input_row_num: 31,
                     output_row_num: 31,
                     input_col: ['Rate'],
-                    transform_icon: 'transform_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [{
                         posi: [0.129, 1],
                         case: {
@@ -2820,7 +2820,7 @@ const case2 = {
                     input_row_num: 31,
                     output_row_num: 31,
                     input_col: ['Value_Retention'],
-                    transform_icon: 'create_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [],
                     create: [{
                         posi: [0, 1],
@@ -2842,7 +2842,7 @@ const case2 = {
                     input_row_num: 31,
                     output_row_num: 31,
                     input_col: ['Rate'],
-                    transform_icon: 'transform_columns_mutate',
+                    transform_icon: 'mutate_columns',
                     unchange: [{
                         posi: [0, 0.161],
                         case: {
@@ -2922,7 +2922,7 @@ const case2 = {
         1: {
             row_num: 36,
             type: 'unchange',
-            transform: 'transform_columns_replace_na',
+            transform: 'replace_columns_na',
             table_path: 'data/case2/L6 (car).csv',
             change: false,
             columns: {
@@ -2980,7 +2980,7 @@ const case2 = {
         3: {
             row_num: 31,
             type: 'delete',
-            transform: 'combine_columns_merge',
+            transform: 'merge_columns',
             table_path: 'data/case2/L8 (car).csv',
             change: true,
             columns: {
@@ -3005,7 +3005,7 @@ const case2 = {
         4: {
             row_num: 31,
             type: 'create',
-            transform: 'create_columns_extract',
+            transform: 'extract_columns',
             table_path: 'data/case2/L9 (car).csv',
             change: true,
             columns: {
@@ -3034,7 +3034,7 @@ const case2 = {
         5: {
             row_num: 31,
             type: 'create',
-            transform: 'create_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case2/L10 (car).csv',
             change: true,
             columns: {
@@ -3067,7 +3067,7 @@ const case2 = {
         6: {
             row_num: 31,
             type: 'create',
-            transform: 'create_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case2/L11 (car).csv',
             change: true,
             columns: {
@@ -3104,7 +3104,7 @@ const case2 = {
         7: {
             row_num: 31,
             type: 'unchange',
-            transform: 'transform_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case2/L12 (car).csv',
             change: false,
             columns: {
@@ -3141,7 +3141,7 @@ const case2 = {
         8: {
             row_num: 31,
             type: 'unchange',
-            transform: 'transform_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case2/L13 (car).csv',
             change: false,
             columns: {
@@ -3178,7 +3178,7 @@ const case2 = {
         9: {
             row_num: 31,
             type: 'unchange',
-            transform: 'transform_columns_mutate',
+            transform: 'mutate_columns',
             table_path: 'data/case2/L14 (car).csv',
             change: false,
             columns: {
@@ -3215,7 +3215,7 @@ const case2 = {
         10: {
             row_num: 31,
             type: 'unchange',
-            transform: 'transform_tables_sort_asc',
+            transform: 'sort_table_asc',
             table_path: 'data/case2/L15 (car).csv',
             change: false,
             columns: {
@@ -3252,7 +3252,7 @@ const case2 = {
         11: {
             row_num: 31,
             type: 'transform',
-            transform: 'transform_columns_rearrange',
+            transform: 'rearrange_columns',
             table_path: 'data/case2/L16 (car).csv',
             change: true,
             line_cols: ["Value_Retention", "Rate"],
@@ -3290,7 +3290,7 @@ const case2 = {
         12: {
             row_num: 10,
             type: 'unchange',
-            transform: 'delete_rows_slice_keep',
+            transform: 'slice_keep_rows',
             table_path: 'data/case2/L17 (car).csv',
             change: false,
             columns: {
