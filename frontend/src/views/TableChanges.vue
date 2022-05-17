@@ -44,7 +44,7 @@
     <el-row type="flex" justify="center" style="height: calc(100vh - 70px); margin: 0">
     <el-col
         style="
-          width: 22vw;
+          width: 25vw;
           padding: 0 0 0 0;
           height: 100%;
           display: flex;
