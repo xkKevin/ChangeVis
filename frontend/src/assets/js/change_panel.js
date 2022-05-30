@@ -123,7 +123,7 @@ async function drawColline(data, view, vis_panel_width) {
             margin_left += timeline_config.col_width + timeline_config.col_interval
         }
 
-        if (column_change_data[key].transform_list[column_change_data[key].transform_list.length - 1] === 'transform_columns_rearrange') {
+        if (column_change_data[key].transform_list[column_change_data[key].transform_list.length - 1] === 'rearrange_columns') {
             column_change_data[key].line_cols.forEach((ci, ti) => {
                 if (col_posi[ci] != current_col_posi[ci]) {
                     // console.log(col_posi[ci], current_col_posi[ci]);
@@ -326,7 +326,7 @@ function drawIcon(svg, transform_icon, x, y, icon_width) {
 
             image_element.append("svg:title").text(transform_icon.split("_").join(" "))
 
-            if (transform_icon === 'transform_columns_rearrange') {
+            if (transform_icon === 'rearrange_columns') {
                 let img_box = image_element.node().getBBox()
                 let cx = img_box.x + img_box.width / 2
                 let cy = img_box.y + img_box.height / 2
