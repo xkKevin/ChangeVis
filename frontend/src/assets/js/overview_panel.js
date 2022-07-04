@@ -11,8 +11,9 @@ var skip_step = 0 // 跳过的初始步骤
 var select_data = {}
 var view = { level1: {}, level2: {}, level3: {} }
 var vis_panel_width = 0
+var graph = null
 var start_step = 0
-var end_step = undefined
+var end_step = Infinity
 
 
 var vm = null
@@ -27,6 +28,9 @@ const sendVue = (_that) => {
  * @param {*} group_flag : 是否合并，1 表示合并，0表示不合并
  */
 async function handel_overview(data, group_flag = 0, proportion_flag = false) {
+    start_step = 0
+    end_step = Infinity
+
     select_rect = []
     skip_step = 0
     overall_data = data
@@ -95,7 +99,7 @@ function changeProportionView(group_flag, proportion_flag) {
 }
 
 async function combinedEvent(group_flag, proportion_flag) {
-    if (end_step === undefined) {
+    if (end_step === Infinity) {
         await handel_overview(overall_data, group_flag, proportion_flag)
         return view
     }
@@ -166,7 +170,7 @@ function add_event(group_flag, proportion_flag) {
                 start_step = select_steps[0]
                 end_step = select_steps[select_steps.length - 1]
                 select_data = generate_select_data(start_step, end_step, group_flag)
-
+                drawOverviewStep()
                 drawChanges(select_data, view, proportion_flag, vis_panel_width)
                 drawColline(select_data, view, vis_panel_width).then(() => {
                     d3.selectAll(".vis_line").remove()
@@ -396,10 +400,40 @@ function generateGraph(data, group_flag) {
     return { graph, height_ratio, end }
 }
 
+function drawOverviewStep() {
+    d3.select("#overview_steps").remove()
+    let tbl_step = d3.select("#overview_svg").append('g').attr("id", "overview_steps")
+    graph.children.forEach(tbl =>{
+        // 在table左上方添加步骤序号
+        // 先绘制圆
+        let step_num = parseInt(String(tbl.step).split("_").slice(-1))
+        // console.log(step_num, start_step, end_step);
+        if (step_num >= start_step && step_num <= end_step){
+        let cr = 10
+        let cy = tbl.y + cr + 3
+        let cr_interval = cr + 5
+        tbl_step.append("circle")
+            .attr("r", cr)
+            .attr("cx", tbl.x - cr_interval).attr("cy", cy)
+            .attr("stroke", 'black')
+            .attr("fill", 'white')
+        tbl_step.append("text").text(step_num - skip_step)
+            .attr("font-size", '15px')
+            .attr("x", tbl.x - cr_interval).attr("y", cy + 1.3)
+            // .attr("transform", `translate(${change_config.right_step_width/2}, 0)`)
+            .attr("text-anchor", "middle")
+            .attr("dominant-baseline", "middle")  // 文本垂直居中
+        }
+    })
+}
 
-function drawOverview(pipeline_data, graph, height_ratio, group_flag, proportion_flag) {
+
+function drawOverview(pipeline_data, graph_d, height_ratio, group_flag, proportion_flag) {
     let overview_svg = d3.select("#overview_svg").attr("transform", null)
     overview_svg.selectChildren().remove()
+
+    graph = graph_d
+    drawOverviewStep()
 
     let line_flag = -1 // -1 表示上；1 表示下
     graph.children.forEach(tbl => {
