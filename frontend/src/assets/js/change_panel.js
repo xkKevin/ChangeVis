@@ -456,11 +456,33 @@ function drawChanges(data, view, proportion_flag, vis_panel_width) {
 
                         // 添加右侧步骤文本
                         if (block.step != undefined) {
-                            change_step.append("text").text(block.step - skip_step)
-                                .attr("font-size", change_config.step_font_size)
-                                .attr("x", text_x).attr("y", text_y)
-                                .attr("transform", `translate(${change_config.right_step_width/2}, 0)`)
-                                .attr("text-anchor", "middle")
+                            let text_g = change_step.append("g")
+
+                            let cr = 8
+                            let cx = text_x + cr/2 + 6
+                            let cy = block_y + (area_proportion * col_height)/2 // - cr/2 - 10
+                            text_g.append("circle")
+                                .attr("r", cr)
+                                .attr("cx", cx).attr("cy", cy)
+                                .attr("stroke", 'black')
+                                .attr("fill", 'white')
+
+                            let step_num  = block.step - skip_step
+                            let step_fs = '15px'
+                            if (step_num>=10){
+                                step_fs = '12px'
+                            }
+                            let text_step = text_g.append("text").text(step_num)
+                                .attr("font-size", step_fs)
+                                .attr("x", cx).attr("y", cy + 1.4) //.attr("x", margin_left + change_config.col_width).attr("y", col_y - 1.5 * change_config.icon_margin_bottom)
+                                .attr("text-anchor", "middle") // end
+                                .attr("dominant-baseline", "middle")  // 文本垂直居中
+
+                            // change_step.append("text").text(block.step - skip_step)
+                            //     .attr("font-size", change_config.step_font_size)
+                            //     .attr("x", text_x).attr("y", text_y)
+                            //     .attr("transform", `translate(${change_config.right_step_width/2}, 0)`)
+                            //     .attr("text-anchor", "middle")
                             step_text_flag = 1
 
                             // 为 change_step 赋予新的 step 值
@@ -512,23 +534,39 @@ function drawChanges(data, view, proportion_flag, vis_panel_width) {
 
 
             // 添加图标
-            drawIcon(change_step, col.transform_icon, margin_left, col_y - change_config.icon_size[1] - change_config.icon_margin_bottom, change_config.col_width)
+            drawIcon(change_step, col.transform_icon, margin_left - 5, col_y - change_config.icon_size[1] - change_config.icon_margin_bottom, change_config.col_width)
 
             // 添加步骤序号
             if (step_text_flag === 0) {
                 let text_g = change_step.append("g").attr("id", "step" + col.step)
-                let text_step = text_g.append("text").text(col.step - skip_step)
-                    .attr("font-size", change_config.step_font_size)
-                    .attr("x", margin_left + change_config.col_width).attr("y", col_y - 1.5 * change_config.icon_margin_bottom)
-                    .attr("text-anchor", "end")
+                let cr = 9
+                let cx = margin_left + change_config.col_width - cr/2 - 5
+                let cy = col_y - cr/2 - 10
+                text_g.append("circle")
+                    .attr("r", cr)
+                    .attr("cx", cx).attr("cy", cy)
+                    .attr("stroke", 'black')
+                    .attr("fill", 'white')
+
+                let step_num  = col.step - skip_step
+                let step_fs = '15px'
+                if (step_num>=10){
+                    step_fs = '12px'
+                }
+                let text_step = text_g.append("text").text(step_num)
+                    .attr("font-size", step_fs)
+                    .attr("x", cx).attr("y", cy + 1.4) //.attr("x", margin_left + change_config.col_width).attr("y", col_y - 1.5 * change_config.icon_margin_bottom)
+                    .attr("text-anchor", "middle") // end
+                    .attr("dominant-baseline", "middle")  // 文本垂直居中
+
                     // let text_box = text_step.node().getBBox()
                     // text_g.append("rect")
                     //     .attr("x", text_box.x - 2).attr("y", text_box.y - 1.5)
                     //     .attr("width", text_box.width + 4).attr("height", text_box.height + 3)
                     //     .attr("fill", "none")
-                    //     .attr("stroke", change_color[col.transform_icon.split('_')[0]])
+                    //     .attr("stroke", "black") // change_color[col.transform_icon.split('_')[0]]
                     //     .attr("stroke-width", 2.5)
-                text_step.raise()
+                // text_step.raise()
             }
 
             group = col.group ? col.group : 0

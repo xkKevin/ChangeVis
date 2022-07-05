@@ -12,7 +12,7 @@ const change_color = {
 
 const overview_config = {
     'margin_top': 55,
-    'margin_left': 30,
+    'margin_left': 40,
     'margin_bottom': 10,
     'col_width': 16,
     'col_height': 65,

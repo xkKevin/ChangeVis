@@ -4,9 +4,9 @@
         '--transform-color': color.transform,
         '--create-color': color.create,
       }">
-    <el-header height="50px" style="background: black">
-      <el-row style="background: black; padding-top: 8px; flex: 1;">
-        <div style="background: black; float: left;">
+    <el-header height="50px" style="background: black;">
+      <el-row style="background: black; padding-top: 8px; flex: 1; text-align: center;">
+        <div style="background: black; position: absolute; left: 2px;">
           <span style="font-family: Arial; font-size: 20px; color: white">Case:</span>
           <el-dropdown @command="selectCase" style="margin-left: 20px">
               <span
@@ -36,8 +36,26 @@
               </el-dropdown-menu>
           </el-dropdown>
         </div>
-        <div style="background: black; margin-top: 10px; text-align: center;line-height: 20px; width: 100%;">
-            <span style="font-family: Arial; font-size: 30px; color: white; font-weight: bold">ChangeVis</span>
+        <span style="font-family: Arial; font-size: 30px; color: white; font-weight: bold">ChangeVis</span>
+        <div style="right: 5px; text-align: left; top:4px; position: absolute;">
+          <div>
+            <div style="background: #a6cee3; display: inline-block; width: 35px; height: 15px;"></div>
+            <span style="color: white; margin-left: 6px;">Transformed</span>
+          </div>
+          <div>
+            <div style="background: #e6e6e6; display: inline-block; width: 35px; height: 15px;"></div>
+            <span style="color: white; margin-left: 6px;">Unchanged</span>
+          </div>
+        </div>
+        <div style="right: 168px; text-align: left; top:4px; position: absolute;">
+          <div>
+            <div style="background: #b2df8a; display: inline-block; width: 35px; height: 15px;"></div>
+            <span style="color: white; margin-left: 6px;">Created</span>
+          </div>
+          <div>
+            <div style="background: #fb9a99; display: inline-block; width: 35px; height: 15px;"></div>
+            <span style="color: white; margin-left: 6px;">Deleted</span>
+          </div>
         </div>
       </el-row>
     </el-header>
