@@ -129,7 +129,7 @@ async function drawColline(data, view, vis_panel_width) {
                     // console.log(col_posi[ci], current_col_posi[ci]);
                     let start_p = [col_posi[ci], margin_top - timeline_config.knot_interval + timeline_config.radius]
                     let end_p = [current_col_posi[ci], margin_top - timeline_config.radius]
-                    let points = generatePoints(start_p, end_p, 6, 3)
+                    let points = generatePoints(start_p, end_p, 6, 4.7)
 
                     let line = d3.line()
                         .curve(d3.curveCardinal.tension(0))
