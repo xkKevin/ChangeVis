@@ -126,12 +126,56 @@ async function combinedEvent(group_flag, proportion_flag) {
     d3.select(end_i).dispatch("mouseup")
 }
 
+function highlight_cols(step = -1, click_flag = undefined) {
+    d3.selectAll("g.line_cols[click_flag='0']").classed("select", false)
+    d3.selectAll("#overview_steps g[click_flag='0']").selectChild("circle").attr("fill", "none")
+    if (step < 0) return
+    let line_cols = d3.selectAll("g.line_cols")
+    let overview_steps = d3.selectAll("#overview_steps g")
+    if (click_flag === '1') {
+        line_cols.classed("select", false).attr("click_flag", '0')
+        overview_steps.classed("select", false).attr("click_flag", '0')
+    }
+    line_cols = line_cols.nodes()
+    overview_steps = overview_steps.nodes()
+    let ci_select = null
+    let os_select = null
+    
+    for (let ci in line_cols) {
+        let ci_node = d3.select(line_cols[ci])
+        let ci_step = parseInt(ci_node.attr("step"))
+        if (step >= ci_step) {
+            ci_select = ci_node
+        }else {
+            break
+        }
+    }
+    for (let ci in overview_steps) {
+        let ci_node = d3.select(overview_steps[ci])
+        let ci_step = parseInt(ci_node.attr("step"))
+        if (ci_step >= step) {
+            os_select = ci_node
+            break
+        }
+    } 
+    
+
+    ci_select.classed("select", true)
+    os_select.selectChild("circle").attr("fill", change_color.highlight_step)
+    if (click_flag) {
+        ci_select.attr("click_flag", click_flag)
+        os_select.attr("click_flag", click_flag)
+    }
+    
+}
+
 function add_event(group_flag, proportion_flag) {
     // 为整个body添加事件
     d3.select("body").on("keydown", (event) => {
         // console.log(event)
         if (event.keyCode === 27) { // escape
-            d3.selectAll(".table, .change_step").attr("click_flag", '0').classed("select", false)
+            d3.selectAll(".table, .change_step, .line_cols").attr("click_flag", '0').classed("select", false)
+            d3.selectAll("#overview_steps g").selectChild("circle").attr("fill", "none")
             select_rect = []
             vm.codeLineHighlight()
             vm.codeGlyphHighlight()
@@ -193,7 +237,10 @@ function add_event(group_flag, proportion_flag) {
     d3.selectAll(".change_step")
         .on("mouseover", function() {
             // d3.select(this).classed("select", true)
-            d3.selectAll(`.change_step[step='${d3.select(this).attr("step")}']`).classed("select", true)
+            let tbl_this = d3.select(this)
+            let tbl_step = parseInt(tbl_this.attr("step"))
+            d3.selectAll(`.change_step[step='${tbl_step}']`).classed("select", true)
+            highlight_cols(tbl_step-skip_step)
         })
         .on("mouseout", function() {
             let tbl_this = d3.select(this)
@@ -201,12 +248,15 @@ function add_event(group_flag, proportion_flag) {
                 // tbl_this.classed("select", false)
                 d3.selectAll(`.change_step[step='${tbl_this.attr("step")}']`).classed("select", false)
             }
+            highlight_cols()
         })
         .on("mouseup", async function() {
             d3.selectAll(".change_step").attr("click_flag", '0').classed("select", false)
 
             let tbl_this = d3.select(this)
-            d3.selectAll(`.change_step[step='${tbl_this.attr("step")}']`).attr("click_flag", '1').classed("select", true)
+            let tbl_step = parseInt(tbl_this.attr("step"))
+            d3.selectAll(`.change_step[step='${tbl_step}']`).attr("click_flag", '1').classed("select", true)
+            highlight_cols(tbl_step-skip_step, '1')
             let steps = tbl_this.attr("step").split("_").map(Number)
 
             let code_glyph_lines = []
@@ -409,20 +459,22 @@ function drawOverviewStep() {
         let step_num = parseInt(String(tbl.step).split("_").slice(-1))
         // console.log(step_num, start_step, end_step);
         if (step_num >= start_step && step_num <= end_step){
-        let cr = 10
-        let cy = tbl.y + cr + 3
-        let cr_interval = cr + 5
-        tbl_step.append("circle")
-            .attr("r", cr)
-            .attr("cx", tbl.x - cr_interval).attr("cy", cy)
-            .attr("stroke", 'black')
-            .attr("fill", 'white')
-        tbl_step.append("text").text(step_num - skip_step)
-            .attr("font-size", '15px')
-            .attr("x", tbl.x - cr_interval).attr("y", cy + 1.3)
-            // .attr("transform", `translate(${change_config.right_step_width/2}, 0)`)
-            .attr("text-anchor", "middle")
-            .attr("dominant-baseline", "middle")  // 文本垂直居中
+            let step_text = step_num - skip_step
+            let step_g = tbl_step.append("g").attr("step", step_text).attr("click_flag", "0")
+            let cr = 10
+            let cy = tbl.y + cr + 3
+            let cr_interval = cr + 5
+            step_g.append("circle")
+                .attr("r", cr)
+                .attr("cx", tbl.x - cr_interval).attr("cy", cy)
+                .attr("stroke", 'black')
+                .attr("fill", 'white')
+            step_g.append("text").text(step_text)
+                .attr("font-size", '15px')
+                .attr("x", tbl.x - cr_interval).attr("y", cy + 1.3)
+                // .attr("transform", `translate(${change_config.right_step_width/2}, 0)`)
+                .attr("text-anchor", "middle")
+                .attr("dominant-baseline", "middle")  // 文本垂直居中
         }
     })
 }

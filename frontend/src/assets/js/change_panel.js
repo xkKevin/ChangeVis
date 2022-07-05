@@ -98,14 +98,15 @@ async function drawColline(data, view, vis_panel_width) {
         let columns = column_change_data[key].columns
         let half_col_width = timeline_config.col_width / 2
         let current_col_posi = {}
+        let cols_svg = colline_svg.append("g").classed("line_cols", true).attr("step", key - skip_step).attr("click_flag", '0')
         for (let ci in columns) {
             // 绘制背景颜色
-            colline_svg.append("rect")
+            cols_svg.append("rect")
                 .attr("x", margin_left).attr("y", margin_top - timeline_config.radius)
                 .attr("width", timeline_config.col_width).attr("height", 2 * timeline_config.radius)
                 .attr("fill", cdi === 0 ? change_color.unchange : change_color[columns[ci].change_type])
 
-            drawText(colline_svg, ci, change_config.title_font_size, margin_left, text_y, [half_col_width, 0], max_len)
+            drawText(cols_svg, ci, change_config.title_font_size, margin_left, text_y, [half_col_width, 0], max_len)
 
             // 绘制glyph
             if (cdi === 0 || cdi === Object.keys(column_change_data).length - 1) {
