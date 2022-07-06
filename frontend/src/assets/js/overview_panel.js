@@ -134,7 +134,7 @@ function highlight_cols(step = -1, click_flag = undefined) {
     let overview_steps = d3.selectAll("#overview_steps g")
     if (click_flag === '1') {
         line_cols.classed("select", false).attr("click_flag", '0')
-        overview_steps.classed("select", false).attr("click_flag", '0')
+        overview_steps.attr("click_flag", '0').selectChild("circle").attr("fill", "none")
     }
     line_cols = line_cols.nodes()
     overview_steps = overview_steps.nodes()
@@ -175,7 +175,7 @@ function add_event(group_flag, proportion_flag) {
         // console.log(event)
         if (event.keyCode === 27) { // escape
             d3.selectAll(".table, .change_step, .line_cols").attr("click_flag", '0').classed("select", false)
-            d3.selectAll("#overview_steps g").selectChild("circle").attr("fill", "none")
+            d3.selectAll("#overview_steps g").attr("click_flag", '0').selectChild("circle").attr("fill", "none")
             select_rect = []
             vm.codeLineHighlight()
             vm.codeGlyphHighlight()
@@ -239,7 +239,7 @@ function add_event(group_flag, proportion_flag) {
             // d3.select(this).classed("select", true)
             let tbl_this = d3.select(this)
             let tbl_step = parseInt(tbl_this.attr("step"))
-            d3.selectAll(`.change_step[step='${tbl_step}']`).classed("select", true)
+            d3.selectAll(`.change_step[step='${tbl_this.attr("step")}']`).classed("select", true)
             highlight_cols(tbl_step-skip_step)
         })
         .on("mouseout", function() {
@@ -255,7 +255,7 @@ function add_event(group_flag, proportion_flag) {
 
             let tbl_this = d3.select(this)
             let tbl_step = parseInt(tbl_this.attr("step"))
-            d3.selectAll(`.change_step[step='${tbl_step}']`).attr("click_flag", '1').classed("select", true)
+            d3.selectAll(`.change_step[step='${tbl_this.attr("step")}']`).attr("click_flag", '1').classed("select", true)
             highlight_cols(tbl_step-skip_step, '1')
             let steps = tbl_this.attr("step").split("_").map(Number)
 
