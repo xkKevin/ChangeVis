@@ -1351,7 +1351,6 @@ const case1 = {
                 input_nan_posi: [],
                 output_nan_posi: [],
                 step: 1
-
             }]
         },
         Performance: {

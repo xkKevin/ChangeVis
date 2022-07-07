@@ -373,6 +373,13 @@ function generate_select_data(start, end, group_flag) {
             if (trans.step >= start && trans.step <= end) {
                 rows.push(trans.output_row_num)
                 tmp_data.change_data[key].push(trans)
+            }else if (trans_field === 'combine'){
+                overall_data.change_data[key]["origin"].forEach(trans => {
+                    if (trans.step >= start && trans.step <= end) {
+                        rows.push(trans.output_row_num)
+                        tmp_data.change_data[key].push(trans)
+                    }
+                })
             }
         })
     })
