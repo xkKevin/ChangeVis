@@ -368,16 +368,19 @@ function generate_select_data(start, end, group_flag) {
             trans_field = 'combine'
         }
         // console.log(key, trans_field, overall_data.change_data[key][trans_field]);
+        let select_flag = {} // 在combine的时候有没有被选择
         overall_data.change_data[key][trans_field].forEach(trans => {
             // let new_tran = Object.assign({}, trans) // 深拷贝对象
-            if (trans.step >= start && trans.step <= end) {
+            if (trans.step >= start && trans.step <= end && select_flag[key+trans.step] === undefined) {
                 rows.push(trans.output_row_num)
                 tmp_data.change_data[key].push(trans)
+                select_flag[key+trans.step] = true
             }else if (trans_field === 'combine'){
                 overall_data.change_data[key]["origin"].forEach(trans => {
-                    if (trans.step >= start && trans.step <= end) {
+                    if (trans.step >= start && trans.step <= end && select_flag[key+trans.step] === undefined) {
                         rows.push(trans.output_row_num)
                         tmp_data.change_data[key].push(trans)
+                        select_flag[key+trans.step] = true
                     }
                 })
             }
