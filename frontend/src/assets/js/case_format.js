@@ -1350,7 +1350,8 @@ const case1 = {
                 transform: [],
                 input_nan_posi: [],
                 output_nan_posi: [],
-                step: 1
+                step: 1,
+                combine_steps: [1, 7]
             }]
         },
         Performance: {
