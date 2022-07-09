@@ -377,7 +377,7 @@ function generate_select_data(start, end, group_flag) {
                         select_step.push(si)
                     }
                 })
-                if (select_step.length === trans.combine_steps){
+                if (select_step.length === trans.combine_steps.length){
                     rows.push(trans.output_row_num)
                     tmp_data.change_data[key].push(trans)
                 }else{
