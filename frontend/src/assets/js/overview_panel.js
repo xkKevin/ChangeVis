@@ -140,13 +140,13 @@ function highlight_cols(step = -1, click_flag = undefined) {
     overview_steps = overview_steps.nodes()
     let ci_select = null
     let os_select = null
-    
+
     for (let ci in line_cols) {
         let ci_node = d3.select(line_cols[ci])
         let ci_step = parseInt(ci_node.attr("step"))
         if (step >= ci_step) {
             ci_select = ci_node
-        }else {
+        } else {
             break
         }
     }
@@ -157,8 +157,8 @@ function highlight_cols(step = -1, click_flag = undefined) {
             os_select = ci_node
             break
         }
-    } 
-    
+    }
+
 
     ci_select.classed("select", true)
     os_select.selectChild("circle").attr("fill", change_color.highlight_step)
@@ -166,7 +166,7 @@ function highlight_cols(step = -1, click_flag = undefined) {
         ci_select.attr("click_flag", click_flag)
         os_select.attr("click_flag", click_flag)
     }
-    
+
 }
 
 function add_event(group_flag, proportion_flag) {
@@ -240,7 +240,7 @@ function add_event(group_flag, proportion_flag) {
             let tbl_this = d3.select(this)
             let tbl_step = parseInt(tbl_this.attr("step"))
             d3.selectAll(`.change_step[step='${tbl_this.attr("step")}']`).classed("select", true)
-            highlight_cols(tbl_step-skip_step)
+            highlight_cols(tbl_step - skip_step)
         })
         .on("mouseout", function() {
             let tbl_this = d3.select(this)
@@ -256,7 +256,7 @@ function add_event(group_flag, proportion_flag) {
             let tbl_this = d3.select(this)
             let tbl_step = parseInt(tbl_this.attr("step"))
             d3.selectAll(`.change_step[step='${tbl_this.attr("step")}']`).attr("click_flag", '1').classed("select", true)
-            highlight_cols(tbl_step-skip_step, '1')
+            highlight_cols(tbl_step - skip_step, '1')
             let steps = tbl_this.attr("step").split("_").map(Number)
 
             let code_glyph_lines = []
@@ -371,16 +371,16 @@ function generate_select_data(start, end, group_flag) {
         let select_flag = {} // 在combine的时候有没有被选择
         overall_data.change_data[key][trans_field].forEach(trans => {
             // let new_tran = Object.assign({}, trans) // 深拷贝对象
-            if (trans.step >= start && trans.step <= end && select_flag[key+trans.step] === undefined) {
+            if (trans.step >= start && trans.step <= end && select_flag[key + trans.step] === undefined) {
                 rows.push(trans.output_row_num)
                 tmp_data.change_data[key].push(trans)
-                select_flag[key+trans.step] = true
-            }else if (trans_field === 'combine'){
+                select_flag[key + trans.step] = true
+            } else if (trans_field === 'combine') {
                 overall_data.change_data[key]["origin"].forEach(trans => {
-                    if (trans.step >= start && trans.step <= end && select_flag[key+trans.step] === undefined) {
+                    if (trans.step >= start && trans.step <= end && select_flag[key + trans.step] === undefined) {
                         rows.push(trans.output_row_num)
                         tmp_data.change_data[key].push(trans)
-                        select_flag[key+trans.step] = true
+                        select_flag[key + trans.step] = true
                     }
                 })
             }
@@ -463,12 +463,12 @@ function generateGraph(data, group_flag) {
 function drawOverviewStep() {
     d3.select("#overview_steps").remove()
     let tbl_step = d3.select("#overview_svg").append('g').attr("id", "overview_steps")
-    graph.children.forEach(tbl =>{
+    graph.children.forEach(tbl => {
         // 在table左上方添加步骤序号
         // 先绘制圆
         let step_num = parseInt(String(tbl.step).split("_").slice(-1))
-        // console.log(step_num, start_step, end_step);
-        if (step_num >= start_step && step_num <= end_step){
+            // console.log(step_num, start_step, end_step);
+        if (step_num >= start_step && step_num <= end_step) {
             let step_text = step_num - skip_step
             let step_g = tbl_step.append("g").attr("step", step_text).attr("click_flag", "0")
             let cr = 10
@@ -484,7 +484,7 @@ function drawOverviewStep() {
                 .attr("x", tbl.x - cr_interval).attr("y", cy + 1.3)
                 // .attr("transform", `translate(${change_config.right_step_width/2}, 0)`)
                 .attr("text-anchor", "middle")
-                .attr("dominant-baseline", "middle")  // 文本垂直居中
+                .attr("dominant-baseline", "middle") // 文本垂直居中
         }
     })
 }

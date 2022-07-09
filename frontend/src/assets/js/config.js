@@ -8,7 +8,7 @@ const change_color = {
     'line': "black",
     'col_bg': "#f5f4ff",
     'glyph': "#fdbf6f",
-    'highlight_step': 'pink' // 选择step高亮的颜色
+    'highlight_step': '#fed9a6' // 选择step高亮的颜色
 }
 
 const overview_config = {
