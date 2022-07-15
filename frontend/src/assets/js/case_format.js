@@ -1350,7 +1350,8 @@ const case1 = {
                 transform: [],
                 input_nan_posi: [],
                 output_nan_posi: [],
-                step: 1
+                step: 1,
+                combine_steps: [1, 7]
             }]
         },
         Performance: {
@@ -1590,7 +1591,7 @@ const case1 = {
                     input_col: ['Achievements'],
                     transform_icon: 'mutate_columns',
                     unchange: [{
-                        posi: [0, 0.913],
+                        posi: [0.087, 1],
                         case: {
                             input_case: [
                                 [88.89, 92.0, 62.5, 80.0, 86.36, 95.65, 87.5, 100.0, 95.45, 104.17, 109.09, 100.0, 109.09, 95.65, 78.26, 68.97, 88.46, 77.78, 81.82, 84.0, 78.57]
