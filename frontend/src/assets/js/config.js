@@ -1,5 +1,5 @@
 const change_color = {
-    'delete': '#fb9a99',
+    'delete': 'red',
     'transform': '#a6cee3',
     'create': '#b2df8a',
     'unchange': '#e6e6e6',
@@ -12,7 +12,7 @@ const change_color = {
 }
 
 const overview_config = {
-    'margin_top': 55,
+    'margin_top': 155,
     'margin_left': 40,
     'margin_bottom': 10,
     'col_width': 16,

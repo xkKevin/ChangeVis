@@ -36,6 +36,7 @@
               </el-dropdown-menu>
           </el-dropdown>
         </div>
+        <button @click="testBackend">test</button>
         <span style="font-family: Arial; font-size: 30px; color: white; font-weight: bold">ChangeVis</span>
         <div style="right: 5px; text-align: left; top:4px; position: absolute;">
           <div>
@@ -210,7 +211,7 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
 import * as d3 from "d3";
 import * as monaco from "monaco-editor"; // https://www.cnblogs.com/xuhaoliang/p/13803230.html
 
@@ -287,6 +288,21 @@ export default {
     // }
   },
   methods: {
+    testBackend () {
+
+      var data ={
+        a: 12,
+        b: 70
+      }
+      axios
+        .get(`${request_api}/addNumber`, {params: data})
+        .then((response) => {
+          alert(`The result is: ${response.data.sum}`)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     cellClassName ({ row, rowIndex, column, columnIndex }) {
             if (column.property.slice(0,10) !== 'ChangeVis_') {
               let tempColName = 'ChangeVis_' + column.property
